@@ -3,6 +3,7 @@ import futureSelfImage from '../assets/solar_letters.webp';
 import vaccineImage from '../assets/vaccine_image.webp';
 import iudImage from '../assets/iud_expiry.webp';
 import anniversaryImage from '../assets/bday_calander.webp';
+import heroImage from '../assets/hero.webp';
 
 const articles = [
   {
@@ -28,6 +29,18 @@ const articles = [
     imageSrc: anniversaryImage,
     link: '/articles/anniversary-reminders',
     alt: 'Conceptual image about remembering important dates'
+  },
+  {
+    title: 'Visa Expiry Guide',
+    imageSrc: heroImage,
+    link: '/articles/visa-expiry',
+    alt: 'Person looking at a passport with a calendar in the background'
+  },
+  {
+    title: 'Subscription Renewal Traps',
+    imageSrc: heroImage,
+    link: '/articles/subscription-renewal',
+    alt: 'A person looking shocked at a credit card statement'
   }
 ];
 
