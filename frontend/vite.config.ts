@@ -4,12 +4,10 @@ import react from "@vitejs/plugin-react"
 import { defineConfig, loadEnv } from "vite"
 
 // https://vite.dev/config/
-export default defineConfig(({ mode }) => {
+export default ({ mode }: { mode: string }) => {
   const env = loadEnv(mode, '..', '');
-  const isDevelopment = env.debug === 'true';
-
-  return {
-    base: isDevelopment ? '/' : '/static/',
+  return defineConfig({
+    base: '/static/',
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
@@ -19,10 +17,10 @@ export default defineConfig(({ mode }) => {
     server: {
       proxy: {
         '/api': {
-          target: 'http://127.0.0.1:8000',
+          target: mode === 'development' ? 'http://127.0.0.1:8000' : env.API_SERVER_URL,
           changeOrigin: true,
         },
       },
     },
-  }
-})
+  })
+}
