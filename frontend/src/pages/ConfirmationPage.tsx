@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Button } from '@/components/ui/button';
 import { CheckCircle, User, Heart, Calendar, CreditCard, AlertCircle, Loader2 } from 'lucide-react';
 import { getUserProfile, getEmergencyContacts, getEvent } from '@/api';
-import type { UserProfile, EmergencyContact, Event, EventCreationResponse } from '@/types';
+import type { UserProfile, EmergencyContact, Event } from '@/types';
 
 const ConfirmationPage = () => {
   const { eventId } = useParams<{ eventId: string }>();

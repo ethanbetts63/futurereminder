@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useStripe } from '@stripe/react-stripe-js';
-import type { PaymentIntent } from '@stripe/stripe-js';
+import type { PaymentIntent, PaymentIntentResult } from '@stripe/stripe-js';
+
+// Define a more specific type that includes the metadata we expect from our backend.
+interface PaymentIntentWithMetadata extends PaymentIntent {
+  metadata: {
+    event_id?: string;
+    user_id?: string;
+  };
+}
 import { Link, useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -29,8 +37,17 @@ const PaymentStatusPage: React.FC = () => {
       return;
     }
 
-    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }: { paymentIntent?: PaymentIntent }) => {
+    stripe.retrievePaymentIntent(clientSecret).then((result: PaymentIntentResult) => {
+      if (result.error) {
+        setIsProcessing(false);
+        setMessage(result.error.message || 'An error occurred while retrieving payment status.');
+        setPaymentSucceeded(false);
+        return;
+      }
+
       setIsProcessing(false);
+      const paymentIntent = result.paymentIntent as PaymentIntentWithMetadata;
+
       switch (paymentIntent?.status) {
         case 'succeeded':
           setPaymentSucceeded(true);
@@ -96,7 +113,15 @@ const PaymentStatusPage: React.FC = () => {
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || "pk_test_51RRCzbPH0oVkn2F1ZCB43p08cHzPiROnrVDvRbggNjvm4WAsDHhNy8gzd00qhxCItqk5Y8yhtRi9BJSIlt8dr8x100D0oG7sKC");
+const publishableKey = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
+
+if (!publishableKey) {
+  console.error("FATAL: VITE_STRIPE_PUBLISHABLE_KEY is not set in .env file or is not prefixed with VITE_.");
+}
+// Log a truncated version of the key for debugging, which is safer than logging the whole key.
+console.log("Stripe.js is loading with key:", publishableKey ? `${publishableKey.substring(0, 10)}...` : "KEY NOT FOUND");
+
+const stripePromise = publishableKey ? loadStripe(publishableKey) : null;
 
 const WrappedPaymentStatusPage = () => (
   <Elements stripe={stripePromise}>
