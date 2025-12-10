@@ -37,10 +37,16 @@ const PaymentStatusPage: React.FC = () => {
           toast.success("Payment successful!", {
             description: "Your event has been activated."
           });
-          setMessage('Success! Your payment was received. Redirecting to your confirmation...');
-          setTimeout(() => {
-            navigate('/confirmation');
-          }, 2000);
+          
+          const eventId = paymentIntent.metadata.event_id;
+          if (eventId) {
+            setMessage('Success! Your payment was received. Redirecting to your confirmation...');
+            setTimeout(() => {
+              navigate(`/confirmation/${eventId}`);
+            }, 2000);
+          } else {
+            setMessage('Success! Your payment was received, but we could not find the event details. Please check your dashboard.');
+          }
           break;
         case 'processing':
           setMessage("Payment processing. We'll update you when payment is received.");

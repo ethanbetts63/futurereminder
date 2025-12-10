@@ -93,6 +93,14 @@ export async function getEvents(): Promise<Event[]> {
     return handleResponse(response);
 }
 
+export async function getEvent(id: string): Promise<Event> {
+    const response = await fetch(`/api/events/${id}/`, {
+        method: 'GET',
+        headers: getAuthHeaders(),
+    });
+    return handleResponse(response);
+}
+
 export async function createAuthenticatedEvent(eventData: Partial<Event>): Promise<Event> {
     const response = await fetch('/api/events/', {
         method: 'POST',

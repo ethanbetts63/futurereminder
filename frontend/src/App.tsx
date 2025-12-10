@@ -35,7 +35,7 @@ function App() {
         <Routes>
           {/* Public routes */}
           <Route path="/" element={<HomePage />} />
-          <Route path="/confirmation" element={<ConfirmationPage />} />
+          <Route path="/confirmation/:eventId" element={<ConfirmationPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/articles/letter-to-future-self" element={<LetterToFutureSelf />} />
           <Route path="/articles/vaccine-boosters" element={<VaccineBoosters />} />

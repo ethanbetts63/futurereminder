@@ -1,33 +1,41 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { CheckCircle, User, Heart, Calendar, CreditCard, AlertCircle, Loader2 } from 'lucide-react';
-import { getUserProfile, getEmergencyContacts } from '@/api';
-import type { UserProfile, EmergencyContact, EventCreationResponse } from '@/types';
+import { getUserProfile, getEmergencyContacts, getEvent } from '@/api';
+import type { UserProfile, EmergencyContact, Event, EventCreationResponse } from '@/types';
 
 const ConfirmationPage = () => {
-  const location = useLocation() as { state: { values: EventCreationResponse } };
-  const { values: eventCreationData } = location.state || {};
-
+  const { eventId } = useParams<{ eventId: string }>();
+  
+  const [event, setEvent] = useState<Event | null>(null);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [contacts, setContacts] = useState<EmergencyContact[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!eventId) {
+      setError('No event ID provided.');
+      setLoading(false);
+      return;
+    }
+
     const fetchData = async () => {
       try {
         setLoading(true);
-        const [profileData, contactsData] = await Promise.all([
+        const [eventData, profileData, contactsData] = await Promise.all([
+          getEvent(eventId),
           getUserProfile(),
           getEmergencyContacts(),
         ]);
+        setEvent(eventData);
         setProfile(profileData);
         setContacts(contactsData);
         setError(null);
       } catch (err) {
-        setError('Failed to load your account details. Please refresh the page.');
+        setError('Failed to load your reminder details. Please refresh the page.');
         console.error(err);
       } finally {
         setLoading(false);
@@ -35,18 +43,30 @@ const ConfirmationPage = () => {
     };
 
     fetchData();
-  }, []);
+  }, [eventId]);
 
-  if (!eventCreationData) {
+  if (loading) {
+    return (
+      <div className="container mx-auto px-4 py-8 flex justify-center items-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <p className="ml-4 text-muted-foreground">Loading your confirmation details...</p>
+      </div>
+    );
+  }
+
+  if (error || !event) {
     return (
       <div className="container mx-auto px-4 py-8 text-center">
-        <h1 className="text-2xl font-bold">No information to display.</h1>
-        <p>It looks like you navigated to this page directly. Please create an event first.</p>
+        <h1 className="text-2xl font-bold mb-2">Could Not Load Reminder</h1>
+        <p>{error || 'An unexpected error occurred.'}</p>
+        <Button asChild className="mt-4">
+          <Link to="/dashboard">Go to Your Dashboard</Link>
+        </Button>
       </div>
     );
   }
   
-  const eventDate = new Date(eventCreationData.event.event_date).toLocaleDateString('en-US', {
+  const eventDate = new Date(event.event_date).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -98,7 +118,7 @@ const ConfirmationPage = () => {
                   </div>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground">Payment processing is not yet enabled. Your event has been created free of charge.</p>
+                <p className="text-muted-foreground">Your payment was successful and the event is now active.</p>
               </CardContent>
             </Card>
 
@@ -110,7 +130,7 @@ const ConfirmationPage = () => {
                   <CardTitle>Your Profile</CardTitle>
                 </div>
                 <Button asChild size="sm">
-                  <Link to="/account/profile">Edit Profile</Link>
+                  <Link to="/dashboard/account">Edit Profile</Link>
                 </Button>
               </CardHeader>
               <CardContent className="space-y-2">
@@ -128,7 +148,7 @@ const ConfirmationPage = () => {
                   <CardTitle>Emergency Contacts</CardTitle>
                 </div>
                 <Button asChild size="sm">
-                  <Link to="/account/contacts">Edit Contacts</Link>
+                  <Link to="/dashboard/account">Edit Contacts</Link>
                 </Button>
               </CardHeader>
               <CardContent>
@@ -155,13 +175,13 @@ const ConfirmationPage = () => {
                         <CardTitle>Event Details</CardTitle>
                     </div>
                     <Button asChild size="sm">
-                        <Link to="/events">Manage Events</Link>
+                        <Link to="/dashboard/events">Manage Events</Link>
                     </Button>
                 </CardHeader>
                 <CardContent className="space-y-2">
-                    <p><strong>Event Name:</strong> {eventCreationData.event.name}</p>
+                    <p><strong>Event Name:</strong> {event.name}</p>
                     <p><strong>Event Date:</strong> {eventDate}</p>
-                    {eventCreationData.event.notes && <p><strong>Notes:</strong> {eventCreationData.event.notes}</p>}
+                    {event.notes && <p><strong>Notes:</strong> {event.notes}</p>}
                 </CardContent>
             </Card>
           </div>
