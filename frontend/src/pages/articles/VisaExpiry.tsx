@@ -21,6 +21,7 @@ const VisaExpiry = () => {
         faqPage="visa-expiry"
       >
         <div className="text-lg text-primary-foreground">
+          <h2 className="text-3xl font-bold tracking-tight mb-4 mt-8">How to Remember a Visa Expiry and What do if you’ve missed it.</h2>
           <p className="mb-6">There’s really only two reasons you might be reading this article. Either you’re worried about forgetting a Visa expiry or you’ve already missed it. For your sake I hope you’re in the first camp. Visa expiries are incredibly easy to forget. They hit that “important, but distant” niche that our brains just aren’t very good at tracking. For people on long-term visas — work permits, student visas that run a year or more, or multi-year residency permits — the deadline can sit quietly in the future until one day it doesn’t. You’re not irresponsible; you’re human. The system hands you a date, life hands you distractions, and suddenly you’re facing a deadline you forgot existed.</p>
           <p className="mb-6">This article is for the people who overstayed by accident or who are terrified they might. We’ve done the research so here are the facts, region-specific consequences, and practical steps you can take right now.</p>
           
@@ -53,12 +54,10 @@ const VisaExpiry = () => {
           <h2 className="text-3xl font-bold tracking-tight mb-4 mt-8">How to prevent accidental overstays — practical systems that actually work</h2>
           <p className="mb-6">The single best idea: stop relying on a single calendar alert. Build redundancy and make the problem social and procedural. Do this as soon as you get your visa:</p>
           <ul className="list-disc list-inside mb-6 space-y-2">
-            <li>Record the exact expiry date in three places: your passport (physically write the date if you must), a calendar you check daily, and a dedicated “visa/immigration” tracker (spreadsheet or app).</li>
-            <li>Set multiple reminders: at issuance, 6 months before, 3 months before, 1 month before, and 1 week before. Each reminder should require action (e.g., “start renewal paperwork,” not “remember visa”).</li>
-            <li>Note every related deadline: biometrics appointments, employer sponsorship windows, registration deadlines with local immigration — these often matter more than the printed expiry.</li>
-            <li>Make it someone else’s job too: tell HR, a partner, or a trusted friend to remind you. Social redundancy beats solo memory.</li>
-            <li>Start renewals early: for long-term visas, begin paperwork 4–6 months before expiry when possible. For student or seasonal visas, start earlier if processing backlogs are likely.</li>
-            <li>Document the process: keep copies of submissions and proof of postal dates; if problems arise, evidence you started early helps your case.</li>
+            <li><span className="font-bold">Set multiple reminders:</span> at issuance, 6 months before, 3 months before, 1 month before, and 1 week before. Each reminder should require action (e.g., “start renewal paperwork,” not “remember visa”).</li>
+            <li><span className="font-bold">Note every related deadline:</span> biometrics appointments, employer sponsorship windows, registration deadlines with local immigration — these often matter more than the printed expiry.</li>
+            <li><span className="font-bold">Start renewals early:</span> for long-term visas, begin paperwork 4–6 months before expiry when possible. For student or seasonal visas, start earlier if processing backlogs are likely.</li>
+            <li><span className="font-bold">Document the process:</span> keep copies of submissions and proof of postal dates; if problems arise, evidence you started early helps your case.</li>
           </ul>
           <p className="mb-6">People on expat forums often describe treating visa dates like tax deadlines: overkill is the point. If the renewal would cause job loss, deportation, or a multi-year ban, “too many reminders” is exactly what you want.</p>
           
