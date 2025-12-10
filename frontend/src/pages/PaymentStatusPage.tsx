@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useStripe } from '@stripe/react-stripe-js';
 import type { PaymentIntent } from '@stripe/stripe-js';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
@@ -9,8 +9,10 @@ import { toast } from 'sonner';
 
 const PaymentStatusPage: React.FC = () => {
   const stripe = useStripe();
+  const navigate = useNavigate();
   const [message, setMessage] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(true);
+  const [paymentSucceeded, setPaymentSucceeded] = useState(false);
 
   useEffect(() => {
     if (!stripe) {
@@ -31,23 +33,29 @@ const PaymentStatusPage: React.FC = () => {
       setIsProcessing(false);
       switch (paymentIntent?.status) {
         case 'succeeded':
+          setPaymentSucceeded(true);
           toast.success("Payment successful!", {
             description: "Your event has been activated."
           });
-          setMessage('Success! Your payment was received and your event has been activated.');
+          setMessage('Success! Your payment was received. Redirecting to your confirmation...');
+          setTimeout(() => {
+            navigate('/confirmation');
+          }, 2000);
           break;
         case 'processing':
           setMessage("Payment processing. We'll update you when payment is received.");
           break;
         case 'requires_payment_method':
+          setPaymentSucceeded(false);
           setMessage('Payment failed. Please try another payment method.');
           break;
         default:
+          setPaymentSucceeded(false);
           setMessage('Something went wrong.');
           break;
       }
     });
-  }, [stripe]);
+  }, [stripe, navigate]);
 
   return (
     <div className="container mx-auto max-w-2xl py-12">
@@ -65,9 +73,11 @@ const PaymentStatusPage: React.FC = () => {
           ) : (
             <>
               <p className="text-lg mb-6">{message}</p>
-              <Button asChild>
-                <Link to="/dashboard">Go to Your Dashboard</Link>
-              </Button>
+              {!paymentSucceeded && (
+                <Button asChild>
+                  <Link to="/create-flow/payment">Try Payment Again</Link>
+                </Button>
+              )}
             </>
           )}
         </CardContent>
