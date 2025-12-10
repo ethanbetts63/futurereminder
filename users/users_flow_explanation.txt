@@ -1,0 +1,50 @@
+User Flow Strategy: Upfront Account Creation for Event Management
+
+This document outlines the current and planned user flow for creating a new event, focusing on the refined strategy of requiring a full, password-protected account from the outset. This approach prioritizes security, provides a unified user experience, and simplifies backend logic compared to the previous "Anonymous-First" method.
+
+**Development Note:**
+The payment step and a dedicated confirmation page are planned but not yet implemented. Currently, after event creation, users are redirected directly to the events management page.
+
+---
+
+### Step 1: Entry Point (Homepage & "Create an Event" Call to Action)
+
+*   **User Experience:** The user lands on the homepage, where the primary call to action is "Create an Event". There is no separate "Sign Up" option; account creation is now intrinsically linked to starting the event creation process. Existing users can use the "Login" option.
+*   **System Action:** Clicking "Create an Event" navigates the user to the initial step of the new, guided event creation flow (`/event-gate` then `/create-flow/profile`).
+
+### Step 2: Account Creation & Profile Setup
+
+*   **User Experience:** The user is guided to create a full account by providing their email, a secure password, and essential profile information (e.g., first name, last name, phone).
+*   **System Action (Backend):** The `RegisterView` handles this request, creating a new `User` object with an associated password. Upon successful registration, JSON Web Tokens (JWTs) are returned, and the user is immediately authenticated and logged into the session.
+*   **Frontend Implementation:** The `ProfileCreationPage` (`/create-flow/profile`) handles this step, capturing user input and interacting with the backend registration API.
+
+### Step 3: Emergency Contacts (Optional)
+
+*   **User Experience:** The user is presented with the option to add emergency contacts. They can add multiple contacts or skip this step entirely and manage contacts later via their account settings.
+*   **System Action (Backend):** For the now-authenticated user, the `EmergencyContactsManager` component makes direct API calls (e.g., `/api/emergency-contacts/`) to create, retrieve, update, or delete emergency contacts associated with their profile.
+*   **Frontend Implementation:** The `EmergencyContactPage` (`/create-flow/contacts`) hosts the `EmergencyContactsManager`, which handles the persistence of contact data.
+
+### Step 4: Event Details
+
+*   **User Experience:** The user provides the core details for their reminder event, including the event name, the specific event date, any supplementary notes, and how many weeks in advance notifications should begin.
+*   **System Action (Backend):** The event details are submitted via an authenticated API endpoint to create a new `Event` associated with the logged-in user.
+*   **Frontend Implementation:** The `EventCreationPage` (`/create-flow/event`) utilizes the `EventCreationForm` to capture this information and submit it.
+
+### Step 5 (Upcoming): Payment
+
+*   **User Experience:** (Planned) The user will review their event details and any associated costs, then proceed to select a payment method and complete the transaction.
+*   **System Action (Backend):** (Planned) The system will process order details, interact with a payment provider, and handle transaction status.
+
+### Step 6 (Upcoming): Confirmation
+
+*   **User Experience:** (Planned) After successful event creation and payment, the user will land on a dedicated confirmation page, displaying a summary of their new event and payment details.
+*   **System Action (Backend):** (Planned) Display confirmation information.
+*   **Frontend Implementation:** (Planned) A new `ConfirmationPage` will be created for this step.
+
+### Key Changes from Previous "Anonymous-First" Flow:
+
+*   **Unified Account Creation:** Users create a full account upfront, eliminating the concept of "unclaimed" users and the `is_claimed` field on the `User` model.
+*   **Simplified Backend Authentication:** The `RegisterView` now consistently returns JWTs upon successful registration, and all subsequent API interactions in the flow are authenticated. Anonymous registration endpoints (`register_anonymous`) and account claiming logic have been removed.
+*   **Streamlined Frontend Context:** The `EventCreationContext` has been entirely removed, as the flow no longer requires temporary, unauthenticated state management across steps.
+*   **Direct API Interaction:** Components like `EmergencyContactsManager` now directly interact with the backend API for persistence, leveraging the authenticated user session.
+*   **Clearer User Journey:** The new flow provides a more conventional and secure path for users, with account creation integrated logically into the first step of event setup.

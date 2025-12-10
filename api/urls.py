@@ -1,0 +1,24 @@
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views.frontend_views.faq_list_view import FaqListView
+from .views.emergency_contact_view import EmergencyContactViewSet
+from users.views.register_view import RegisterView
+from users.views.user_profile_view import UserProfileView
+from events.views.event_view import EventViewSet
+
+# A router automatically generates the URLs for a ViewSet.
+router = DefaultRouter()
+router.register(r'events', EventViewSet, basename='event')
+router.register(r'emergency-contacts', EmergencyContactViewSet, basename='emergencycontact')
+
+urlpatterns = [
+    # All standard resource URLs (list, create, retrieve, update, delete)
+    path('', include(router.urls)),
+
+    # User management endpoints
+    path('users/me/', UserProfileView.as_view(), name='user-profile'),
+    path('users/register/', RegisterView.as_view(), name='register'),
+    
+    # Other specific-action endpoints
+    path('faqs/', FaqListView.as_view(), name='faq-list'),
+]

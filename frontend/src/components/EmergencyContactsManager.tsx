@@ -1,0 +1,205 @@
+import React, { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import type { EmergencyContact } from '@/types';
+import { createEmergencyContact, updateEmergencyContact, deleteEmergencyContact } from '@/api';
+import { useAuth } from '@/context/AuthContext';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { toast } from "sonner";
+
+interface ManagerProps {
+    initialContacts: EmergencyContact[];
+    onContactsChange: (contacts: EmergencyContact[]) => void;
+    isAnonymous?: boolean;
+}
+
+type ContactFormData = Omit<EmergencyContact, 'id' | 'user'>;
+
+const tempId = () => -Math.floor(Math.random() * 1000000);
+
+// --- Sub-component for the "Add New Contact" form, now without its own Card ---
+const AddContactForm: React.FC<{ onAddContact: (data: ContactFormData) => Promise<void> }> = ({ onAddContact }) => {
+    const { register, handleSubmit, reset, formState: { isSubmitting } } = useForm<ContactFormData>();
+
+    const handleFormSubmit = async (data: ContactFormData) => {
+        await onAddContact(data);
+        reset({ first_name: '', last_name: '', phone: '', email: '' }); // Reset form after successful submission
+    };
+
+    return (
+        <div className="w-full">
+            <h4 className="text-base font-semibold mb-4 border-t pt-6">Add a New Contact</h4>
+            <form onSubmit={handleSubmit(handleFormSubmit)}>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-start">
+                    <Input {...register("first_name", { required: true })} placeholder="First Name" />
+                    <Input {...register("last_name", { required: true })} placeholder="Last Name" />
+                    <Input {...register("phone", { required: true })} placeholder="Phone" />
+                    <Input {...register("email")} placeholder="Email (Optional)" />
+                    <Button type="submit" disabled={isSubmitting} className="w-full">
+                        {isSubmitting ? 'Saving...' : 'Save New Contact'}
+                    </Button>
+                </div>
+            </form>
+        </div>
+    );
+};
+
+
+export const EmergencyContactsManager: React.FC<ManagerProps> = ({ initialContacts, onContactsChange, isAnonymous = false }) => {
+    const { user } = useAuth();
+    const [contacts, setContacts] = useState<EmergencyContact[]>(initialContacts);
+    const [editingId, setEditingId] = useState<number | null>(null);
+    const [contactToDelete, setContactToDelete] = useState<EmergencyContact | null>(null);
+
+    const { register: registerEdit, handleSubmit: handleSubmitEdit, reset: resetEdit } = useForm<ContactFormData>();
+
+    useEffect(() => {
+        setContacts(initialContacts);
+    }, [initialContacts]);
+    
+    // --- Edit Handlers ---
+    const handleUpdate = async (data: ContactFormData) => {
+        if (!editingId) return;
+
+        if (!isAnonymous && user) {
+            try {
+                const updatedContact = await updateEmergencyContact(editingId, data);
+                const newContacts = contacts.map(c => c.id === editingId ? updatedContact : c);
+                setContacts(newContacts);
+                onContactsChange(newContacts);
+                toast.success("Contact updated.");
+            } catch (error) {
+                toast.error("Failed to update contact.");
+            }
+        } else { // Anonymous flow for editing
+            const newContacts = contacts.map(c => c.id === editingId ? { ...data, id: editingId } : c);
+            setContacts(newContacts);
+            onContactsChange(newContacts);
+        }
+        setEditingId(null);
+    };
+
+    // --- Add Handler ---
+    const handleAdd = async (data: ContactFormData) => {
+        if (!isAnonymous && user) {
+            try {
+                const newContact = await createEmergencyContact(data);
+                const newContacts = [...contacts, newContact];
+                setContacts(newContacts);
+                onContactsChange(newContacts);
+                toast.success("Contact added.");
+            } catch (error) {
+                toast.error("Failed to add contact.");
+                throw error; // Re-throw to prevent form reset on failure
+            }
+        } else { // Anonymous flow for adding
+            const newContact: EmergencyContact = { ...data, id: tempId() };
+            const newContacts = [...contacts, newContact];
+            setContacts(newContacts);
+            onContactsChange(newContacts);
+        }
+    };
+    
+    // --- Delete Handlers ---
+    const handleDeleteConfirm = async () => {
+        if (!contactToDelete) return;
+        
+        if (!isAnonymous && user && contactToDelete.id > 0) {
+            try {
+                await deleteEmergencyContact(contactToDelete.id);
+                toast.success("Contact deleted.");
+            } catch (error) {
+                toast.error("Failed to delete contact.");
+                setContactToDelete(null);
+                return;
+            }
+        }
+        
+        const newContacts = contacts.filter(c => c.id !== contactToDelete.id);
+        setContacts(newContacts);
+        onContactsChange(newContacts);
+        setContactToDelete(null);
+    };
+
+    const startEditing = (contact: EmergencyContact) => {
+        setEditingId(contact.id);
+        resetEdit(contact);
+    };
+
+    const cancelEditing = () => {
+        setEditingId(null);
+        resetEdit();
+    };
+    
+    // --- Render Methods ---
+    const renderEditFormRow = () => (
+        <TableRow>
+            <TableCell><Input {...registerEdit("first_name", { required: true })} placeholder="First Name" /></TableCell>
+            <TableCell><Input {...registerEdit("last_name", { required: true })} placeholder="Last Name" /></TableCell>
+            <TableCell><Input {...registerEdit("phone", { required: true })} placeholder="Phone" /></TableCell>
+            <TableCell><Input {...registerEdit("email")} placeholder="Email (Optional)" /></TableCell>
+            <TableCell className="flex gap-2">
+                <Button onClick={handleSubmitEdit(handleUpdate)}>Save</Button>
+                <Button variant="ghost" onClick={cancelEditing}>Cancel</Button>
+            </TableCell>
+        </TableRow>
+    );
+
+    return (
+        <Card>
+            <CardHeader>
+                <div>
+                    <CardTitle>Emergency Contacts</CardTitle>
+                    <CardDescription>Manage your list of emergency contacts.</CardDescription>
+                </div>
+            </CardHeader>
+            <CardContent>
+                <Table>
+                    <TableHeader><TableRow><TableHead>First Name</TableHead><TableHead>Last Name</TableHead><TableHead>Phone</TableHead><TableHead>Email</TableHead><TableHead>Actions</TableHead></TableRow></TableHeader>
+                    <TableBody>
+                        {contacts.map(contact => (
+                            editingId === contact.id ? renderEditFormRow() : (
+                                <TableRow key={contact.id}>
+                                    <TableCell>{contact.first_name}</TableCell>
+                                    <TableCell>{contact.last_name}</TableCell>
+                                    <TableCell>{contact.phone}</TableCell>
+                                    <TableCell>{contact.email}</TableCell>
+                                    <TableCell className="flex gap-2">
+                                        <Button variant="outline" size="sm" onClick={() => startEditing(contact)}>Edit</Button>
+                                        <Button variant="destructive" size="sm" onClick={() => setContactToDelete(contact)}>Delete</Button>
+                                    </TableCell>
+                                </TableRow>
+                            )
+                        ))}
+                         {contacts.length === 0 && (
+                            <TableRow>
+                                <TableCell colSpan={5} className="text-center h-24">
+                                    No emergency contacts added yet.
+                                </TableCell>
+                            </TableRow>
+                        )}
+                    </TableBody>
+                </Table>
+            </CardContent>
+            <CardFooter className="flex-col items-start">
+                <AddContactForm onAddContact={handleAdd} />
+            </CardFooter>
+            
+             <AlertDialog open={contactToDelete !== null} onOpenChange={() => setContactToDelete(null)}>
+                <AlertDialogContent>
+                    <AlertDialogHeader><AlertDialogTitle>Are you sure?</AlertDialogTitle><AlertDialogDescription>This will permanently delete the contact.</AlertDialogDescription></AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction onClick={handleDeleteConfirm}>Continue</AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
+        </Card>
+    );
+};

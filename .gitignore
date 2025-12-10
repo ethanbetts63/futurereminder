@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.bin
+env/
+venv/
+bin/
+include/
+lib/
+lib64/
+local/
+.env
+.explanation.txt
+explanation.txt
+
+# Django
+*.log
+*.pot
+*.mo
+.DS_Store
+*.sqlite3
+media/
+
+# React
+node_modules/
+build/
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.DS_Store
+
+# IDEs
+.idea/
+.vscode/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

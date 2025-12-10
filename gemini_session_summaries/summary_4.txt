@@ -1,0 +1,23 @@
+Session Summary
+
+Initial State:
+The session began with a persistent "409 Conflict (account already exists)" error for logged-in users trying to create an event. The application used a single, dual-purpose API endpoint to handle both anonymous and authenticated event creation, which was hiding the true nature of the bug.
+
+Investigation and Debugging:
+1.  Initial theories pointed to a stale JWT token, but this was disproven by the user logging in and out.
+2.  We discovered that the real issue was the dual-purpose endpoint "failing silently." When it received a valid token but had an internal issue, instead of returning a "401 Unauthorized" or "500 Server Error," it would fall back to the anonymous user flow, which then correctly identified that the user's email already existed.
+3.  This led to a deep discussion about API design and its architectural flaws.
+
+Architectural Evolution:
+The session involved a significant and collaborative refactoring of the application's core logic, guided by user insights.
+1.  **First Iteration:** We planned to split the single endpoint into two: one for authenticated users (`POST /api/events/`) and a complex one for anonymous users that created a user, contacts, and an event in a single transaction.
+2.  **Second (and Final) Iteration:** The user proposed a much simpler and more robust architecture. Instead of a complex transaction, the anonymous user would first be directed to a page to create a full user account with a password.
+3.  Upon successful creation, the backend would immediately return a login token (JWT). The frontend would log the user in, effectively converging the "anonymous" and "authenticated" flows after the very first step.
+
+Implementation and Resolution:
+1.  **Backend Refactor:** The backend was simplified. The main `/api/users/register/` endpoint was updated to handle all profile fields and to return JWTs upon success. All special-purpose "anonymous" registration code was deleted.
+2.  **Frontend Refactor:** A new multi-step UI flow was created for new users, starting with `EventGate` for routing. The `ProfileCreationPage` was updated to include password fields and to handle the new registration/login flow. All subsequent pages (`EmergencyContactPage`, `EventCreationPage`) now operate under the assumption that the user is authenticated.
+3.  **Bug Fixes:** Along the way, several minor bugs were fixed, including backend `NameError` and `TypeError` exceptions due to code-generation mistakes, and frontend JSX syntax errors and routing issues.
+
+Final State:
+The application is now in a much simpler and more robust state. The "unclaimed user" concept has been eliminated. The API is cleaner and more RESTful. The event creation flow is unified, ensuring all users are authenticated when they create contacts or events, which resolved the initial bug and prevented many future ones.

@@ -1,0 +1,36 @@
+# Payments App Overview
+
+This document provides a high-level overview of the Stripe payment integration, covering the architecture, file structure, and API endpoints.
+
+## Core Concepts
+
+Two main architectural ideas form the foundation of this payment system:
+
+1.  **Decoupled State Management**: Instead of just adding a "paid" status to the `Event` model, we created a dedicated `Payment` model. This cleanly separates the concerns of event management from transaction management. The `Payment` model acts as a ledger for all transactions, while the `Event` model's `is_active` status is derived from a successful payment. This is a more robust and scalable design.
+
+2.  **Webhook-Driven Fulfillment**: The activation of an event is handled by a backend webhook, not by the user's browser session. When Stripe confirms a payment is successful, it sends a secure, server-to-server message to our webhook endpoint. This endpoint then activates the event. This ensures that events are only ever activated after a payment is well and truly confirmed, making the system reliable and secure.
+
+## Backend File Breakdown (`payments` app)
+
+-   `models/payment.py`: Defines the `Payment` model, which is the heart of our internal transaction tracking. It stores the status ('pending', 'succeeded', 'failed'), amount, and links to the user and the event being paid for. It also stores the Stripe PaymentIntent ID, which is crucial for linking webhook events back to our internal records.
+
+-   `views/create_payment_intent.py`: Contains the `CreatePaymentIntentView`. The frontend calls this view to initiate a transaction. The view creates a `Payment` record in our database and a corresponding `PaymentIntent` with Stripe, then returns a secure `clientSecret` to the frontend.
+
+-   `views/stripe_webhook.py`: Contains the `StripeWebhookView`. This is a public endpoint that listens for notifications from Stripe. It uses a secret key to verify that incoming requests are legitimate. Its main job is to listen for the `payment_intent.succeeded` event, and upon receiving it, it updates our `Payment` record's status and sets the associated `Event`'s `is_active` flag to `True`.
+
+-   `urls.py`: This file routes incoming requests to the correct views. It exposes the two endpoints mentioned above.
+
+## Frontend File Breakdown
+
+-   `pages/flow/EventCreationPage.tsx`: After a user successfully creates an event on this page, the app's navigation logic was modified to redirect them to the new payment page instead of the old confirmation page.
+
+-   `pages/PaymentPage.tsx`: This is the main page for the payment flow. It receives the event data from the `EventCreationPage`, calls our backend API to get a `clientSecret`, and then sets up the Stripe `Elements` provider, which is necessary for the payment form.
+
+-   `components/checkout/CheckoutForm.tsx`: This component contains the actual UI for the payment form. It uses Stripe's `<PaymentElement />`, a pre-built, secure component for collecting card details. It also handles the form submission logic.
+
+-   `pages/PaymentStatusPage.tsx`: This is the final page the user sees. After submitting the payment, Stripe redirects the user here. The page gives the user immediate feedback, confirming whether their payment was successful, was still processing, or failed.
+
+## API Summary
+
+-   `POST /api/payments/create-payment-intent/`: Called by the frontend to start the payment process.
+-   `POST /api/payments/webhook/`: Called by Stripe's servers to confirm the payment status.

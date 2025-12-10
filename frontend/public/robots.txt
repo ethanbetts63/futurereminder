@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Allow: /articles/
+Disallow: /dashboard/
+Disallow: /create-flow/
+Disallow: /confirmation
+
+Sitemap: https://www.futurereminder.app/sitemap.xml
