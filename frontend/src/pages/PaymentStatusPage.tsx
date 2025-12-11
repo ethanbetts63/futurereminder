@@ -47,6 +47,7 @@ const PaymentStatusPage: React.FC = () => {
 
       setIsProcessing(false);
       const paymentIntent = result.paymentIntent as PaymentIntentWithMetadata;
+      console.log("Retrieved Payment Intent:", paymentIntent);
 
       switch (paymentIntent?.status) {
         case 'succeeded':

@@ -14,13 +14,14 @@ const SubscriptionRenewal = () => {
         ogImage="/og-images/og-homepage.webp"
       />
       <ArticleLayout
-        title="The $5 → $300 renewal — why it hurts, why it happens, and what to do now"
+        title="Predatory Subscription Renewals: Why They Happen and How to Fight Back"
         subtitle={<><span className="font-bold italic underline">Article Summary:</span> Many cheap introductory subscription deals are designed to make money from users who forget to cancel before the full-price renewal. This article covers why this model is effective, what steps to take if you get charged, and how to prevent it from happening again.</>}
         imageSrc={articleImage}
         imageAlt="A person looking shocked at a credit card statement"
         faqPage="subscription-renewal"
       >
         <div className="text-lg text-primary-foreground">
+          <h2 className="text-3xl font-bold tracking-tight mb-4 mt-2">The $5 → $300 renewal — why it hurts, why it happens, and what to do now</h2>
           <p className="mb-6">If you’re reading this, there’s a good chance you’ve just been hit with a renewal charge you weren’t expecting — maybe $199, $249, or even $300. Worse, it’s probably for a subscription you haven’t used in months. It feels sneaky, unfair, and borderline predatory, and you’re not wrong to feel that way. Companies design those cheap introductory deals knowing many people will forget by the time renewal comes around.</p>
           <p className="mb-6">Before we go anywhere else: you’re not stupid, and you’re not alone. This trap works on millions of people every year. It’s a dirty, and effective business model. Let’s talk about why it happens, why so many people still get caught, how you might be able to get your money back, and how you can stop it from ever happening again.</p>
 
@@ -80,7 +81,7 @@ const SubscriptionRenewal = () => {
           <p className="mb-6">It’s not about fear — it’s about matching the tool to the consequence. For trivial subscriptions, keep it simple. For the few things where forgetting would hurt, use a system designed to persist.</p>
         </div>
       </ArticleLayout>
-      <section className="mt-16">
+      <section className="mt-10">
         <ArticleCarousel exclude="/articles/subscription-renewal" />
       </section>
     </>
