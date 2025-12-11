@@ -29,7 +29,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ eventId }) => {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: `${window.location.origin}/static/payment-status?event_id=${eventId}`,
+        return_url: `${window.location.origin}/payment-status?event_id=${eventId}`,
       },
     });
 

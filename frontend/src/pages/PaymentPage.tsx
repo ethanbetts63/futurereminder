@@ -6,20 +6,18 @@ import { Elements } from '@stripe/react-stripe-js';
 import { toast } from 'sonner';
 
 import CheckoutForm from '../components/checkout/CheckoutForm';
+import PaymentSummary from '../components/checkout/PaymentSummary'; // Import the new component
 import { createPaymentIntent } from '@/api';
 import type { Event } from '@/types';
 import { Spinner } from '@/components/ui/spinner';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'; // Import Card components
 
-// Use the test publishable key from Stripe's documentation.
-// This should be loaded from an environment variable in a real production app.
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || "pk_test_51RRCzbPH0oVkn2F1ZCB43p08cHzPiROnrVDvRbggNjvm4WAsDHhNy8gzd00qhxCItqk5Y8yhtRi9BJSIlt8dr8x100D0oG7sKC");
-
 
 export default function PaymentPage() {
   const location = useLocation();
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   
-  // The event object is passed from the previous page
   const event: Event | undefined = location.state?.event;
 
   useEffect(() => {
@@ -37,12 +35,12 @@ export default function PaymentPage() {
   }, [event]);
 
   if (!event) {
-    // If the user lands here without an event, redirect them.
     return <Navigate to="/dashboard/events" replace />;
   }
   
   const appearance: Appearance = {
     theme: 'stripe',
+    // You can customize the theme further here if needed
   };
 
   const options: StripeElementsOptions = {
@@ -52,21 +50,40 @@ export default function PaymentPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-4">Complete Your Payment</h1>
-      <p className="mb-8">
-        Please enter your payment details for the event: <strong>{event.name}</strong>
-      </p>
-      <div className="max-w-md mx-auto">
-        {clientSecret ? (
-          <Elements options={options} stripe={stripePromise}>
-            <CheckoutForm eventId={event.id} />
-          </Elements>
-        ) : (
-          <div className="flex justify-center items-center h-48">
-            <Spinner className="h-12 w-12" />
-            <p className="ml-4 text-lg">Initializing payment gateway...</p>
-          </div>
-        )}
+      <div className="text-center mb-8">
+        <h1 className="text-3xl font-bold">Complete Your Payment</h1>
+        <p className="text-muted-foreground">
+          Secure your reminder for <strong>{event.name}</strong>.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 md:gap-12">
+        {/* Right Column (Order Summary) - Placed first for mobile stacking */}
+        <div className="mb-8 md:mb-0">
+          <PaymentSummary event={event} />
+        </div>
+        
+        {/* Left Column (Payment Form) */}
+        <div>
+          <Card>
+            <CardHeader>
+              <CardTitle>Payment Details</CardTitle>
+              <CardDescription>Enter your card information below.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {clientSecret ? (
+                <Elements options={options} stripe={stripePromise}>
+                  <CheckoutForm eventId={event.id.toString()} />
+                </Elements>
+              ) : (
+                <div className="flex justify-center items-center h-48">
+                  <Spinner className="h-12 w-12" />
+                  <p className="ml-4 text-lg">Initializing payment gateway...</p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   );
