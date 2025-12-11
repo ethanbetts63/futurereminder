@@ -1,7 +1,7 @@
 import React from 'react';
-import { Hero } from '../Hero';
-import { Faq } from '../Faq';
-import { CtaCard } from '../CtaCard';
+import { Hero } from './Hero';
+import { Faq } from './Faq';
+import { CtaCard } from './CtaCard';
 import faqImage from '../../assets/faq_image.webp';
 import faqImageLandscape from '../../assets/faq_image_landscape.webp';
 

@@ -1,4 +1,4 @@
-import { ArticleLayout } from '../../components/layouts/ArticleLayout';
+import { ArticleLayout } from '../../components/ArticleLayout';
 import articleImage from '../../assets/solar_letters.webp';
 import { ArticleCarousel } from '../../components/ArticleCarousel';
 import Seo from '../../components/Seo';

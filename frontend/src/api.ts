@@ -1,6 +1,6 @@
 // src/api.ts
 import { authedFetch } from '@/apiClient';
-import type { ProfileCreationData } from "@/components/flow/ProfileCreationForm";
+import type { ProfileCreationData } from "@/forms/ProfileCreationForm";
 import type { AuthResponse, Event, UserProfile, EmergencyContact, FaqItem } from "@/types";
 
 /**

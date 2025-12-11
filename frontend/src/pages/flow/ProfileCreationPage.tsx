@@ -5,7 +5,7 @@ import { useAuth } from '@/context/AuthContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
-import { ProfileCreationForm, type ProfileCreationData } from '@/components/flow/ProfileCreationForm';
+import { ProfileCreationForm, type ProfileCreationData } from '@/forms/ProfileCreationForm';
 import { registerUser } from '@/api'; // Use the main registration function
 import { toast } from 'sonner';
 

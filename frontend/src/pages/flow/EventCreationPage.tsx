@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { Spinner } from '@/components/ui/spinner';
 import { createAuthenticatedEvent } from '@/api';
-import { EventCreationForm, type EventCreationData } from '@/components/flow/EventCreationForm'; // Assuming EventCreationForm is created
+import { EventCreationForm, type EventCreationData } from '@/forms/EventCreationForm'; // Assuming EventCreationForm is created
 
 const EventCreationPage: React.FC = () => {
     const navigate = useNavigate();

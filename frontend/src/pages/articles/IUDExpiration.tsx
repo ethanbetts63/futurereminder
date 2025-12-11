@@ -1,4 +1,4 @@
-import { ArticleLayout } from '../../components/layouts/ArticleLayout';
+import { ArticleLayout } from '../../components/ArticleLayout';
 import articleImage from '../../assets/iud_expiry.webp';
 import { ArticleCarousel } from '../../components/ArticleCarousel';
 import Seo from '../../components/Seo';

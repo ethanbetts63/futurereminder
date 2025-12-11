@@ -68,6 +68,9 @@ export default function PaymentPage() {
             <CardHeader>
               <CardTitle className="text-3xl">Payment Details</CardTitle>
               <CardDescription className="text-black">Enter your card information below.</CardDescription>
+              <div className="text-center text-sm text-muted-foreground pt-2">
+                <p>Powered by <span className="font-bold">Stripe</span></p>
+              </div>
             </CardHeader>
             <CardContent>
               {clientSecret ? (

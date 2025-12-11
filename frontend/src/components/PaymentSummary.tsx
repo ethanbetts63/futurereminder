@@ -35,9 +35,6 @@ const PaymentSummary: React.FC<PaymentSummaryProps> = ({ event }) => {
             <span>${price.toFixed(2)}</span>
           </div>
         </div>
-        <div className="text-center text-sm text-muted-foreground pt-4">
-          <p>Powered by <span className="font-bold">Stripe</span></p>
-        </div>
       </CardContent>
     </Card>
   );
