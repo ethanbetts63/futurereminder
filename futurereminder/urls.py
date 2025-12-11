@@ -27,6 +27,6 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
-    # Catch-all for the React frontend
-    re_path(r'^(?:.*)/?$', TemplateView.as_view(template_name="index.html")),
+    # Catch-all for the React frontend, ignoring API, admin, and sitemap paths
+    re_path(r'^(?!api/|admin/|sitemap\.xml).*$', TemplateView.as_view(template_name="index.html")),
 ]
