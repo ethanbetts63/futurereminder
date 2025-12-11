@@ -59,26 +59,25 @@ const SubscriptionRenewal = () => {
           <p className="mb-6">Attach proof if you can (signup receipt or last-login info). If the vendor refuses, call your card issuer and file a dispute — many banks investigate and will reverse charges where appropriate.</p>
 
           <h2 className="text-3xl font-bold tracking-tight mb-4 mt-8">If you cancel immediately, will you keep access?</h2>
-          <p className="mb-6">It depends.</p>
           <ul className="list-disc list-inside mb-6 space-y-2">
               <li>Most reputable services (big streaming platforms, mainstream SaaS, Apple/Google billed apps) let you keep access through the paid period even after cancellation.</li>
               <li>Some aggressive vendors (often the ones with suspiciously cheap intro rates) will disable access as soon as you cancel. They do this to deter cancellations.</li>
           </ul>
-          <p className="mb-6">It’s an annoyance if access is cut, but losing access immediately is usually a better trade than paying hundreds of dollars in a future surprise. In practice: cancel immediately to prevent future charges; if the vendor revokes access, that’s inconvenient — not catastrophic.</p>
+          <p className="mb-6">It’s an annoyance if access is cut, but losing access immediately is usually a better trade than paying hundreds of dollars in a future for something you don't want. In practice: cancel immediately to prevent future charges; if the vendor revokes access, that’s inconvenient — not catastrophic.</p>
 
           <h2 className="text-3xl font-bold tracking-tight mb-4 mt-8">Longer-term prevention (don’t trust willpower alone)</h2>
           <p className="mb-6">If you want to stop this from happening again, treat subscriptions like financial commitments, not minor to-dos.</p>
           <ul className="list-disc list-inside mb-6 space-y-2">
-            <li>Track renewals. One small spreadsheet or a subscription-tracking app with renewal dates that you review quarterly.</li>
-            <li>Use multiple reminders. Set reminders at sign-up, 6 months, 1 month, and 1 week before renewal. Make each reminder require an action (review/cancel).</li>
-            <li>Use payment hygiene. Virtual or single-use cards for trials limit vendor access when the card expires. Consider a dedicated card for subscriptions.</li>
-            <li>Cancel immediately for trials. If you only want the trial, cancel on day one — you usually retain access and remove the risk.</li>
-            <li>For high-value renewals, escalate your reminders. If forgetting would cost hundreds or carry serious consequences, a single calendar alert isn’t enough.</li>
+            <li><span className="font-bold">Track renewals.</span>  One small spreadsheet or a subscription-tracking app with renewal dates that you review quarterly.</li>
+            <li><span className="font-bold">Use multiple reminders.</span>  Set reminders at sign-up, 6 months, 1 month, and 1 week before renewal. Make each reminder require an action (review/cancel).</li>
+            <li><span className="font-bold">Use payment hygiene.</span>  Virtual or single-use cards for trials limit vendor access when the card expires. Consider a dedicated card for subscriptions.</li>
+            <li><span className="font-bold">Cancel immediately for trials.</span>  If you only want the trial, cancel on day one — you usually retain access and remove the risk.</li>
+            <li><span className="font-bold">Escalate your reminders.</span> If forgetting would cost hundreds or carry serious consequences, a single calendar alert isn’t enough.</li>
           </ul>
 
           <h2 className="text-3xl font-bold tracking-tight mb-4 mt-8">What’s the Best App for Subscription Renewal reminders?</h2>
           <p className="mb-6">If a forgotten renewal could cost you real money or cause bigger problems, treat it differently. That’s the idea behind FutureReminder: not a replacement for every calendar alert, but a last-line safety net. When the reminder window opens, FutureReminder escalates from email and push to SMS, manual calls, and — if needed — outreach to emergency contacts until you acknowledge the event.</p>
-          <p className="mb-6">It’s not about fear — it’s about matching the tool to the consequence. For trivial subscriptions, keep it simple. For the few things where forgetting would hurt, use a system designed to persist.</p>
+          <p className="mb-0"><span className="font-bold italic underline">It’s not about fear — it’s about matching the tool to the consequence.</span> For trivial subscriptions, keep it simple. For the few things where forgetting would hurt, use a system designed to persist. Our service is a cheap, quick to set up and transparent. We hope it can save you some money.</p>
         </div>
       </ArticleLayout>
       <section className="mt-10">

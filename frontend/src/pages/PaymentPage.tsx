@@ -40,7 +40,11 @@ export default function PaymentPage() {
   
   const appearance: Appearance = {
     theme: 'stripe',
-    // You can customize the theme further here if needed
+    rules: {
+      '.Label': {
+        color: 'var(--foreground)',
+      },
+    }
   };
 
   const options: StripeElementsOptions = {
@@ -57,14 +61,9 @@ export default function PaymentPage() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 md:gap-12">
-        {/* Right Column (Order Summary) - Placed first for mobile stacking */}
-        <div className="mb-8 md:mb-0">
-          <PaymentSummary event={event} />
-        </div>
-        
+      <div className="flex flex-col md:flex-row md:gap-12">
         {/* Left Column (Payment Form) */}
-        <div>
+        <div className="order-2 md:order-1 w-full">
           <Card>
             <CardHeader>
               <CardTitle>Payment Details</CardTitle>
@@ -83,6 +82,11 @@ export default function PaymentPage() {
               )}
             </CardContent>
           </Card>
+        </div>
+
+        {/* Right Column (Order Summary) */}
+        <div className="order-1 md:order-2 w-full mb-8 md:mb-0">
+          <PaymentSummary event={event} />
         </div>
       </div>
     </div>
