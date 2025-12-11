@@ -12,6 +12,7 @@ class EmergencyContactSerializer(serializers.ModelSerializer):
             'id',
             'first_name',
             'last_name',
+            'relationship',
             'phone',
             'email',
         ]

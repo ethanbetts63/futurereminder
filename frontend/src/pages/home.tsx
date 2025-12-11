@@ -21,7 +21,7 @@ const HomePage = () => {
         ogImage="/og-images/og-homepage.webp"
       />
       <Hero
-        title="Reminders that don't take silence for an answer."
+        title={<>Reminders that don't take <span className='italic'>silence</span> for an answer.</>}
         subtitle={<>Calanders don't handle critical events in the distant future. We do. When a critical deadline hits, we don't just ping you—we trigger an <span className= "italic font-bold underline">escalating hierarchy of notifications</span> — from emails and texts to emergency contacts.</>}
         imageSrc={heroImage}
         imageAlt="A man sinking into a wormhole, sorrounded by examples of missed deadlines, to symbolize forgetting important events"
