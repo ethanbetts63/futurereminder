@@ -1,5 +1,5 @@
 // src/api.ts
-import { csrfFetch } from "@/utils/utils";
+import { authedFetch } from '@/apiClient';
 import type { ProfileCreationData } from "@/components/flow/ProfileCreationForm";
 import type { AuthResponse, Event, UserProfile, EmergencyContact, FaqItem } from "@/types";
 
@@ -8,20 +8,6 @@ import type { AuthResponse, Event, UserProfile, EmergencyContact, FaqItem } from
  */
 
 // --- Helper Functions ---
-
-/**
- * Creates the authorization headers for a JWT authenticated request.
- * @returns A Headers object with the Authorization bearer token.
- */
-function getAuthHeaders(): Headers {
-    const token = localStorage.getItem('accessToken');
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    if (token) {
-        headers.append('Authorization', `Bearer ${token}`);
-    }
-    return headers;
-}
 
 /**
  * A helper function to handle common API response logic.
@@ -64,9 +50,8 @@ export async function registerUser(userData: ProfileCreationData): Promise<AuthR
 }
 
 export async function claimAccount(password: string): Promise<{ detail: string }> {
-  const response = await csrfFetch('/api/users/claim/', {
+  const response = await authedFetch('/api/users/claim/', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ password }),
   });
   return handleResponse(response);
@@ -76,9 +61,8 @@ export async function claimAccount(password: string): Promise<{ detail: string }
 // --- FAQ Endpoint ---
 
 export async function getFaqs(page: string): Promise<FaqItem[]> {
-    const response = await fetch(`/api/faqs/?page=${page}`, {
+    const response = await authedFetch(`/api/faqs/?page=${page}`, {
         method: 'GET',
-        headers: getAuthHeaders(),
     });
     return handleResponse(response);
 }
@@ -86,43 +70,38 @@ export async function getFaqs(page: string): Promise<FaqItem[]> {
 // --- Event Endpoints ---
 
 export async function getEvents(): Promise<Event[]> {
-    const response = await fetch('/api/events/', {
+    const response = await authedFetch('/api/events/', {
         method: 'GET',
-        headers: getAuthHeaders(),
     });
     return handleResponse(response);
 }
 
 export async function getEvent(id: string): Promise<Event> {
-    const response = await fetch(`/api/events/${id}/`, {
+    const response = await authedFetch(`/api/events/${id}/`, {
         method: 'GET',
-        headers: getAuthHeaders(),
     });
     return handleResponse(response);
 }
 
 export async function createAuthenticatedEvent(eventData: Partial<Event>): Promise<Event> {
-    const response = await fetch('/api/events/', {
+    const response = await authedFetch('/api/events/', {
         method: 'POST',
-        headers: getAuthHeaders(),
         body: JSON.stringify(eventData),
     });
     return handleResponse(response);
 }
 
 export async function updateEvent(id: number, eventData: Partial<Event>): Promise<Event> {
-    const response = await fetch(`/api/events/${id}/`, {
+    const response = await authedFetch(`/api/events/${id}/`, {
         method: 'PATCH', // PATCH is for partial updates
-        headers: getAuthHeaders(),
         body: JSON.stringify(eventData),
     });
     return handleResponse(response);
 }
 
 export async function deleteEvent(id: number): Promise<void> {
-    const response = await fetch(`/api/events/${id}/`, {
+    const response = await authedFetch(`/api/events/${id}/`, {
         method: 'DELETE',
-        headers: getAuthHeaders(),
     });
     await handleResponse(response);
 }
@@ -131,52 +110,46 @@ export async function deleteEvent(id: number): Promise<void> {
 // --- User Profile & Settings Endpoints ---
 
 export async function getUserProfile(): Promise<UserProfile> {
-    const response = await fetch('/api/users/me/', {
+    const response = await authedFetch('/api/users/me/', {
         method: 'GET',
-        headers: getAuthHeaders(),
     });
     return handleResponse(response);
 }
 
 export async function updateUserProfile(profileData: Partial<UserProfile>): Promise<UserProfile> {
-    const response = await fetch('/api/users/me/', {
+    const response = await authedFetch('/api/users/me/', {
         method: 'PATCH',
-        headers: getAuthHeaders(),
         body: JSON.stringify(profileData),
     });
     return handleResponse(response);
 }
 
 export async function getEmergencyContacts(): Promise<EmergencyContact[]> {
-    const response = await fetch('/api/emergency-contacts/', {
+    const response = await authedFetch('/api/emergency-contacts/', {
         method: 'GET',
-        headers: getAuthHeaders(),
     });
     return handleResponse(response);
 }
 
 export async function createEmergencyContact(contactData: Omit<EmergencyContact, 'id'>): Promise<EmergencyContact> {
-    const response = await fetch('/api/emergency-contacts/', {
+    const response = await authedFetch('/api/emergency-contacts/', {
         method: 'POST',
-        headers: getAuthHeaders(),
         body: JSON.stringify(contactData),
     });
     return handleResponse(response);
 }
 
 export async function updateEmergencyContact(id: number, contactData: Partial<EmergencyContact>): Promise<EmergencyContact> {
-    const response = await fetch(`/api/emergency-contacts/${id}/`, {
+    const response = await authedFetch(`/api/emergency-contacts/${id}/`, {
         method: 'PATCH',
-        headers: getAuthHeaders(),
         body: JSON.stringify(contactData),
     });
     return handleResponse(response);
 }
 
 export async function deleteEmergencyContact(id: number): Promise<void> {
-    const response = await fetch(`/api/emergency-contacts/${id}/`, {
+    const response = await authedFetch(`/api/emergency-contacts/${id}/`, {
         method: 'DELETE',
-        headers: getAuthHeaders(),
     });
     await handleResponse(response);
 }
@@ -184,9 +157,8 @@ export async function deleteEmergencyContact(id: number): Promise<void> {
 // --- Payment Endpoints ---
 
 export async function createPaymentIntent(eventId: number): Promise<{ clientSecret: string }> {
-  const response = await fetch('/api/payments/create-payment-intent/', {
+  const response = await authedFetch('/api/payments/create-payment-intent/', {
     method: 'POST',
-    headers: getAuthHeaders(),
     body: JSON.stringify({ event_id: eventId }),
   });
   return handleResponse(response);

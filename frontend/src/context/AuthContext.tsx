@@ -43,6 +43,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
+  useEffect(() => {
+    const handleAuthFailure = () => {
+      console.log("Authentication failure event received. Logging out.");
+      logout();
+    };
+
+    window.addEventListener('auth-failure', handleAuthFailure);
+
+    return () => {
+      window.removeEventListener('auth-failure', handleAuthFailure);
+    };
+  }, []);
+
   /**
    * Central handler for successful authentication.
    * Decodes token, sets user state, and persists to localStorage.
