@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { CheckCircle, User, Heart, Calendar, CreditCard, AlertCircle, Loader2 } from 'lucide-react';
 import { getUserProfile, getEmergencyContacts, getEvent } from '@/api';
 import type { UserProfile, EmergencyContact, Event } from '@/types';
+import { ArticleCarousel } from '@/components/ArticleCarousel';
 
 const ConfirmationPage = () => {
   const { eventId } = useParams<{ eventId: string }>();
@@ -74,120 +75,125 @@ const ConfirmationPage = () => {
   });
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-4xl">
-      <div className="space-y-8">
-        <Card className="text-center w-full bg-gradient-to-br from-background to-muted/50">
-          <CardHeader>
-            <div className="flex justify-center items-center mb-4">
-              <CheckCircle className="h-16 w-16 text-green-500" />
-            </div>
-            <CardTitle className="text-3xl">Your Reminder is Locked In!</CardTitle>
-            <CardDescription>
-              Here is a summary of the information we've recorded. You can manage these details from your account page.
-            </CardDescription>
-          </CardHeader>
-        </Card>
-
-        {loading && (
-          <div className="flex justify-center items-center py-8">
-            <Loader2 className="h-8 w-8 animate-spin text-primary" />
-            <p className="ml-4 text-muted-foreground">Loading your details...</p>
-          </div>
-        )}
-
-        {error && (
-          <Card className="border-destructive bg-destructive/10">
-            <CardHeader className="flex flex-row items-center space-x-4">
-              <AlertCircle className="h-8 w-8 text-destructive" />
-              <div>
-                <CardTitle>Error</CardTitle>
-                <CardDescription className="text-destructive">{error}</CardDescription>
+    <>
+      <div className="container mx-auto px-4 py-8 max-w-4xl">
+        <div className="space-y-8">
+          <Card className="text-center w-full bg-gradient-to-br from-background to-muted/50">
+            <CardHeader>
+              <div className="flex justify-center items-center mb-4">
+                <CheckCircle className="h-16 w-16 text-green-500" />
               </div>
+              <CardTitle className="text-3xl">Your Reminder is Locked In!</CardTitle>
+              <CardDescription>
+                Here is a summary of the information we've recorded. You can manage these details from your account page.
+              </CardDescription>
             </CardHeader>
           </Card>
-        )}
 
-        {!loading && !error && (
-          <div className="space-y-6">
-            {/* Payment Details Section */}
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between">
-                  <div className="flex items-center space-x-4">
-                      <CreditCard className="h-6 w-6 text-primary" />
-                      <CardTitle>Payment Details</CardTitle>
-                  </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">Your payment was successful and the event is now active.</p>
-              </CardContent>
-            </Card>
+          {loading && (
+            <div className="flex justify-center items-center py-8">
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+              <p className="ml-4 text-muted-foreground">Loading your details...</p>
+            </div>
+          )}
 
-            {/* Profile Details Section */}
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between">
-                <div className="flex items-center space-x-4">
-                  <User className="h-6 w-6 text-primary" />
-                  <CardTitle>Your Profile</CardTitle>
+          {error && (
+            <Card className="border-destructive bg-destructive/10">
+              <CardHeader className="flex flex-row items-center space-x-4">
+                <AlertCircle className="h-8 w-8 text-destructive" />
+                <div>
+                  <CardTitle>Error</CardTitle>
+                  <CardDescription className="text-destructive">{error}</CardDescription>
                 </div>
-                <Button asChild size="sm">
-                  <Link to="/dashboard/account">Edit Profile</Link>
-                </Button>
               </CardHeader>
-              <CardContent className="space-y-2">
-                <p><strong>Name:</strong> {profile?.first_name} {profile?.last_name}</p>
-                <p><strong>Email:</strong> {profile?.email}</p>
-                <p><strong>Phone:</strong> {profile?.phone}</p>
-              </CardContent>
             </Card>
+          )}
 
-            {/* Emergency Contacts Section */}
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between">
-                <div className="flex items-center space-x-4">
-                  <Heart className="h-6 w-6 text-primary" />
-                  <CardTitle>Emergency Contacts</CardTitle>
-                </div>
-                <Button asChild size="sm">
-                  <Link to="/dashboard/account">Edit Contacts</Link>
-                </Button>
-              </CardHeader>
-              <CardContent>
-                {contacts.length > 0 ? (
-                  <ul className="space-y-2">
-                    {contacts.map(contact => (
-                      <li key={contact.id} className="p-2 border-b last:border-b-0">
-                        <p><strong>Name:</strong> {contact.first_name} {contact.last_name}</p>
-                        <p className="text-sm text-muted-foreground"><strong>Relationship:</strong> {contact.relationship}</p>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className="text-muted-foreground">No emergency contacts were added.</p>
-                )}
-              </CardContent>
-            </Card>
-            
-            {/* Event Details Section */}
-            <Card>
+          {!loading && !error && (
+            <div className="space-y-6">
+              {/* Payment Details Section */}
+              <Card>
                 <CardHeader className="flex flex-row items-center justify-between">
                     <div className="flex items-center space-x-4">
-                        <Calendar className="h-6 w-6 text-primary" />
-                        <CardTitle>Event Details</CardTitle>
+                        <CreditCard className="h-6 w-6 text-primary" />
+                        <CardTitle>Payment Details</CardTitle>
                     </div>
-                    <Button asChild size="sm">
-                        <Link to="/dashboard/events">Manage Events</Link>
-                    </Button>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">Your payment was successful and the event is now active.</p>
+                </CardContent>
+              </Card>
+
+              {/* Profile Details Section */}
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <User className="h-6 w-6 text-primary" />
+                    <CardTitle>Your Profile</CardTitle>
+                  </div>
+                  <Button asChild size="sm">
+                    <Link to="/dashboard/account">Edit Profile</Link>
+                  </Button>
                 </CardHeader>
                 <CardContent className="space-y-2">
-                    <p><strong>Event Name:</strong> {event.name}</p>
-                    <p><strong>Event Date:</strong> {eventDate}</p>
-                    {event.notes && <p><strong>Notes:</strong> {event.notes}</p>}
+                  <p><strong>Name:</strong> {profile?.first_name} {profile?.last_name}</p>
+                  <p><strong>Email:</strong> {profile?.email}</p>
+                  <p><strong>Phone:</strong> {profile?.phone}</p>
                 </CardContent>
-            </Card>
-          </div>
-        )}
+              </Card>
+
+              {/* Emergency Contacts Section */}
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <Heart className="h-6 w-6 text-primary" />
+                    <CardTitle>Emergency Contacts</CardTitle>
+                  </div>
+                  <Button asChild size="sm">
+                    <Link to="/dashboard/account">Edit Contacts</Link>
+                  </Button>
+                </CardHeader>
+                <CardContent>
+                  {contacts.length > 0 ? (
+                    <ul className="space-y-2">
+                      {contacts.map(contact => (
+                        <li key={contact.id} className="p-2 border-b last:border-b-0">
+                          <p><strong>Name:</strong> {contact.first_name} {contact.last_name}</p>
+                          <p className="text-sm text-muted-foreground"><strong>Relationship:</strong> {contact.relationship}</p>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="text-muted-foreground">No emergency contacts were added.</p>
+                  )}
+                </CardContent>
+              </Card>
+              
+              {/* Event Details Section */}
+              <Card>
+                  <CardHeader className="flex flex-row items-center justify-between">
+                      <div className="flex items-center space-x-4">
+                          <Calendar className="h-6 w-6 text-primary" />
+                          <CardTitle>Event Details</CardTitle>
+                      </div>
+                      <Button asChild size="sm">
+                          <Link to="/dashboard/events">Manage Events</Link>
+                      </Button>
+                  </CardHeader>
+                  <CardContent className="space-y-2">
+                      <p><strong>Event Name:</strong> {event.name}</p>
+                      <p><strong>Event Date:</strong> {eventDate}</p>
+                      {event.notes && <p><strong>Notes:</strong> {event.notes}</p>}
+                  </CardContent>
+              </Card>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+      <section className="mt-10">
+        <ArticleCarousel />
+      </section>
+    </>
   );
 };
 

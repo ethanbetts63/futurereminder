@@ -3,7 +3,8 @@ import futureSelfImage from '../assets/solar_letters.webp';
 import vaccineImage from '../assets/vaccine_image.webp';
 import iudImage from '../assets/iud_expiry.webp';
 import anniversaryImage from '../assets/bday_calander.webp';
-import heroImage from '../assets/hero.webp';
+import visaImage from '../assets/visa.webp';
+import subscriptionImage from '../assets/subscription.webp';
 
 const articles = [
   {
@@ -32,13 +33,13 @@ const articles = [
   },
   {
     title: 'Visa Expiry Guide',
-    imageSrc: heroImage,
+    imageSrc: visaImage,
     link: '/articles/visa-expiry',
     alt: 'Person looking at a passport with a calendar in the background'
   },
   {
     title: 'Subscription Renewal Traps',
-    imageSrc: heroImage,
+    imageSrc: subscriptionImage,
     link: '/articles/subscription-renewal',
     alt: 'A person looking shocked at a credit card statement'
   }

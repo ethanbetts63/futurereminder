@@ -1,5 +1,5 @@
 import { ArticleLayout } from '../../components/layouts/ArticleLayout';
-import articleImage from '../../assets/hero.webp';
+import articleImage from '../../assets/subscription.webp';
 import { ArticleCarousel } from '../../components/ArticleCarousel';
 import Seo from '../../components/Seo';
 
