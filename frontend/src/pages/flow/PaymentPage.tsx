@@ -6,21 +6,40 @@ import { Elements } from '@stripe/react-stripe-js';
 import { toast } from 'sonner';
 
 import CheckoutForm from '../../forms/CheckoutForm';
-import PaymentSummary from '../../components/PaymentSummary'; // Import the new component
-import { createPaymentIntent } from '@/api';
-import type { Event } from '@/types';
+import Summary from '../../components/Summary';
+import { createPaymentIntent, getUserProfile, getEmergencyContacts } from '@/api';
+import type { Event, UserProfile, EmergencyContact } from '@/types';
 import { Spinner } from '@/components/ui/spinner';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'; // Import Card components
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || "pk_test_51RRCzbPH0oVkn2F1ZCB43p08cHzPiROnrVDvRbggNjvm4WAsDHhNy8gzd00qhxCItqk5Y8yhtRi9BJSIlt8dr8x100D0oG7sKC");
 
 export default function PaymentPage() {
   const location = useLocation();
   const [clientSecret, setClientSecret] = useState<string | null>(null);
+  const [profile, setProfile] = useState<UserProfile | null>(null);
+  const [contacts, setContacts] = useState<EmergencyContact[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   
   const event: Event | undefined = location.state?.event;
 
   useEffect(() => {
+    // Fetch user profile and contacts
+    Promise.all([getUserProfile(), getEmergencyContacts()])
+      .then(([userProfile, emergencyContacts]) => {
+        setProfile(userProfile);
+        setContacts(emergencyContacts);
+      })
+      .catch(error => {
+        toast.error("Failed to load user data", {
+          description: error.message || "Could not fetch profile and contact details."
+        });
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+
+    // Fetch payment intent
     if (event?.id) {
       createPaymentIntent(event.id)
         .then(data => {
@@ -87,9 +106,9 @@ export default function PaymentPage() {
           </Card>
         </div>
 
-        {/* Right Column (Order Summary) */}
+        {/* Right Column (Summary) */}
         <div className="order-1 md:order-2 w-full mb-8 md:mb-0">
-          <PaymentSummary event={event} />
+          <Summary event={event} user={profile} emergencyContacts={contacts} />
         </div>
       </div>
     </div>
