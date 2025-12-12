@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import HomePage from './pages/home';
 import ConfirmationPage from './pages/flow/ConfirmationPage';
@@ -5,6 +6,9 @@ import LoginPage from './pages/LoginPage';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 import { Toaster } from "@/components/ui/sonner"
+
+// Import store
+import { useConfigStore } from './stores/configStore';
 
 // Import dashboard components
 import { UserDashboardLayout } from './pages/UserDashboardLayout';
@@ -28,6 +32,12 @@ import ReminderAppsRanked from './pages/articles/ReminderAppsRanked';
 
 
 function App() {
+  const fetchConfig = useConfigStore((state) => state.fetchConfig);
+
+  useEffect(() => {
+    fetchConfig();
+  }, [fetchConfig]);
+
   return (
     <div className="min-h-screen flex flex-col">
       <NavBar />

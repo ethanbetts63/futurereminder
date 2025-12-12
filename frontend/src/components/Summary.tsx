@@ -3,6 +3,7 @@ import type { Event, UserProfile, EmergencyContact } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { formatDate } from '@/utils/utils';
+import { useConfigStore } from '@/stores/configStore';
 
 interface SummaryProps {
   event?: Event;
@@ -12,7 +13,10 @@ interface SummaryProps {
 }
 
 const Summary: React.FC<SummaryProps> = ({ event, user, emergencyContacts, className }) => {
-  const price = 10.00; // This can be moved or made dynamic later
+  const { config, isLoading: isConfigLoading } = useConfigStore((state) => ({ 
+    config: state.config, 
+    isLoading: state.isLoading 
+  }));
 
   return (
     <div className={`space-y-4 ${className}`}>
@@ -47,7 +51,14 @@ const Summary: React.FC<SummaryProps> = ({ event, user, emergencyContacts, class
             <div className="border-t pt-3 space-y-2">
               <div className="flex justify-between font-bold text-lg border-t pt-2 mt-2">
                 <span>Total:</span>
-                <span>${price.toFixed(2)}</span>
+                <span>
+                  {isConfigLoading 
+                    ? '...' 
+                    : config 
+                      ? `$${config.amount.toFixed(2)}` 
+                      : 'N/A'
+                  }
+                </span>
               </div>
             </div>
           </CardContent>

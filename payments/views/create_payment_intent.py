@@ -5,7 +5,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from django.conf import settings
 from events.models import Event
-from payments.models import Payment
+from payments.models import Payment, Product, Price
 
 # It's good practice to initialize the API key once.
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -32,16 +32,25 @@ class CreatePaymentIntentView(APIView):
                 status=status.HTTP_404_NOT_FOUND
             )
 
-        # For now, we'll hardcode the price.
-        # In the future, this could come from the event or a product model.
-        amount_in_cents = 1000  # e.g., $10.00
-        amount_in_dollars = amount_in_cents / 100
+        # Fetch the price from the database instead of hardcoding it.
+        # For the MVP, we assume there is one default, active, one-time price.
+        try:
+            price = Price.objects.filter(is_active=True, type='one_time').first()
+            if not price:
+                raise Price.DoesNotExist
+        except Price.DoesNotExist:
+             return Response(
+                {"error": "No active price configured for purchase."},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+        amount_in_cents = int(price.amount * 100)
 
         try:
             # Create a PaymentIntent with Stripe
             payment_intent = stripe.PaymentIntent.create(
                 amount=amount_in_cents,
-                currency='usd',
+                currency=price.currency,
                 automatic_payment_methods={'enabled': True},
                 metadata={
                     'event_id': event.id,
@@ -53,8 +62,9 @@ class CreatePaymentIntentView(APIView):
             Payment.objects.create(
                 user=request.user,
                 event=event,
-                stripe_charge_id=payment_intent.id,
-                amount=amount_in_dollars,
+                price=price,
+                stripe_payment_intent_id=payment_intent.id,
+                amount=price.amount,
                 status='pending'
             )
 
