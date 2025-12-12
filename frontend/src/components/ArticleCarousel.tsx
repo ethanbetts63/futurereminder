@@ -5,6 +5,7 @@ import iudImage from '../assets/iud_expiry.webp';
 import anniversaryImage from '../assets/bday_calander.webp';
 import visaImage from '../assets/visa.webp';
 import subscriptionImage from '../assets/subscription.webp';
+import postnotesImage from '../assets/postnotes.webp';
 
 const articles = [
   {
@@ -45,9 +46,9 @@ const articles = [
   },
   {
     title: 'The Best Reminder Apps of 2025, Ranked',
-    imageSrc: subscriptionImage, // Using placeholder
+    imageSrc: postnotesImage,
     link: '/articles/reminder-apps-ranked',
-    alt: 'Conceptual image of different reminder apps on a phone screen'
+    alt: 'A corkboard covered in colorful sticky notes with reminder icons'
   }
 ];
 

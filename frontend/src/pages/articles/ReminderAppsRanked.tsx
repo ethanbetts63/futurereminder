@@ -1,5 +1,5 @@
 import { ArticleLayout } from '../../components/ArticleLayout';
-import articleImage from '../../assets/subscription.webp'; // <-- TODO: Add a real image and update this path
+import articleImage from '../../assets/postnotes.webp';
 import { ArticleCarousel } from '../../components/ArticleCarousel';
 import Seo from '../../components/Seo';
 
@@ -17,7 +17,7 @@ const ReminderAppsRanked = () => {
         title="The Best Reminder Apps in 2025 — Ranked by a Reminder App That Only Wants 1% of You"
         subtitle={<>We’re not actually a reminder app. We’re reminder app adjacent. If you need to be reminded about something really, really important well into the future go check out our home page. If not, keep reading. We live and breathe the reminder app ecosystem and we don’t want your business. Who else’s opinion would you rather. Some guy on reddit? </>}
         imageSrc={articleImage}
-        imageAlt="Conceptual image of different reminder apps on a phone screen"
+        imageAlt="A corkboard covered in colorful sticky notes with reminder icons"
       >
         <div className="text-lg text-primary-foreground">
           <h2 className="text-3xl font-bold tracking-tight mb-4 mt-2">Some Guy on Reddit</h2>
