@@ -62,17 +62,18 @@ const Summary: React.FC<SummaryProps> = ({ event, user, emergencyContacts, class
               <Link to="/account">Edit</Link>
             </Button>
           </CardHeader>
-          <CardContent className="p-4 pt-0">
+          <CardContent className="p-4 pt-0 text-sm">
             {/* Profile Details */}
             <div className="space-y-1">
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Name:</span>
-                <span className="font-semibold">{user.first_name} {user.last_name}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Email:</span>
-                <span className="font-semibold">{user.email}</span>
-              </div>
+                <div className="flex justify-between"><span className="text-muted-foreground">Name:</span> <span className="font-semibold">{user.first_name} {user.last_name}</span></div>
+                <div className="flex justify-between"><span className="text-muted-foreground">Email:</span> <span className="font-semibold">{user.email}</span></div>
+                {user.phone && <div className="flex justify-between"><span className="text-muted-foreground">Phone:</span> <span className="font-semibold">{user.phone}</span></div>}
+                {user.backup_email && <div className="flex justify-between"><span className="text-muted-foreground">Backup Email:</span> <span className="font-semibold">{user.backup_email}</span></div>}
+                {user.backup_phone && <div className="flex justify-between"><span className="text-muted-foreground">Backup Phone:</span> <span className="font-semibold">{user.backup_phone}</span></div>}
+                {user.facebook_handle && <div className="flex justify-between"><span className="text-muted-foreground">Facebook:</span> <span className="font-semibold">{user.facebook_handle}</span></div>}
+                {user.instagram_handle && <div className="flex justify-between"><span className="text-muted-foreground">Instagram:</span> <span className="font-semibold">{user.instagram_handle}</span></div>}
+                {user.snapchat_handle && <div className="flex justify-between"><span className="text-muted-foreground">Snapchat:</span> <span className="font-semibold">{user.snapchat_handle}</span></div>}
+                {user.x_handle && <div className="flex justify-between"><span className="text-muted-foreground">X (Twitter):</span> <span className="font-semibold">{user.x_handle}</span></div>}
             </div>
 
             {/* Emergency Contacts Section (Conditional) */}

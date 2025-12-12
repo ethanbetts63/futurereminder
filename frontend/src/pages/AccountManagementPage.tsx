@@ -87,7 +87,7 @@ const AccountManagementPage: React.FC = () => {
                         <div>
                             <CardTitle className="text-2xl">Your Profile</CardTitle>
                             <CardDescription className="text-black">
-                                Update your personal information and social media handles.
+                                Update your personal information and social media handles. The more contact methods you provide, the more secure your reminder will be.
                             </CardDescription>
                         </div>
                         <div className="flex gap-2">
@@ -116,7 +116,7 @@ const AccountManagementPage: React.FC = () => {
                 <CardHeader>
                     <CardTitle className="text-2xl">Emergency Contacts</CardTitle>
                      <CardDescription className="text-black">
-                        This is the list of people we will contact if we cannot reach you.
+                        This is the list of people we will contact if we cannot reach you. You may have up to 3 contacts. We will only call them as a last resort. It is very important that they have consented to be your emergency contact.
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
