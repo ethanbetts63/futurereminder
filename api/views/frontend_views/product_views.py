@@ -1,6 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from django.core.cache import cache
 from payments.models import Price
 
 class SingleEventPriceView(APIView):
@@ -11,6 +12,12 @@ class SingleEventPriceView(APIView):
     permission_classes = [] # No authentication required
 
     def get(self, request, *args, **kwargs):
+        cache_key = 'single_event_price_data'
+        cached_data = cache.get(cache_key)
+
+        if cached_data:
+            return Response(cached_data)
+
         try:
             # For the MVP, we assume there is one default, active, one-time price.
             price = Price.objects.filter(is_active=True, type='one_time').first()
@@ -23,6 +30,10 @@ class SingleEventPriceView(APIView):
                 'amount': price.amount,
                 'currency': price.currency,
             }
+            
+            # Store the data in the cache for 24 hours
+            cache.set(cache_key, data, 60 * 60 * 24)
+
             return Response(data)
 
         except Price.DoesNotExist:

@@ -6,7 +6,7 @@ from ...serializers import FaqSerializer
 from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
 
-#@method_decorator(cache_page(60 * 60 * 24), name='dispatch') # Apply 24-hour cache
+@method_decorator(cache_page(60 * 60 * 24), name='dispatch') # Apply 24-hour cache
 class FaqListView(ListAPIView):
     # This view should be public and not attempt any authentication.
     # We override the global default by setting authentication_classes to empty.

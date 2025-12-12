@@ -1,8 +1,8 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views.frontend_views.faq_list_view import FaqListView
-from .views.emergency_contact_view import EmergencyContactViewSet
-from .views.product_views import SingleEventPriceView
+from .views.frontend_views.emergency_contact_view import EmergencyContactViewSet
+from .views.frontend_views.product_views import SingleEventPriceView
 from users.views.register_view import RegisterView
 from users.views.user_profile_view import UserProfileView
 from events.views.event_view import EventViewSet
