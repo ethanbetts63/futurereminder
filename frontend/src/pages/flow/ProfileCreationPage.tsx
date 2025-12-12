@@ -43,29 +43,25 @@ const ProfileCreationPage: React.FC = () => {
     };
 
     return (
-        <div className="container mx-auto max-w-4xl py-12">
-            <Card>
+        <div className="container mx-auto max-w-2xl py-12">
+            <Card className="bg-foreground text-background">
                 <CardHeader>
-                    <CardTitle>Step 1: Create Your Account</CardTitle>
-                    <CardDescription>
-                        Create your account to continue the event creation process.
+                    <CardTitle className="text-3xl">Step 1: Create Your Account</CardTitle>
+                    <CardDescription className="text-black">
+                        Welcome! Let's get your account set up so you can create your first reminder.
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <ProfileCreationForm 
-                        initialData={{}}
-                        onSubmit={handleFormSubmit}
-                    />
+                    <ProfileCreationForm onSubmit={handleFormSubmit} />
                 </CardContent>
                 <CardFooter className="flex justify-end">
                     <Button 
-                        type="submit" 
                         size="lg"
                         disabled={isSubmitting}
                         onClick={() => document.getElementById('profile-creation-submit')?.click()}
                     >
                         {isSubmitting && <Spinner className="mr-2 h-4 w-4" />}
-                        Create Account & Continue
+                        Next: Add Contacts
                     </Button>
                 </CardFooter>
             </Card>

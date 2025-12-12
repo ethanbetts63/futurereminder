@@ -63,10 +63,10 @@ const EmergencyContactPage: React.FC = () => {
             <div className="flex flex-col md:flex-row gap-8">
                 {/* Main Content Column */}
                 <div className="w-full md:w-2/3">
-                    <Card>
+                    <Card className="bg-foreground text-background">
                         <CardHeader>
                             <CardTitle>Step 2: Add Emergency Contacts (Optional)</CardTitle>
-                            <CardDescription>
+                            <CardDescription className="text-black">
                                 These are the people we'll notify if we can't reach you. You can skip this and add them later from your account settings.
                             </CardDescription>
                         </CardHeader>

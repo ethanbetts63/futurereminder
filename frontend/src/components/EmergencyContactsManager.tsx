@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 import type { EmergencyContact } from '@/types';
 import { createEmergencyContact, updateEmergencyContact, deleteEmergencyContact } from '@/api';
 import { useAuth } from '@/context/AuthContext';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -43,7 +42,7 @@ const AddContactForm: React.FC<{ onAddContact: (data: ContactFormData) => Promis
                     <Input {...register("phone", { required: true })} placeholder="Phone" />
                     <Input {...register("email")} placeholder="Email (Optional)" />
                     <Button type="submit" disabled={isSubmitting} className="w-full">
-                        {isSubmitting ? 'Saving...' : 'Save New Contact'}
+                        {isSubmitting ? 'Saving...' : 'Save'}
                     </Button>
                 </div>
             </form>
@@ -154,47 +153,40 @@ export const EmergencyContactsManager: React.FC<ManagerProps> = ({ initialContac
     );
 
     return (
-        <Card>
-            <CardHeader>
-                <div>
-                    <CardTitle>Emergency Contacts</CardTitle>
-                    <CardDescription>Manage your list of emergency contacts.</CardDescription>
-                </div>
-            </CardHeader>
-            <CardContent>
-                <Table>
-                    <TableHeader><TableRow><TableHead>First Name</TableHead><TableHead>Last Name</TableHead><TableHead>Relationship</TableHead><TableHead>Phone</TableHead><TableHead>Email</TableHead><TableHead>Actions</TableHead></TableRow></TableHeader>
-                    <TableBody>
-                        {contacts.map(contact => (
-                            editingId === contact.id ? renderEditFormRow() : (
-                                <TableRow key={contact.id}>
-                                    <TableCell>{contact.first_name}</TableCell>
-                                    <TableCell>{contact.last_name}</TableCell>
-                                    <TableCell>{contact.relationship}</TableCell>
-                                    <TableCell>{contact.phone}</TableCell>
-                                    <TableCell>{contact.email}</TableCell>
-                                    <TableCell className="flex gap-2">
-                                        <Button variant="outline" size="sm" onClick={() => startEditing(contact)}>Edit</Button>
-                                        <Button variant="destructive" size="sm" onClick={() => setContactToDelete(contact)}>Delete</Button>
-                                    </TableCell>
-                                </TableRow>
-                            )
-                        ))}
-                         {contacts.length === 0 && (
-                            <TableRow>
-                                <TableCell colSpan={6} className="text-center h-24">
-                                    No emergency contacts added yet.
+        <div className="w-full">
+            <Table>
+                <TableHeader><TableRow><TableHead className="text-black">First Name</TableHead><TableHead className="text-black">Last Name</TableHead><TableHead className="text-black">Relationship</TableHead><TableHead className="text-black">Phone</TableHead><TableHead className="text-black">Email</TableHead><TableHead className="text-black">Actions</TableHead></TableRow></TableHeader>
+                <TableBody>
+                    {contacts.map(contact => (
+                        editingId === contact.id ? renderEditFormRow() : (
+                            <TableRow key={contact.id}>
+                                <TableCell>{contact.first_name}</TableCell>
+                                <TableCell>{contact.last_name}</TableCell>
+                                <TableCell>{contact.relationship}</TableCell>
+                                <TableCell>{contact.phone}</TableCell>
+                                <TableCell>{contact.email}</TableCell>
+                                <TableCell className="flex gap-2">
+                                    <Button size="sm" onClick={() => startEditing(contact)}>Edit</Button>
+                                    <Button variant="destructive" size="sm" onClick={() => setContactToDelete(contact)}>Delete</Button>
                                 </TableCell>
                             </TableRow>
-                        )}
-                    </TableBody>
-                </Table>
-            </CardContent>
-            <CardFooter className="flex-col items-start">
+                        )
+                    ))}
+                     {contacts.length === 0 && (
+                        <TableRow>
+                            <TableCell colSpan={6} className="text-center h-24">
+                                No emergency contacts added yet.
+                            </TableCell>
+                        </TableRow>
+                    )}
+                </TableBody>
+            </Table>
+
+            <div className="mt-6">
                 <AddContactForm onAddContact={handleAdd} />
-            </CardFooter>
-            
-             <AlertDialog open={contactToDelete !== null} onOpenChange={() => setContactToDelete(null)}>
+            </div>
+
+            <AlertDialog open={contactToDelete !== null} onOpenChange={() => setContactToDelete(null)}>
                 <AlertDialogContent>
                     <AlertDialogHeader><AlertDialogTitle>Are you sure?</AlertDialogTitle><AlertDialogDescription>This will permanently delete the contact.</AlertDialogDescription></AlertDialogHeader>
                     <AlertDialogFooter>
@@ -203,6 +195,6 @@ export const EmergencyContactsManager: React.FC<ManagerProps> = ({ initialContac
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>
-        </Card>
+        </div>
     );
 };
