@@ -1,13 +1,18 @@
 import React from 'react';
+import { useConfig } from '@/context/ConfigContext';
 
 export const Letter: React.FC = () => {
+  const { config, isLoading } = useConfig();
+
   return (
     <section>
       <div className="container mx-auto px-4 md:px-6">
         <h2 className="text-center text-4xl md:text-5xl font-bold tracking-tight text-primary-foreground mb-4">
           Forgetfulness is <span className= "italic underline font-bold">expensive</span>.
         </h2>
-        <p className="italic text-center text-xl text-primary-foreground mb-8"> FutureReminder is $25.99.</p>
+        <p className="italic text-center text-xl text-primary-foreground mb-8"> 
+          FutureReminder is {isLoading ? '...' : config ? `$${config.amount.toFixed(2)}` : 'a small, one-time fee'}.
+        </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-8 text-lg text-primary-foreground">
           <div className="flex flex-col gap-4">
             <p>

@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Check } from 'lucide-react';
 import logo from '../assets/logo.webp';
 import { CreateEventLink } from './CreateEventLink';
+import { useConfig } from '@/context/ConfigContext';
 
 const includedFeatures = [
   "Access for one event",
