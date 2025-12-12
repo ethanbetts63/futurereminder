@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import HomePage from './pages/home';
-import ConfirmationPage from './pages/ConfirmationPage';
+import ConfirmationPage from './pages/flow/ConfirmationPage';
 import LoginPage from './pages/LoginPage';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
@@ -12,7 +12,7 @@ import { EventManagementPage } from './pages/EventManagementPage';
 import AccountManagementPage from './pages/AccountManagementPage';
 
 // Import the new event creation flow pages
-import EventGate from './pages/EventGate';
+import EventGate from './components/EventGate';
 import ProfileCreationPage from './pages/flow/ProfileCreationPage';
 import EmergencyContactPage from './pages/flow/EmergencyContactPage';
 import EventCreationPage from './pages/flow/EventCreationPage';

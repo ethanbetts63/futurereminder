@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField as ShadcnFormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { toast } from "sonner";
-import { Spinner } from './ui/spinner';
+import { Spinner } from '@/components/ui/spinner';
 
 interface ProfileFormProps {
     profile: UserProfile;
