@@ -92,7 +92,7 @@ const AccountManagementPage: React.FC = () => {
                         </div>
                         <div className="flex gap-2">
                              {!isEditing ? (
-                                <Button variant="outline" onClick={() => setIsEditing(true)}>Edit</Button>
+                                <Button variant="default" onClick={() => setIsEditing(true)}>Edit</Button>
                             ) : (
                                 <>
                                     <Button variant="ghost" onClick={() => setIsEditing(false)}>Cancel</Button>
