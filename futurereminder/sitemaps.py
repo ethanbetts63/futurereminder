@@ -18,6 +18,9 @@ class StaticViewSitemap(Sitemap):
             '/articles/vaccine-boosters',
             '/articles/iud-expiration',
             '/articles/anniversary-reminders',
+            '/articles/subscription-renewal',
+            '/articles/visa-expiry',
+            '/articles/reminder-apps-ranked',
         ]
 
     def location(self, item):
