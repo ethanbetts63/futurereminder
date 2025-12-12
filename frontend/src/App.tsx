@@ -19,6 +19,7 @@ const EmergencyContactPage = lazy(() => import('./pages/flow/EmergencyContactPag
 const EventCreationPage = lazy(() => import('./pages/flow/EventCreationPage'));
 const PaymentPage = lazy(() => import('./pages/flow/PaymentPage'));
 const PaymentStatusPage = lazy(() => import('./pages/flow/PaymentStatusPage'));
+const TermsAndConditionsPage = lazy(() => import('./pages/TermsAndConditionsPage'));
 
 // --- Lazy-loaded Articles ---
 const LetterToFutureSelf = lazy(() => import('./pages/articles/LetterToFutureSelf'));
@@ -49,6 +50,7 @@ function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/confirmation/:eventId" element={<ConfirmationPage />} />
               <Route path="/login" element={<LoginPage />} />
+              <Route path="/terms-and-conditions" element={<TermsAndConditionsPage />} />
               <Route path="/articles/letter-to-future-self" element={<LetterToFutureSelf />} />
               <Route path="/articles/vaccine-boosters" element={<VaccineBoosters />} />
               <Route path="/articles/iud-expiration" element={<IUDExpiration />} />
@@ -82,4 +84,3 @@ function App() {
 }
 
 export default App;
-

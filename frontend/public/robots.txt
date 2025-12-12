@@ -4,5 +4,6 @@ Allow: /articles/
 Disallow: /dashboard/
 Disallow: /create-flow/
 Disallow: /confirmation
+Disallow: /terms-and-conditions/
 
 Sitemap: https://www.futurereminder.app/sitemap.xml

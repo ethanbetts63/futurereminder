@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import logo from '../assets/logo.webp';
 
 const Footer: React.FC = () => {
@@ -17,9 +18,9 @@ const Footer: React.FC = () => {
 
           {/* Right Side: Navigation Links */}
           <nav className="flex gap-6">
-            <a href="/privacy" className="text-sm hover:underline">Privacy Policy</a>
-            <a href="/terms" className="text-sm hover:underline">Terms of Service</a>
-            <a href="/contact" className="text-sm hover:underline">Contact</a>
+            <Link to="/privacy" className="text-sm hover:underline">Privacy Policy</Link>
+            <Link to="/terms-and-conditions" className="text-sm hover:underline">Terms & Conditions</Link>
+            <Link to="/contact" className="text-sm hover:underline">Contact</Link>
           </nav>
 
         </div>
