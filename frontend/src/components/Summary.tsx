@@ -3,7 +3,7 @@ import type { Event, UserProfile, EmergencyContact } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { formatDate } from '@/utils/utils';
-import { useConfigStore } from '@/stores/configStore';
+import { useConfig } from '@/context/ConfigContext';
 
 interface SummaryProps {
   event?: Event;
@@ -13,10 +13,7 @@ interface SummaryProps {
 }
 
 const Summary: React.FC<SummaryProps> = ({ event, user, emergencyContacts, className }) => {
-  const { config, isLoading: isConfigLoading } = useConfigStore((state) => ({ 
-    config: state.config, 
-    isLoading: state.isLoading 
-  }));
+  const { config, isLoading: isConfigLoading } = useConfig();
 
   return (
     <div className={`space-y-4 ${className}`}>
