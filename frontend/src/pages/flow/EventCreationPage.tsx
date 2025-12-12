@@ -90,7 +90,7 @@ const EventCreationPage: React.FC = () => {
                 </div>
                 {/* Right Summary Column */}
                 <div className="w-full md:w-1/3">
-                    <Summary user={profile} emergencyContacts={contacts} />
+                    <Summary user={profile || undefined} emergencyContacts={contacts} />
                 </div>
             </div>
         </div>

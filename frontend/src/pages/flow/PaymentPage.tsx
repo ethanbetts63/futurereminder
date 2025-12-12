@@ -19,7 +19,7 @@ export default function PaymentPage() {
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [contacts, setContacts] = useState<EmergencyContact[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [, setIsLoading] = useState(true);
   
   const event: Event | undefined = location.state?.event;
 
@@ -108,7 +108,7 @@ export default function PaymentPage() {
 
         {/* Right Column (Summary) */}
         <div className="order-1 md:order-2 w-full mb-8 md:mb-0">
-          <Summary event={event} user={profile} emergencyContacts={contacts} />
+          <Summary event={event} user={profile || undefined} emergencyContacts={contacts} />
         </div>
       </div>
     </div>

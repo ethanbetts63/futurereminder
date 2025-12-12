@@ -52,7 +52,7 @@ const ProfileCreationPage: React.FC = () => {
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <ProfileCreationForm onSubmit={handleFormSubmit} />
+                    <ProfileCreationForm initialData={{}} onSubmit={handleFormSubmit} />
                 </CardContent>
                 <CardFooter className="flex justify-end">
                     <Button 

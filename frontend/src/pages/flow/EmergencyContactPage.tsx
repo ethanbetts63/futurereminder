@@ -83,7 +83,7 @@ const EmergencyContactPage: React.FC = () => {
                 </div>
                 {/* Right Summary Column */}
                 <div className="w-full md:w-1/3">
-                    <Summary user={profile} />
+                    <Summary user={profile || undefined} />
                 </div>
             </div>
         </div>
