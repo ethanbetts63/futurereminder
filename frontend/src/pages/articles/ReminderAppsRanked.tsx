@@ -20,10 +20,11 @@ const ReminderAppsRanked = () => {
         imageAlt="Conceptual image of different reminder apps on a phone screen"
       >
         <div className="text-lg text-primary-foreground">
-          <p className="mb-6">“Some guy on Reddit” could actually be really smart. So we read every single reddit and forum discussion we could find on reminder apps just to be sure. In the article that follows, we’ll try to give you the community consensus for all the major apps with just a little touch of our own opinions sprinkled on top.</p>
+          <h2 className="text-3xl font-bold tracking-tight mb-4 mt-2">Some Guy on Reddit</h2>
+          <p className="mb-6">Turns out “some guy on Reddit” is actually really smart. So we read every single reddit and forum discussion we could find on reminder apps just to be sure. In the article that follows, we’ll try to give you the community consensus for all the major apps with just a little touch of our own opinions sprinkled on top.</p>
           
           <h2 className="text-3xl font-bold tracking-tight mb-4 mt-8">How We Scored These Apps</h2>
-          <p className="mb-6">Across all the discussions I read, these five practical needs showed up again and again. So that’s what we’ll use for this comparison. Each one rates 1 (worst) to 5 (best). Then you can decide based on your own needs which is right for you:</p>
+          <p className="mb-6">Across all the discussions we read, these five practical needs showed up again and again. So that’s what we’ll use for this comparison. Each one rates 1 (worst) to 5 (best). You won't have to google "Best reminder app for ADHD" or "students" or "couples" or "free". We'll just give you all the scores. Then you can decide based on your own needs which is right for you:</p>
           <ol className="list-decimal list-inside space-y-4 mb-8">
             <li><span className="font-bold">Cross-Platform Sync:</span> How reliably the app syncs between phones, tablets, web, desktop, and ecosystems.</li>
             <li><span className="font-bold">Hard-to-Ignore (Persistence):</span> How difficult it is to miss, dismiss, or accidentally ignore a reminder. Think: nag strength, snooze controls, repeating alerts.</li>
@@ -133,13 +134,13 @@ const ReminderAppsRanked = () => {
                 <p>Featurefulness: 1/5</p>
                 <h4 className="font-semibold mt-4 mb-2">Community Opinion</h4>
                 <p className="mb-4">We’re too new to have a large community consensus yet. But we’d love to know what you think. You can find the boss's email on our home page.</p>
-                <h4 className="font-semibold mt-4 mb-2">My Opinion</h4>
+                <h4 className="font-semibold mt-4 mb-2">Our Opinion</h4>
                 <p className="mb-4">Every single other reminder app is built for next Tuesday. We’re built for that super import thing you can’t forget in 10 months time (or 10 years). Visa expires, contraceptive implant removals, trademark or domain renewals. Warranty maintenance. Your anniversary. Anything that is distant but critical. Anything where every now and again you remember and think to yourself, “I really can’t forget to…”.</p>
                 <p className="mb-4">We won’t just ping you a notification. We’ll email you. Then we’ll text you. Then we’ll try your backup contacts. Then we’ll call you. Then we can try your social media handles. Finally, you can even give us emergency contacts for us to call. Sounds like overkill? It isn’t. Not when the event is unmissable.</p>
                 <p className="mb-4">Overstay a visa and you could end a career or a relationship. Leave an IUD in past expiry and you could get pregnant. Forget to renew a trademark, domain or business license. That could be bankruptcy. All because you “just forgot”.</p>
                 <p className="mb-4">Why N/A for cross-platform sync? We aren’t an app and we don’t want to be on your phone. Set up an event with us once and then forget about us. We won’t contact you at all until the date you’ve told us to.</p>
                 <p className="mb-4">Why Cost 1/5 ? You pay per event you want to be reminded about. We don’t expect you to use us for every little thing in your life. No subscriptions. You pay upfront and once. And then you forget about us.</p>
-                <p className="mb-4">Why featurefulness 1/5 ? We only do one thing. And at this point I think you understand that. It’s not a flaw, it's our whole business model.</p>
+                <p className="mb-4">Why featurefulness 1/5 ? We only do one thing. And at this point we think you understand that. It’s not a flaw, it's our whole business model.</p>
               </div>
             </div>
           </div>
