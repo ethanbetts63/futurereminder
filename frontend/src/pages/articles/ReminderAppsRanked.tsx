@@ -22,7 +22,7 @@ const ReminderAppsRanked = () => {
         <div className="text-lg text-primary-foreground">
           <p className="mb-6">“Some guy on Reddit” could actually be really smart. So we read every single reddit and forum discussion we could find on reminder apps just to be sure. In the article that follows, we’ll try to give you the community consensus for all the major apps with just a little touch of our own opinions sprinkled on top.</p>
           
-          <h2 className="text-3xl font-bold tracking-tight mb-4 mt-8">How I Scored These Apps</h2>
+          <h2 className="text-3xl font-bold tracking-tight mb-4 mt-8">How We Scored These Apps</h2>
           <p className="mb-6">Across all the discussions I read, these five practical needs showed up again and again. So that’s what we’ll use for this comparison. Each one rates 1 (worst) to 5 (best). Then you can decide based on your own needs which is right for you:</p>
           <ol className="list-decimal list-inside space-y-4 mb-8">
             <li><span className="font-bold">Cross-Platform Sync:</span> How reliably the app syncs between phones, tablets, web, desktop, and ecosystems.</li>

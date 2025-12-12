@@ -10,7 +10,7 @@ interface ArticleLayoutProps {
   subtitle: React.ReactNode;
   imageSrc: string;
   imageAlt: string;
-  faqPage: string;
+  faqPage?: string;
   ctaElement?: React.ReactNode;
   children: React.ReactNode;
 }
@@ -33,18 +33,20 @@ export const ArticleLayout: React.FC<ArticleLayoutProps> = ({ title, subtitle, i
           <div>
             {children}
           </div>
-          <section className="bg-white text-gray-900 rounded-lg">
-            <div className="container mx-auto px-4">
-              <Faq 
-                title="The Fine Print"
-                subtitle="(Plain English)"
-                page={faqPage}
-                imageSrc={faqImage}
-                imageSrcLandscape={faqImageLandscape}
-                imageAlt="Abstract representation of questions"
-              />
-            </div>
-          </section>
+          {faqPage && (
+            <section className="bg-white text-gray-900 rounded-lg">
+              <div className="container mx-auto px-4">
+                <Faq 
+                  title="The Fine Print"
+                  subtitle="(Plain English)"
+                  page={faqPage}
+                  imageSrc={faqImage}
+                  imageSrcLandscape={faqImageLandscape}
+                  imageAlt="Abstract representation of questions"
+                />
+              </div>
+            </section>
+          )}
         </div>
 
         {/* Sticky Sidebar Column (1/3 width) */}
