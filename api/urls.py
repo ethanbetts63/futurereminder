@@ -8,6 +8,7 @@ from users.views.user_profile_view import UserProfileView
 from events.views.event_view import EventViewSet
 from .views.backend_views.dashboard_analytics_view import DashboardAnalyticsView
 from .views.backend_views.notification_views import NotificationStatsView, AdminTaskListView
+from .views.backend_views.analytics_views import AutomatedNotificationHistoryView, ManualNotificationHistoryView
 
 # A router automatically generates the URLs for a ViewSet.
 router = DefaultRouter()
@@ -32,4 +33,8 @@ urlpatterns = [
     # Notification endpoints for the admin dashboard
     path('notifications/stats/', NotificationStatsView.as_view(), name='notification-stats'),
     path('notifications/admin-tasks/', AdminTaskListView.as_view(), name='notification-admin-tasks'),
+
+    # Analytics endpoints for chart data
+    path('analytics/automated-notifications/', AutomatedNotificationHistoryView.as_view(), name='automated-notification-history'),
+    path('analytics/manual-notifications/', ManualNotificationHistoryView.as_view(), name='manual-notification-history'),
 ]
