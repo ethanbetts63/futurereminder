@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
 import { authedFetch } from '@/apiClient';
 import {
