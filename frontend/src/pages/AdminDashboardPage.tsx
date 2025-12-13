@@ -1,38 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import Seo from '@/components/Seo';
 import { Spinner } from '@/components/ui/spinner';
 import { Button } from '@/components/ui/button';
-import { getDashboardAnalytics } from '@/api';
-import { DashboardAnalyticsChart } from '@/components/admin/DashboardAnalyticsChart';
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { AlertCircle } from "lucide-react"
-
+import { DashboardAnalyticsTable } from '@/components/admin/DashboardAnalyticsChart';
 
 const AdminDashboardPage: React.FC = () => {
   const { user, isLoading: isAuthLoading } = useAuth();
-  const [analyticsData, setAnalyticsData] = useState<any[] | null>(null);
-  const [isLoadingAnalytics, setIsLoadingAnalytics] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchAnalytics = async () => {
-      try {
-        setIsLoadingAnalytics(true);
-        const data = await getDashboardAnalytics();
-        setAnalyticsData(data);
-      } catch (err: any) {
-        setError(err.message || "Failed to fetch analytics data.");
-      } finally {
-        setIsLoadingAnalytics(false);
-      }
-    };
-
-    if (user?.is_staff) {
-      fetchAnalytics();
-    }
-  }, [user]);
 
   if (isAuthLoading) {
     return (
@@ -69,21 +44,7 @@ const AdminDashboardPage: React.FC = () => {
           </p>
           
           <div className="mt-8">
-            {isLoadingAnalytics && (
-              <div className="flex justify-center items-center h-64">
-                <Spinner />
-              </div>
-            )}
-            {error && (
-              <Alert variant="destructive">
-                <AlertCircle className="h-4 w-4" />
-                <AlertTitle>Error</AlertTitle>
-                <AlertDescription>{error}</AlertDescription>
-              </Alert>
-            )}
-            {analyticsData && (
-              <DashboardAnalyticsChart data={analyticsData} />
-            )}
+            <DashboardAnalyticsTable />
           </div>
         </main>
       </div>

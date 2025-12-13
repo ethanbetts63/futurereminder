@@ -1,103 +1,95 @@
 "use client"
 
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
+import { useState, useEffect } from 'react';
+import { authedFetch } from '@/apiClient'; 
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipContent,
-  type ChartConfig,
-} from "@/components/ui/chart"
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
-const chartConfig = {
-  profileCreations: {
-    label: "Profiles",
-    color: "hsl(var(--chart-1))",
-  },
-  eventCreations: {
-    label: "Events",
-    color: "hsl(var(--chart-2))",
-  },
-  successfulPayments: {
-    label: "Payments",
-    color: "hsl(var(--chart-3))",
-  },
-} satisfies ChartConfig
-
-interface DashboardAnalyticsChartProps {
-    data: any[];
+// Define the shape of our data
+interface WeeklyData {
+  weekStart: string;
+  profileCreations: number;
+  eventCreations: number;
+  successfulPayments: number;
 }
 
-export function DashboardAnalyticsChart({ data }: DashboardAnalyticsChartProps) {
+export function DashboardAnalyticsTable() {
+  const [data, setData] = useState<WeeklyData[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const response = await authedFetch('/api/dashboard-analytics/');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const responseData: WeeklyData[] = await response.json();
+        setData(responseData);
+        setError(null);
+      } catch (err) {
+        setError('Failed to fetch analytics data. Please try again later.');
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Platform Activity</CardTitle>
+        <CardTitle>Weekly Platform Activity</CardTitle>
         <CardDescription>
-          Showing profile creations, event creations, and successful payments for the last 30 days.
+          Summary of new users, events, and payments for the last four weeks.
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig}>
-          <AreaChart
-            accessibilityLayer
-            data={data}
-            margin={{
-              left: 12,
-              right: 12,
-            }}
-          >
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="month" // This key from the backend holds the date string
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              tickFormatter={(value: string) => {
-                const date = new Date(value);
-                return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-              }}
-            />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent indicator="line" />}
-            />
-            <Area
-              dataKey="profileCreations"
-              type="natural"
-              fill="var(--color-profileCreations)"
-              fillOpacity={0.4}
-              stroke="var(--color-profileCreations)"
-              stackId="a"
-            />
-            <Area
-              dataKey="eventCreations"
-              type="natural"
-              fill="var(--color-eventCreations)"
-              fillOpacity={0.4}
-              stroke="var(--color-eventCreations)"
-              stackId="a"
-            />
-            <Area
-              dataKey="successfulPayments"
-              type="natural"
-              fill="var(--color-successfulPayments)"
-              fillOpacity={0.4}
-              stroke="var(--color-successfulPayments)"
-              stackId="a"
-            />
-            <ChartLegend content={<ChartLegendContent />} />
-          </AreaChart>
-        </ChartContainer>
+        {loading && <p className="text-center text-muted-foreground">Loading data...</p>}
+        {error && <p className="text-center text-destructive">{error}</p>}
+        {!loading && !error && data.length === 0 && (
+          <p className="text-center text-muted-foreground">No activity data to display for the last four weeks.</p>
+        )}
+        {!loading && !error && data.length > 0 && (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="font-semibold">Week Starting</TableHead>
+                <TableHead className="text-center font-semibold">New Users</TableHead>
+                <TableHead className="text-center font-semibold">Events Created</TableHead>
+                <TableHead className="text-center font-semibold">Payments</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {data.map((row) => (
+                <TableRow key={row.weekStart}>
+                  <TableCell>{row.weekStart}</TableCell>
+                  <TableCell className="text-center">{row.profileCreations}</TableCell>
+                  <TableCell className="text-center">{row.eventCreations}</TableCell>
+                  <TableCell className="text-center">{row.successfulPayments}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
       </CardContent>
     </Card>
-  )
+  );
 }
