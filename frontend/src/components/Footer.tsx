@@ -1,6 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/logo.webp';
+import logo320 from '../assets/logo-320w.webp';
+import logo640 from '../assets/logo-640w.webp';
+import logo768 from '../assets/logo-768w.webp';
+import logo1024 from '../assets/logo-1024w.webp';
+import logo1280 from '../assets/logo-1280w.webp';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -12,7 +17,13 @@ const Footer: React.FC = () => {
           
           {/* Left Side: Logo and Copyright */}
           <div className="flex items-center gap-4 mb-4 md:mb-0">
-            <img src={logo} alt=" Logo" className="h-8 w-auto" />
+                            <img
+                                className="h-10 w-auto"
+                                src={logo}
+                                srcSet={`${logo320} 320w, ${logo640} 640w, ${logo768} 768w, ${logo1024} 1024w, ${logo1280} 1280w`}
+                                sizes="40px"
+                                alt="Future Reminder Logo"
+                            />
             <p className="text-sm">&copy; {currentYear} FutureReminder. All rights reserved.</p>
           </div>
 

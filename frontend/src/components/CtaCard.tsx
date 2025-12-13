@@ -2,6 +2,11 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Check } from 'lucide-react';
 import logo from '../assets/logo.webp';
+import logo320 from '../assets/logo-320w.webp';
+import logo640 from '../assets/logo-640w.webp';
+import logo768 from '../assets/logo-768w.webp';
+import logo1024 from '../assets/logo-1024w.webp';
+import logo1280 from '../assets/logo-1280w.webp';
 import { CreateEventLink } from './CreateEventLink';
 import { useConfig } from '@/context/ConfigContext';
 
