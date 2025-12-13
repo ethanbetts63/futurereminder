@@ -1,3 +1,9 @@
+import heroImage from '../assets/hero.webp';
+import hero320 from '../assets/hero-320w.webp';
+import hero640 from '../assets/hero-640w.webp';
+import hero768 from '../assets/hero-768w.webp';
+import hero1024 from '../assets/hero-1024w.webp';
+import hero1280 from '../assets/hero-1280w.webp';
 import faqImage from '../assets/faq_image.webp';
 import faqImageLandscape from '../assets/faq_image_landscape.webp';
 import faqImage320 from '../assets/faq_image-320w.webp';
@@ -32,8 +38,8 @@ const HomePage = () => {
       <Hero
         title={<>Reminders that don't take <span className='italic'>silence</span> for an answer.</>}
         subtitle={<>Calendars are for meetings. FutureReminder is for consequences. When a critical deadline hits, we don't just ping you—we trigger an <span className= "italic font-bold underline">escalating hierarchy of notifications</span> — from emails to emergency contacts.</>}
-        imageSrc="/assets/hero.webp"
-        srcSet="/assets/hero-320w.webp 320w, /assets/hero-640w.webp 640w, /assets/hero-768w.webp 768w, /assets/hero-1024w.webp 1024w, /assets/hero-1280w.webp 1280w"
+        imageSrc={heroImage}
+        srcSet={`${hero320} 320w, ${hero640} 640w, ${hero768} 768w, ${hero1024} 1024w, ${hero1280} 1280w`}
         imageAlt="A man sinking into a wormhole, sorrounded by examples of missed deadlines, to symbolize forgetting important events"
         ctaElement={<CreateEventLink size="lg" className="text-lg" />}
       />
