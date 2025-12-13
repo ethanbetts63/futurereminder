@@ -25,7 +25,13 @@ export const CtaCard: React.FC = () => {
       <CardHeader className="text-center">
         <div className="flex justify-center items-center gap-3 mb-2">
             <div className="flex items-center justify-center h-12 w-12 bg-primary rounded-lg">
-              <img src={logo} alt=" Logo" className="h-10 w-10" />
+                    <img
+                        src={logo}
+                        srcSet={`${logo320} 320w, ${logo640} 640w, ${logo768} 768w, ${logo1024} 1024w, ${logo1280} 1280w`}
+                        sizes="64px"
+                        alt="Future Reminder Logo"
+                        className="h-16 w-16"
+                    />
             </div>
             <CardTitle className="text-3xl"><span className="bg-primary text-primary-foreground px-2 py-1 rounded-md italic underline">FutureReminder</span></CardTitle>
         </div>

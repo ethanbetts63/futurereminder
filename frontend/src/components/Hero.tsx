@@ -4,17 +4,20 @@ interface HeroProps {
   title: React.ReactNode;
   subtitle: React.ReactNode;
   imageSrc: string;
+  srcSet?: string;
   imageAlt: string;
   ctaElement?: React.ReactNode;
 }
 
-export const Hero: React.FC<HeroProps> = ({ title, subtitle, imageSrc, imageAlt, ctaElement }) => {
+export const Hero: React.FC<HeroProps> = ({ title, subtitle, imageSrc, srcSet, imageAlt, ctaElement }) => {
   return (
     <section className="container mx-auto px-4 pt-8 pb-8">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div>
           <img 
             src={imageSrc} 
+            srcSet={srcSet}
+            sizes="(min-width: 1024px) 50vw, 100vw"
             alt={imageAlt} 
             className="rounded-lg object-cover w-full h-full shadow-2xl"
           />
