@@ -20,6 +20,7 @@ export const Hero: React.FC<HeroProps> = ({ title, subtitle, imageSrc, srcSet, i
             sizes="(min-width: 1024px) 50vw, 100vw"
             alt={imageAlt} 
             className="rounded-lg object-cover w-full h-full shadow-2xl"
+            fetchPriority="high"
           />
         </div>
         <div className="text-left">
