@@ -32,6 +32,10 @@ export interface Event {
     is_active: boolean;
     created_at: string;
     updated_at: string;
+    payment_details: {
+        amount: number;
+        date: string;
+    } | null;
 }
 
 export interface UserProfile {

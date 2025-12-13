@@ -122,7 +122,15 @@ const ConfirmationPage = () => {
                     </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground">Your payment was successful and the event is now active.</p>
+                  {event.payment_details ? (
+                    <div className="space-y-2">
+                        <p><strong>Payment Date:</strong> {new Date(event.payment_details.date).toLocaleDateString()}</p>
+                        <p><strong>Amount Paid:</strong> ${event.payment_details.amount.toFixed(2)}</p>
+                        <p className="text-sm text-muted-foreground pt-2">Your payment was successful and the event is now active.</p>
+                    </div>
+                  ) : (
+                    <p className="text-muted-foreground">Your payment was successful and the event is now active.</p>
+                  )}
                 </CardContent>
               </Card>
                             {/* Event Details Section */}
