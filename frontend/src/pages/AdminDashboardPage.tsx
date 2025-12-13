@@ -5,6 +5,8 @@ import Seo from '@/components/Seo';
 import { Spinner } from '@/components/ui/spinner';
 import { Button } from '@/components/ui/button';
 import { DashboardAnalyticsTable } from '@/components/admin/DashboardAnalyticsChart';
+import { AutomatedNotificationStats } from '@/components/admin/AutomatedNotificationStats';
+import { AdminTaskQueue } from '@/components/admin/AdminTaskQueue';
 
 const AdminDashboardPage: React.FC = () => {
   const { user, isLoading: isAuthLoading } = useAuth();
@@ -43,8 +45,10 @@ const AdminDashboardPage: React.FC = () => {
             Welcome, {user.first_name || user.email}. Here's what's happening on the platform.
           </p>
           
-          <div className="mt-8">
+          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
             <DashboardAnalyticsTable />
+            <AutomatedNotificationStats />
+            <AdminTaskQueue />
           </div>
         </main>
       </div>

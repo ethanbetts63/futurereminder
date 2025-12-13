@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from datetime import timedelta
 
 class Event(models.Model):
     """
@@ -16,6 +17,12 @@ class Event(models.Model):
     weeks_in_advance = models.PositiveIntegerField(
         default=4,
         help_text="The number of weeks in advance to start sending notifications."
+    )
+    notification_start_date = models.DateField(
+        editable=False,
+        null=True,
+        blank=True,
+        help_text="The auto-calculated date when notifications will begin."
     )
     notes = models.TextField(
         blank=True,
@@ -38,9 +45,33 @@ class Event(models.Model):
     # Timestamps
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
+    
     def __str__(self):
         return f"'{self.name}' on {self.event_date} for {self.user.username}"
+
+    def save(self, *args, **kwargs):
+        # Import services here to avoid circular dependency at startup
+        from notifications.services import schedule_notifications_for_event, clear_pending_notifications
+
+        # Auto-calculate the notification start date before saving
+        if self.event_date and self.weeks_in_advance:
+            self.notification_start_date = self.event_date - timedelta(weeks=self.weeks_in_advance)
+        
+        super().save(*args, **kwargs)
+
+        # After saving, trigger notification scheduling or clearing.
+        # We wrap this in a try/except block to ensure that a failure in the
+        # notification scheduling logic does not prevent the event itself from
+        # being saved, which is the more critical operation.
+        try:
+            if self.is_active:
+                schedule_notifications_for_event(self)
+            else:
+                clear_pending_notifications(self)
+        except Exception:
+            # If any error occurs during notification scheduling, we'll ignore it
+            # and allow the event saving to succeed.
+            pass
 
     class Meta:
         ordering = ['-event_date']
