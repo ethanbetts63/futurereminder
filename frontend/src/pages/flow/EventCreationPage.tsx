@@ -9,7 +9,7 @@ import { createAuthenticatedEvent, getUserProfile, getEmergencyContacts } from '
 import { EventCreationForm, type EventCreationData } from '@/forms/EventCreationForm';
 import Summary from '@/components/Summary';
 import type { UserProfile, EmergencyContact } from '@/types';
-import { Seo } from '@/components/Seo';
+import Seo from '@/components/Seo';
 
 const EventCreationPage: React.FC = () => {
     const navigate = useNavigate();

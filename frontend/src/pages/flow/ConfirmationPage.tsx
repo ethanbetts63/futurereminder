@@ -6,7 +6,7 @@ import { CheckCircle, User, Heart, Calendar, CreditCard, AlertCircle, Loader2 } 
 import { getUserProfile, getEmergencyContacts, getEvent } from '@/api';
 import type { UserProfile, EmergencyContact, Event } from '@/types';
 import { ArticleCarousel } from '@/components/ArticleCarousel';
-import { Seo } from '@/components/Seo';
+import Seo from '@/components/Seo';
 
 const ConfirmationPage = () => {
   const { eventId } = useParams<{ eventId: string }>();

@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Terminal } from "lucide-react";
 import { ProfileForm } from '@/forms/ProfileForm'; 
 import { EmergencyContactsManager } from '@/components/EmergencyContactsManager';
-import { Seo } from '@/components/Seo';
+import Seo from '@/components/Seo';
 
 const AccountManagementPage: React.FC = () => {
     const [profile, setProfile] = useState<UserProfile | null>(null);

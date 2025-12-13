@@ -8,7 +8,7 @@ import { Spinner } from '@/components/ui/spinner';
 import { ProfileCreationForm, type ProfileCreationData } from '@/forms/ProfileCreationForm';
 import { registerUser } from '@/api'; // Use the main registration function
 import { toast } from 'sonner';
-import { Seo } from '@/components/Seo';
+import Seo from '@/components/Seo';
 
 const ProfileCreationPage: React.FC = () => {
     const navigate = useNavigate();

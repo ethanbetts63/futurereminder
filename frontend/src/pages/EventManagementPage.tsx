@@ -26,7 +26,7 @@ import { toast } from "sonner";
 import * as api from "@/api";
 import type { Event } from "@/types";
 import { formatDate } from "@/utils/utils";
-import { Seo } from "@/components/Seo";
+import Seo from "@/components/Seo";
 
 
 function EventManagementPage() {

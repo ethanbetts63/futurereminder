@@ -14,7 +14,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { toast } from 'sonner';
-import { Seo } from '@/components/Seo';
+import Seo from '@/components/Seo';
 
 const PaymentStatusPage: React.FC = () => {
   const stripe = useStripe();

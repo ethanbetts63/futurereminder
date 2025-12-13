@@ -10,7 +10,7 @@ import { getEmergencyContacts, getUserProfile } from '@/api';
 import type { EmergencyContact, UserProfile } from '@/types';
 import { toast } from 'sonner';
 import { Spinner } from '@/components/ui/spinner';
-import { Seo } from '@/components/Seo';
+import Seo from '@/components/Seo';
 
 
 const EmergencyContactPage: React.FC = () => {
