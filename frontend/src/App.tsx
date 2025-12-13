@@ -20,7 +20,12 @@ const EventCreationPage = lazy(() => import('./pages/flow/EventCreationPage'));
 const PaymentPage = lazy(() => import('./pages/flow/PaymentPage'));
 const PaymentStatusPage = lazy(() => import('./pages/flow/PaymentStatusPage'));
 const TermsAndConditionsPage = lazy(() => import('./pages/TermsAndConditionsPage'));
-const AdminDashboardPage = lazy(() => import('./pages/AdminDashboardPage'));
+
+// --- Lazy-loaded Admin Pages ---
+const AdminLayout = lazy(() => import('./pages/admin/AdminLayout'));
+const AdminHomePage = lazy(() => import('./pages/admin/AdminHomePage'));
+const AutomatedNotificationsPage = lazy(() => import('./pages/admin/AutomatedNotificationsPage'));
+const ManualNotificationsPage = lazy(() => import('./pages/admin/ManualNotificationsPage'));
 
 // --- Lazy-loaded Articles ---
 const LetterToFutureSelf = lazy(() => import('./pages/articles/LetterToFutureSelf'));
@@ -68,8 +73,12 @@ function App() {
               <Route path="/create-flow/payment" element={<PaymentPage />} />
               <Route path="/payment-status" element={<PaymentStatusPage />} />
 
-              {/* Admin route */}
-              <Route path="/admin-dashboard" element={<AdminDashboardPage />} />
+              {/* Admin Section */}
+              <Route path="/admin" element={<AdminLayout />}>
+                <Route index element={<AdminHomePage />} />
+                <Route path="notifications/automated" element={<AutomatedNotificationsPage />} />
+                <Route path="notifications/manual" element={<ManualNotificationsPage />} />
+              </Route>
 
               {/* Logged-in user dashboard routes */}
               <Route path="/dashboard" element={<UserDashboardLayout />}>
