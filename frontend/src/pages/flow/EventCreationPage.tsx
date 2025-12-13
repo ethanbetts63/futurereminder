@@ -66,7 +66,7 @@ const EventCreationPage: React.FC = () => {
                 <div className="w-full md:w-2/3">
                     <Card className="bg-foreground text-background">
                         <CardHeader>
-                            <CardTitle className="text-3xl">Step 3: Create Your Event</CardTitle>
+                            <CardTitle className="text-3xl">Create Your Event</CardTitle>
                             <CardDescription className="text-black">
                                 Finally, tell us about the event you want to be reminded of.
                             </CardDescription>

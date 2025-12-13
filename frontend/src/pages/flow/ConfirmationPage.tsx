@@ -125,6 +125,24 @@ const ConfirmationPage = () => {
                   <p className="text-muted-foreground">Your payment was successful and the event is now active.</p>
                 </CardContent>
               </Card>
+                            {/* Event Details Section */}
+              <Card>
+                  <CardHeader className="flex flex-row items-center justify-between">
+                      <div className="flex items-center space-x-4">
+                          <Calendar className="h-6 w-6 text-primary" />
+                          <CardTitle>Event Details</CardTitle>
+                      </div>
+                      <Button asChild size="sm">
+                          <Link to="/dashboard/events">Manage Events</Link>
+                      </Button>
+                  </CardHeader>
+                  <CardContent className="space-y-2">
+                      <p><strong>Event Name:</strong> {event.name}</p>
+                      <p><strong>Event Date:</strong> {eventDate}</p>
+                      <p><strong>Lead Time:</strong> {event.weeks_in_advance} {event.weeks_in_advance === 1 ? 'week' : 'weeks'}</p>
+                      {event.notes && <p><strong>Notes:</strong> {event.notes}</p>}
+                  </CardContent>
+              </Card>
 
               {/* Profile Details Section */}
               <Card>
@@ -178,25 +196,6 @@ const ConfirmationPage = () => {
                     <p className="text-muted-foreground">No emergency contacts were added.</p>
                   )}
                 </CardContent>
-              </Card>
-              
-              {/* Event Details Section */}
-              <Card>
-                  <CardHeader className="flex flex-row items-center justify-between">
-                      <div className="flex items-center space-x-4">
-                          <Calendar className="h-6 w-6 text-primary" />
-                          <CardTitle>Event Details</CardTitle>
-                      </div>
-                      <Button asChild size="sm">
-                          <Link to="/dashboard/events">Manage Events</Link>
-                      </Button>
-                  </CardHeader>
-                  <CardContent className="space-y-2">
-                      <p><strong>Event Name:</strong> {event.name}</p>
-                      <p><strong>Event Date:</strong> {eventDate}</p>
-                      <p><strong>Lead Time:</strong> {event.weeks_in_advance} {event.weeks_in_advance === 1 ? 'week' : 'weeks'}</p>
-                      {event.notes && <p><strong>Notes:</strong> {event.notes}</p>}
-                  </CardContent>
               </Card>
             </div>
           )}
