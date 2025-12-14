@@ -2,7 +2,7 @@
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from payments.models import Tier
-from ..serializers.tier_serializer import TierSerializer
+from payments.serializers.tier_serializer import TierSerializer
 
 class TierListView(generics.ListAPIView):
     """
