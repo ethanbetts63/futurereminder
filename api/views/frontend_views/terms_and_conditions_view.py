@@ -1,0 +1,17 @@
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from data_management.models import TermsAndConditions
+from api.serializers.terms_and_conditions_serializer import TermsAndConditionsSerializer
+
+class LatestTermsAndConditionsView(APIView):
+    """
+    Returns the most recent version of the Terms and Conditions.
+    """
+    def get(self, request, *args, **kwargs):
+        latest_terms = TermsAndConditions.objects.order_by('-published_at').first()
+        if not latest_terms:
+            return Response({"detail": "No Terms and Conditions found."}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = TermsAndConditionsSerializer(latest_terms)
+        return Response(serializer.data)

@@ -3,6 +3,7 @@ from rest_framework.routers import DefaultRouter
 from .views.frontend_views.faq_list_view import FaqListView
 from .views.frontend_views.emergency_contact_view import EmergencyContactViewSet
 from .views.frontend_views.product_views import SingleEventPriceView
+from .views.frontend_views.terms_and_conditions_view import LatestTermsAndConditionsView
 from payments.views.tier_list_view import TierListView
 from users.views.register_view import RegisterView
 from users.views.user_profile_view import UserProfileView
@@ -33,6 +34,7 @@ urlpatterns = [
 
     # Other specific-action endpoints
     path('faqs/', FaqListView.as_view(), name='faq-list'),
+    path('terms/latest/', LatestTermsAndConditionsView.as_view(), name='latest-terms'),
     
     # Notification endpoints for the admin dashboard
     path('notifications/stats/', NotificationStatsView.as_view(), name='notification-stats'),
