@@ -59,13 +59,13 @@ export const CtaCard: React.FC = () => {
         <div className="flex justify-center bg-muted p-1 rounded-md">
           <button 
             onClick={() => setSelectedTier('automated')}
-            className={`w-1/2 px-4 py-2 text-sm font-semibold rounded ${selectedTier === 'automated' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'}`}
+            className={`w-1/2 px-4 py-2 text-m font-bold rounded ${selectedTier === 'automated' ? 'bg-primary text-primary-foreground' : 'text-white'}`}
           >
             Automated
           </button>
           <button 
             onClick={() => setSelectedTier('fullEscalation')}
-            className={`w-1/2 px-4 py-2 text-sm font-semibold rounded ${selectedTier === 'fullEscalation' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'}`}
+            className={`w-1/2 px-4 py-2 text-m font-bold rounded ${selectedTier === 'fullEscalation' ? 'bg-primary text-primary-foreground' : 'text-white'}`}
           >
             Full Escalation
           </button>
