@@ -89,3 +89,9 @@ export interface Tier {
     description: string;
     prices: Price[];
 }
+
+export interface TermsAndConditions {
+    version: string;
+    content: string;
+    published_at: string;
+}

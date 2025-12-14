@@ -1,162 +1,66 @@
-import Seo from "@/components/Seo";
+import React, { useState, useEffect } from 'react';
+import { getLatestTermsAndConditions } from '@/api';
+import type { TermsAndConditions } from '@/types';
+import Seo from '@/components/Seo';
+import { Spinner } from '@/components/ui/spinner';
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Terminal } from "lucide-react";
 
-const TermsAndConditionsPage = () => {
+const TermsAndConditionsPage: React.FC = () => {
+    const [terms, setTerms] = useState<TermsAndConditions | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        const fetchTerms = async () => {
+            try {
+                setIsLoading(true);
+                const data = await getLatestTermsAndConditions();
+                setTerms(data);
+            } catch (err: any) {
+                setError(err.message || 'Failed to load terms and conditions.');
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchTerms();
+    }, []);
+
+    const renderContent = () => {
+        if (isLoading) {
+            return (
+                <div className="flex justify-center items-center h-64">
+                    <Spinner className="w-8 h-8 mr-2" />
+                    <p>Loading...</p>
+                </div>
+            );
+        }
+
+        if (error) {
+            return (
+                <Alert variant="destructive">
+                    <Terminal className="h-4 w-4" />
+                    <AlertTitle>Error</AlertTitle>
+                    <AlertDescription>{error}</AlertDescription>
+                </Alert>
+            );
+        }
+
+        if (terms) {
+            return (
+                <div dangerouslySetInnerHTML={{ __html: terms.content }} />
+            );
+        }
+
+        return null;
+    };
+
     return (
         <>
             <Seo title="Terms & Conditions | FutureReminder" />
-            <div className="container mx-auto px-4 py-8 max-w-4xl">
-                <h1>Terms & Conditions</h1>
-                <p>Last updated: 12/12/2025</p>
-                <p>
-                    These Terms & Conditions (“Terms”) govern your access to and use of the reminder notification service (“FutureReminder”). By creating an account, submitting contact information, or scheduling an event, you agree to these Terms. If you do not agree, you must not use the Service.
-                </p>
-
-                <h2>1. Definitions</h2>
-                <ul>
-                    <li><strong>“Service”</strong> means the reminder notification system that delivers scheduled notifications using the contact methods you provide.</li>
-                    <li><strong>“Event”</strong> means any reminder, notification, deadline, appointment, or other item created by the user.</li>
-                    <li><strong>“User Content”</strong> means all information provided by the user, including event dates, times, descriptions, time zones, contact information, and emergency contacts.</li>
-                    <li><strong>“Emergency Contact”</strong> means any person the user designates to receive notifications if escalation occurs.</li>
-                    <li><strong>“Contact Methods”</strong> include email addresses, phone numbers, SMS-compatible numbers, backup contact numbers, social media accounts, or any additional communication channels provided by the user.</li>
-                </ul>
-
-                <h2>Product Description & Service</h2>
-                <h3>1. Nature of the Service</h3>
-                <p>Our service provides users with an additional layer of notification support for important future events (“Events”). Using the contact information supplied by the user, our system schedules and sends a series of reminder notifications across multiple communication channels. These channels may include, but are not limited to: email, SMS, backup emails, backup SMS numbers, social media accounts, phone calls, and designated emergency contacts.</p>
-                <p>The service is intended to assist users in remembering important dates. It does not replace the user’s own responsibility to track or attend the Event.</p>
-
-                <h3>2. Operation of Notification System</h3>
-                <p>When creating an Event, the user selects a time period before the Event during which notifications will begin (“Notification Window”). The system automatically divides this period into a series of time blocks and, based on those blocks, attempts to deliver notifications through the available channels.</p>
-                <p>The escalation of communication methods is automated and follows a general hierarchy. However, the exact timing, sequence, and channels used may vary based on system performance, availability of communication platforms, and the completeness or accuracy of the user’s provided contact information.</p>
-
-                <h3>3. No Guarantee of Delivery or Receipt</h3>
-                <p>While we make commercially reasonable efforts to send notifications according to the user’s settings, we do not guarantee that any notification will be delivered, received, read, acted upon, or successfully reach the intended recipient.</p>
-                <p>Delivery may fail or be delayed due to factors outside our control, including but not limited to carrier limitations, spam filters, API failures, platform restrictions, user device settings, service outages, incorrect or outdated contact information, or actions taken by third-party platforms.</p>
-
-                <h3>4. User Responsibility</h3>
-                <p>The user remains fully responsible for attending, complying with, or otherwise managing their Event and its associated obligations. Our service is an optional support tool only.</p>
-                <p>We accept no liability for any missed deadlines, appointments, obligations, legal requirements, fees, penalties, or damages arising from missed Events, whether or not notifications were sent or received.</p>
-                
-                <h3>5. Emergency Contacts</h3>
-                <p>If the user provides emergency contact information, the user represents and warrants that:</p>
-                <ul>
-                    <li>(a) the emergency contacts have given their explicit consent to be contacted on the user’s behalf; and</li>
-                    <li>(b) the user accepts all responsibility for any consequences of such contact.</li>
-                </ul>
-                <p>We may contact emergency contacts only as part of the notification escalation process, and only using the details the user has supplied.</p>
-                
-                <h3>6. Scope & Limitations</h3>
-                <p>The service does not verify the nature, accuracy, legality, or consequences of any Event. We are not a legal reminder service, medical reminder service, compliance service, financial planning tool, or safety-critical system.</p>
-                <p>The user must not rely on this service as their sole or primary method of remembering or acting upon an Event.</p>
-
-                <h2>Full Terms & Conditions</h2>
-                <h3>1. Description of the Service</h3>
-                <p>The Service provides an additional layer of notification by attempting to contact the user through multiple communication channels before the scheduled Event time.</p>
-                <p>Notification attempts may include:</p>
-                <ul>
-                    <li>Emails</li>
-                    <li>SMS or text messages</li>
-                    <li>Backup email addresses</li>
-                    <li>Backup phone numbers</li>
-                    <li>Social media direct messages</li>
-                    <li>Phone calls</li>
-                    <li>Notifications to designated emergency contacts</li>
-                </ul>
-                <p>The notification sequence, timing, and escalation order are determined by the Service based on user settings and the selected start date for notifications.</p>
-                <p>The Service does not guarantee delivery of any notification, nor does it replace the user's own responsibility to track deadlines, appointments, or obligations.</p>
-
-                <h3>2. User Responsibilities</h3>
-                <p>The user agrees that:</p>
-                <ul>
-                    <li>All information provided, including dates, times, time zones, and contact details, is accurate and up to date.</li>
-                    <li>The user is solely responsible for selecting correct event details, including ensuring the event is scheduled in the correct time zone.</li>
-                    <li>The user will only provide contact information they personally own or have full permission to use.</li>
-                    <li>The user will not provide any emergency contact without that person’s clear consent.</li>
-                    <li>The user maintains sole responsibility for meeting deadlines, complying with laws, paying bills, filing documents, or any obligations related to an Event.</li>
-                </ul>
-                
-                <h3>3. Consent to Contact</h3>
-                <p>By using the Service, the user expressly consents to being contacted via all provided contact methods.</p>
-                <p>The user acknowledges that:</p>
-                <ul>
-                    <li>Contact attempts may be automated or completed manually by staff.</li>
-                    <li>Notifications may repeat, escalate, or be sent at multiple intervals.</li>
-                    <li>Standard carrier or data charges may apply for SMS messages, calls, or mobile data.</li>
-                    <li>Email or SMS providers, mobile carriers, and social media platforms may delay, block, filter, or prevent delivery.</li>
-                    <li>They are solely responsible for ensuring access to the contact methods they provide.</li>
-                    <li>The user must not provide any phone number, email, or social media account belonging to another person without their explicit permission.</li>
-                </ul>
-                
-                <h3>4. Consent to Escalation and Emergency Contact Notifications</h3>
-                <p>By scheduling an Event, the user authorises the Service to escalate contact attempts using additional methods if earlier attempts fail.</p>
-                <p>Escalation may include contacting:</p>
-                <ul>
-                    <li>Backup email addresses</li>
-                    <li>Backup phone numbers</li>
-                    <li>Social media accounts</li>
-                    <li>The user via phone call</li>
-                    <li>Emergency contacts</li>
-                </ul>
-                <p>The user agrees to indemnify and hold the Service harmless for any consequences of contacting an emergency contact, including disputes, complaints, or damages.</p>
-
-                <h3>5. Third-Party Platforms and Delivery Limitations</h3>
-                <p>Social media services, mobile carriers, email providers, and phone networks are operated by third parties.</p>
-                <p>The Service has no control over:</p>
-                <ul>
-                    <li>Spam filtering</li>
-                    <li>Network outages</li>
-                    <li>Delivery failures</li>
-                    <li>Carrier restrictions</li>
-                    <li>Social media inbox rules</li>
-                    <li>Account privacy settings</li>
-                    <li>API limitations or changes</li>
-                </ul>
-                <p>The user acknowledges that these third-party factors may affect notification delivery.</p>
-
-                <h3>6. No Guarantee of Delivery or Performance</h3>
-                <p>The Service is an additional layer of protection, not a guarantee.</p>
-                <p>The Service is provided “as is” and “as available”, without warranty of:</p>
-                <ul>
-                    <li>Delivery speed</li>
-                    <li>Delivery success</li>
-                    <li>Escalation timing</li>
-                    <li>System uptime</li>
-                    <li>Error-free performance</li>
-                    <li>Notification accuracy</li>
-                </ul>
-                <p>The user remains fully responsible for all obligations associated with any Event.</p>
-
-                <h3>7. Limitation of Liability</h3>
-                <p>To the maximum extent permitted by law:</p>
-                <ul>
-                    <li>The Service is not liable for any missed events, penalties, fees, expenses, losses, damages, or legal consequences arising from reliance on the Service.</li>
-                    <li>The Service is not responsible for incorrect or incomplete User Content.</li>
-                    <li>The Service is not responsible for failures caused by third-party platforms, outages, filtering, or technical limitations.</li>
-                    <li>Total liability for any claim shall not exceed the total amount paid by the user for the specific Event associated with the claim.</li>
-                </ul>
-
-                <h3>8. Billing and Payments</h3>
-                <p>Users pay for each Event at the price listed at the time of purchase.</p>
-                <p>Fees are non-refundable except where required by law.</p>
-                <p>The user is responsible for any taxes or regulatory fees associated with their purchase.</p>
-
-                <h3>9. Termination</h3>
-                <p>The Service may suspend or terminate a user’s access if:</p>
-                <ul>
-                    <li>Payment fails</li>
-                    <li>Fraud, abuse, or misuse is detected</li>
-                    <li>Contact information is invalid or causes delivery issues</li>
-                    <li>The user violates these Terms</li>
-                </ul>
-                <p>The user may stop using the Service at any time, but no refunds will be issued for Events already purchased.</p>
-
-                <h3>10. Governing Law</h3>
-                <p>These Terms are governed by the laws of Australia.</p>
-                <p>Any disputes must be resolved in the courts of the relevant Australian state or territory.</p>
-
-                <h3>11. Changes to These Terms</h3>
-                <p>The Service may update these Terms from time to time.</p>
-                <p>Continued use after changes are published constitutes acceptance of the updated Terms.</p>
+            <div className="container mx-auto px-4 py-8 max-w-4xl prose dark:prose-invert">
+                {renderContent()}
             </div>
         </>
     );

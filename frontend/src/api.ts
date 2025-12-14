@@ -1,7 +1,7 @@
 // src/api.ts
 import { authedFetch } from '@/apiClient';
 import type { ProfileCreationData } from "@/forms/ProfileCreationForm";
-import type { AppConfig, AuthResponse, Event, UserProfile, EmergencyContact, FaqItem, Tier } from "@/types";
+import type { AppConfig, AuthResponse, Event, UserProfile, EmergencyContact, FaqItem, Tier, TermsAndConditions } from "@/types";
 
 /**
  * A centralized module for all API interactions.
@@ -63,6 +63,14 @@ export async function claimAccount(password: string): Promise<{ detail: string }
     body: JSON.stringify({ password }),
   });
   return handleResponse(response);
+}
+
+
+// --- Legal Endpoints ---
+
+export async function getLatestTermsAndConditions(): Promise<TermsAndConditions> {
+    const response = await fetch('/api/terms/latest/');
+    return handleResponse(response);
 }
 
 
