@@ -1,6 +1,5 @@
 from django.core.management.base import BaseCommand
 from data_management.utils.generation_utils.faq_generator import FaqUpdateOrchestrator
-from data_management.utils.generation_utils.product_generator import ProductUpdateOrchestrator
 from data_management.utils.generation_utils.tier_generator import TierUpdateOrchestrator
 
 class Command(BaseCommand):
@@ -11,11 +10,6 @@ class Command(BaseCommand):
             '--faqs',
             action='store_true',
             help='Generate FAQs from the JSONL data file.',
-        )
-        parser.add_argument(
-            '--products',
-            action='store_true',
-            help='(Legacy) Generate Products and Prices from the JSONL data file.',
         )
         parser.add_argument(
             '--tiers',
@@ -30,12 +24,6 @@ class Command(BaseCommand):
             self.stdout.write(self.style.SUCCESS('Starting FAQ generation...'))
             orchestrator = FaqUpdateOrchestrator(command=self)
             orchestrator.run()
-        
-        if options['products']:
-            something_generated = True
-            self.stdout.write(self.style.SUCCESS('Starting legacy Product and Price generation...'))
-            orchestrator = ProductUpdateOrchestrator(command=self)
-            orchestrator.run()
 
         if options['tiers']:
             something_generated = True
@@ -45,5 +33,5 @@ class Command(BaseCommand):
 
         if not something_generated:
             self.stdout.write(self.style.WARNING(
-                'No generation flag specified. Please use --faqs, --products, --tiers, or other available options.'
+                'No generation flag specified. Please use --faqs, --tiers, or other available options.'
             ))
