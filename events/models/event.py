@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from datetime import timedelta
+from django.core.exceptions import ValidationError
 
 class Event(models.Model):
     """
@@ -61,6 +62,22 @@ class Event(models.Model):
         # Auto-calculate the notification start date before saving
         if self.event_date and self.weeks_in_advance:
             self.notification_start_date = self.event_date - timedelta(weeks=self.weeks_in_advance)
+        
+        # Data integrity check for paid, active events
+        if self.tier:
+            # A tier is considered "paid" if it has an active, one-time price > 0.
+            is_paid_tier = self.tier.prices.filter(
+                is_active=True,
+                type='one_time',
+                amount__gt=0
+            ).exists()
+
+            if self.is_active and is_paid_tier:
+                # If the event is active and for a paid tier, it must have a successful payment.
+                if not self.payments.filter(status='succeeded').exists():
+                    raise ValidationError(
+                        "An active event with a paid tier must have a successful payment record."
+                    )
         
         super().save(*args, **kwargs)
 

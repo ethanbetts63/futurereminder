@@ -1,5 +1,7 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import action
+from rest_framework.response import Response
 from events.models import Event
 from events.serializers.event_serializer import EventSerializer
 from api.serializers.event_creation_serializers import AuthenticatedEventCreateSerializer
@@ -22,10 +24,10 @@ class EventViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         """
-        This view should only return events owned by the currently authenticated user
-        that have a successful payment.
+        This view should only return events owned by the currently authenticated user.
+        We will relax the payment status check here to allow viewing of pending events.
         """
-        return self.request.user.events.filter(payments__status='succeeded').distinct()
+        return self.request.user.events.all()
 
     def perform_create(self, serializer):
         """
@@ -34,3 +36,35 @@ class EventViewSet(viewsets.ModelViewSet):
         within the serializer itself.
         """
         serializer.save() # The user will be injected via context
+
+    @action(detail=True, methods=['post'])
+    def activate(self, request, pk=None):
+        """
+        Custom action to activate an event, intended for free-tier events.
+        """
+        event = self.get_object()
+
+        # Security check: Ensure the tier is actually free.
+        is_free_tier = not event.tier.prices.filter(
+            is_active=True,
+            type='one_time',
+            amount__gt=0
+        ).exists()
+
+        if not is_free_tier:
+            return Response(
+                {'error': 'This action is only allowed for free-tier events.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        if event.is_active:
+            return Response(
+                {'message': 'Event is already active.'},
+                status=status.HTTP_200_OK
+            )
+
+        event.is_active = True
+        event.save()
+        
+        serializer = self.get_serializer(event)
+        return Response(serializer.data, status=status.HTTP_200_OK)

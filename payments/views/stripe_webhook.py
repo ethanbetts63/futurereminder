@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from payments.models import Payment
+from payments.models import Payment, Tier
 
 class StripeWebhookView(APIView):
     """
@@ -39,15 +39,24 @@ class StripeWebhookView(APIView):
                 # Update the status to 'succeeded'
                 payment.status = 'succeeded'
                 payment.save()
-
-                # Here you could also trigger other business logic, like:
-                # - Activating the associated event
-                # - Sending a confirmation email to the user
                 
-                # Activate the associated event
+                # --- New Logic: Upgrade Tier and Activate Event ---
                 if payment.event:
-                    payment.event.is_active = True
-                    payment.event.save()
+                    try:
+                        # Find the paid tier dynamically.
+                        paid_tier = Tier.objects.get(name="Full Escalation")
+                        
+                        # Upgrade the event's tier and activate it
+                        event_to_update = payment.event
+                        event_to_update.tier = paid_tier
+                        event_to_update.is_active = True
+                        event_to_update.save() # The custom save method will validate this
+
+                    except Tier.DoesNotExist:
+                        # This is a critical configuration error. Log it.
+                        print(f"CRITICAL ERROR: The 'Full Escalation' tier was not found. Cannot upgrade event {payment.event.id}.")
+                        # Still return a 200 to Stripe to acknowledge receipt of the event.
+                        return HttpResponse(status=200)
 
             except Payment.DoesNotExist:
                 # This could happen if the payment was created outside of our system's flow

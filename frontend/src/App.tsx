@@ -17,6 +17,8 @@ const EventGate = lazy(() => import('@/components/EventGate'));
 const ProfileCreationPage = lazy(() => import('./pages/flow/ProfileCreationPage'));
 const EmergencyContactPage = lazy(() => import('./pages/flow/EmergencyContactPage'));
 const EventCreationPage = lazy(() => import('./pages/flow/EventCreationPage'));
+const TierChoicePage = lazy(() => import('./pages/flow/TierChoicePage'));
+const ActivationSuccessPage = lazy(() => import('./pages/flow/ActivationSuccessPage'));
 const PaymentPage = lazy(() => import('./pages/flow/PaymentPage'));
 const PaymentStatusPage = lazy(() => import('./pages/flow/PaymentStatusPage'));
 const TermsAndConditionsPage = lazy(() => import('./pages/TermsAndConditionsPage'));
@@ -70,7 +72,9 @@ function App() {
               <Route path="/create-flow/profile" element={<ProfileCreationPage />} />
               <Route path="/create-flow/contacts" element={<EmergencyContactPage />} />
               <Route path="/create-flow/event" element={<EventCreationPage />} />
+              <Route path="/events/:id/activate" element={<TierChoicePage />} />
               <Route path="/create-flow/payment" element={<PaymentPage />} />
+              <Route path="/create-flow/success" element={<ActivationSuccessPage />} />
               <Route path="/payment-status" element={<PaymentStatusPage />} />
 
               {/* Admin Section */}

@@ -114,6 +114,13 @@ export async function deleteEvent(id: number): Promise<void> {
     await handleResponse(response);
 }
 
+export async function activateFreeEvent(eventId: number): Promise<Event> {
+    const response = await authedFetch(`/api/events/${eventId}/activate/`, {
+        method: 'POST',
+    });
+    return handleResponse(response);
+}
+
 
 // --- User Profile & Settings Endpoints ---
 

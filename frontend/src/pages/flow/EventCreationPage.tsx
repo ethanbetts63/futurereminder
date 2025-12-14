@@ -40,7 +40,7 @@ const EventCreationPage: React.FC = () => {
         try {
             const newEvent = await createAuthenticatedEvent(data);
             toast.success("Event created successfully!");
-            navigate('/create-flow/payment', { state: { event: newEvent } });
+            navigate(`/events/${newEvent.id}/activate`, { state: { event: newEvent } });
         } catch (error: any) {
             toast.error("Failed to create event", {
                 description: error.message || "An unknown error occurred."
