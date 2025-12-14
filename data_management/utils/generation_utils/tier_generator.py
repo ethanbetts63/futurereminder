@@ -35,9 +35,9 @@ class TierUpdateOrchestrator:
         )
 
         if created:
-            self.command.stdout.write(self.style.SUCCESS(f"  Created new tier: {tier.name}"))
+            self.command.stdout.write(self.command.style.SUCCESS(f"  Created new tier: {tier.name}"))
         else:
-            self.command.stdout.write(self.style.NOTICE(f"  Updated existing tier: {tier.name}"))
+            self.command.stdout.write(self.command.style.NOTICE(f"  Updated existing tier: {tier.name}"))
 
         # Create or update the associated Price
         price, created = Price.objects.update_or_create(
@@ -51,6 +51,6 @@ class TierUpdateOrchestrator:
         )
         
         if created:
-            self.command.stdout.write(self.style.SUCCESS(f"    - Created new price: ${price.amount} ({price.type})"))
+            self.command.stdout.write(self.command.style.SUCCESS(f"    - Created new price: ${price.amount} ({price.type})"))
         else:
-            self.command.stdout.write(self.style.NOTICE(f"    - Updated existing price: ${price.amount} ({price.type})"))
+            self.command.stdout.write(self.command.style.NOTICE(f"    - Updated existing price: ${price.amount} ({price.type})"))
