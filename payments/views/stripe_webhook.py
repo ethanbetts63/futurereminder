@@ -31,39 +31,34 @@ class StripeWebhookView(APIView):
 
         # Handle the event
         if event['type'] == 'payment_intent.succeeded':
-            payment_intent = event['data']['object'] # contains a stripe.PaymentIntent
-            
+            payment_intent = event['data']['object']
+            metadata = payment_intent.get('metadata', {})
+            target_tier_id = metadata.get('target_tier_id')
+
             # Find the corresponding Payment in our database
             try:
                 payment = Payment.objects.get(stripe_payment_intent_id=payment_intent.id)
-                # Update the status to 'succeeded'
                 payment.status = 'succeeded'
                 payment.save()
                 
-                # --- New Logic: Upgrade Tier and Activate Event ---
-                if payment.event:
+                # Upgrade Tier and Activate Event, if we have the necessary info
+                if payment.event and target_tier_id:
                     try:
-                        # Find the paid tier dynamically.
-                        paid_tier = Tier.objects.get(name="Full Escalation")
+                        # Use the ID from the metadata to get the correct tier
+                        paid_tier = Tier.objects.get(id=target_tier_id)
                         
                         # Upgrade the event's tier and activate it
                         event_to_update = payment.event
                         event_to_update.tier = paid_tier
                         event_to_update.is_active = True
-                        event_to_update.save() # The custom save method will validate this
+                        event_to_update.save() # The custom save method will validate
 
                     except Tier.DoesNotExist:
-                        # This is a critical configuration error. Log it.
-                        print(f"CRITICAL ERROR: The 'Full Escalation' tier was not found. Cannot upgrade event {payment.event.id}.")
-                        # Still return a 200 to Stripe to acknowledge receipt of the event.
+                        print(f"CRITICAL ERROR: Tier with ID {target_tier_id} not found. Cannot upgrade event {payment.event.id}.")
                         return HttpResponse(status=200)
 
             except Payment.DoesNotExist:
-                # This could happen if the payment was created outside of our system's flow
-                # Or if there's a serious data inconsistency.
-                # Log this for investigation.
                 print(f"Error: Received successful payment intent for non-existent charge ID: {payment_intent.id}")
-                # Still return a 200 to Stripe to prevent retries for this event.
                 return HttpResponse(status=200)
 
         elif event['type'] == 'payment_intent.payment_failed':

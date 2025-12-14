@@ -1,7 +1,7 @@
 // src/api.ts
 import { authedFetch } from '@/apiClient';
 import type { ProfileCreationData } from "@/forms/ProfileCreationForm";
-import type { AppConfig, AuthResponse, Event, UserProfile, EmergencyContact, FaqItem } from "@/types";
+import type { AppConfig, AuthResponse, Event, UserProfile, EmergencyContact, FaqItem, Tier } from "@/types";
 
 /**
  * A centralized module for all API interactions.
@@ -178,10 +178,17 @@ export async function deleteEmergencyContact(id: number): Promise<void> {
 
 // --- Payment Endpoints ---
 
-export async function createPaymentIntent(eventId: number): Promise<{ clientSecret: string }> {
+export async function getTiers(): Promise<Tier[]> {
+  const response = await authedFetch('/api/tiers/', {
+    method: 'GET',
+  });
+  return handleResponse(response);
+}
+
+export async function createPaymentIntent(eventId: number, targetTierId: number): Promise<{ clientSecret: string }> {
   const response = await authedFetch('/api/payments/create-payment-intent/', {
     method: 'POST',
-    body: JSON.stringify({ event_id: eventId }),
+    body: JSON.stringify({ event_id: eventId, target_tier_id: targetTierId }),
   });
   return handleResponse(response);
 }

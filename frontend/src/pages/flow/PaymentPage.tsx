@@ -25,6 +25,7 @@ export default function PaymentPage() {
   
   const { config, isLoading: isConfigLoading, loadConfig } = useConfig();
   const event: Event | undefined = location.state?.event;
+  const targetTierId: number | undefined = location.state?.targetTierId;
 
   useEffect(() => {
     loadConfig();
@@ -47,8 +48,8 @@ export default function PaymentPage() {
       });
 
     // Fetch payment intent
-    if (event?.id) {
-      createPaymentIntent(event.id)
+    if (event?.id && targetTierId) {
+      createPaymentIntent(event.id, targetTierId)
         .then(data => {
           setClientSecret(data.clientSecret);
         })
@@ -58,10 +59,13 @@ export default function PaymentPage() {
           });
         });
     }
-  }, [event]);
+  }, [event, targetTierId]);
 
-  if (!event) {
-    return <Navigate to="/dashboard/events" replace />;
+  if (!event || !targetTierId) {
+    // If we land here without an event or a target tier, the flow is broken.
+    // Send user back to the start of the creation flow.
+    toast.error("Invalid state", { description: "Missing event or tier information for payment."});
+    return <Navigate to="/create-flow/event" replace />;
   }
   
   const appearance: Appearance = {

@@ -44,6 +44,12 @@ class EventViewSet(viewsets.ModelViewSet):
         """
         event = self.get_object()
 
+        if not event.tier:
+            return Response(
+                {'error': 'Event does not have a tier associated with it.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
         # Security check: Ensure the tier is actually free.
         is_free_tier = not event.tier.prices.filter(
             is_active=True,

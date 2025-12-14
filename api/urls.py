@@ -3,6 +3,7 @@ from rest_framework.routers import DefaultRouter
 from .views.frontend_views.faq_list_view import FaqListView
 from .views.frontend_views.emergency_contact_view import EmergencyContactViewSet
 from .views.frontend_views.product_views import SingleEventPriceView
+from payments.views.tier_list_view import TierListView
 from users.views.register_view import RegisterView
 from users.views.user_profile_view import UserProfileView
 from events.views.event_view import EventViewSet
@@ -28,6 +29,7 @@ urlpatterns = [
     
     # Configuration endpoints
     path('products/single-event-price/', SingleEventPriceView.as_view(), name='single-event-price'),
+    path('tiers/', TierListView.as_view(), name='tier-list'),
 
     # Other specific-action endpoints
     path('faqs/', FaqListView.as_view(), name='faq-list'),

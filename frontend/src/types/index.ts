@@ -74,3 +74,17 @@ export interface AppConfig {
   amount: number;
   currency: string;
 }
+
+export interface Price {
+    id: number;
+    amount: number;
+    currency: string;
+    type: 'one_time' | 'recurring';
+}
+
+export interface Tier {
+    id: number;
+    name: string;
+    description: string;
+    prices: Price[];
+}

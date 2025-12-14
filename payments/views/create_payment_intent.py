@@ -12,53 +12,40 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 class CreatePaymentIntentView(APIView):
     """
-    Creates a Stripe PaymentIntent for a given event.
+    Creates a Stripe PaymentIntent for a given event and a target tier.
     """
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
         event_id = request.data.get('event_id')
-        if not event_id:
+        target_tier_id = request.data.get('target_tier_id')
+
+        if not all([event_id, target_tier_id]):
             return Response(
-                {"error": "event_id is required."}, 
+                {"error": "event_id and target_tier_id are required."},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
         try:
             event = Event.objects.get(id=event_id, user=request.user)
-            if not event.tier:
-                return Response(
-                    {"error": "Event does not have a tier associated with it."},
-                    status=status.HTTP_400_BAD_REQUEST
-                )
         except Event.DoesNotExist:
             return Response(
                 {"error": "Event not found or you don't have permission."},
                 status=status.HTTP_404_NOT_FOUND
             )
 
-        # Fetch the price for the specific tier associated with the event.
+        # Fetch the price for the TARGET tier, not the event's current tier.
         try:
-            price = Price.objects.filter(tier=event.tier, is_active=True, type='one_time').first()
-            if not price:
+            target_tier = Tier.objects.get(id=target_tier_id)
+            price = target_tier.prices.filter(is_active=True, type='one_time').first()
+            if not price or price.amount <= 0:
                 raise Price.DoesNotExist
-        except Price.DoesNotExist:
+        except (Tier.DoesNotExist, Price.DoesNotExist):
              return Response(
-                {"error": f"No active one-time price configured for the '{event.tier.name}' tier."},
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                {"error": f"No active, paid, one-time price could be found for the selected tier."},
+                status=status.HTTP_400_BAD_REQUEST
             )
         
-        # If the price is zero, no payment is needed.
-        if price.amount == 0:
-            # Activate the event and schedule notifications
-            event.is_active = True
-            event.save()
-            # Here you would call the notification scheduling service
-            return Response(
-                {"message": "Free event activated successfully. No payment required."},
-                status=status.HTTP_200_OK
-            )
-
         amount_in_cents = int(price.amount * 100)
 
         try:
@@ -69,7 +56,8 @@ class CreatePaymentIntentView(APIView):
                 automatic_payment_methods={'enabled': True},
                 metadata={
                     'event_id': event.id,
-                    'user_id': request.user.id
+                    'user_id': request.user.id,
+                    'target_tier_id': target_tier.id, # Add target tier to metadata
                 }
             )
 
