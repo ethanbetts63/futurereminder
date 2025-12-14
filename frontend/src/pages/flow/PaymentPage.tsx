@@ -8,8 +8,7 @@ import { toast } from 'sonner';
 import CheckoutForm from '../../forms/CheckoutForm';
 import Summary from '../../components/Summary';
 import { createPaymentIntent, getUserProfile, getEmergencyContacts } from '@/api';
-import { useConfig } from '@/context/ConfigContext';
-import type { Event, UserProfile, EmergencyContact } from '@/types';
+import type { Event, UserProfile, EmergencyContact, Tier } from '@/types';
 import { Spinner } from '@/components/ui/spinner';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import Seo from '@/components/Seo';
@@ -23,13 +22,8 @@ export default function PaymentPage() {
   const [contacts, setContacts] = useState<EmergencyContact[]>([]);
   const [, setIsLoading] = useState(true);
   
-  const { config, isLoading: isConfigLoading, loadConfig } = useConfig();
   const event: Event | undefined = location.state?.event;
-  const targetTierId: number | undefined = location.state?.targetTierId;
-
-  useEffect(() => {
-    loadConfig();
-  }, [loadConfig]);
+  const targetTier: Tier | undefined = location.state?.targetTier;
 
   useEffect(() => {
     // Fetch user profile and contacts
@@ -48,8 +42,8 @@ export default function PaymentPage() {
       });
 
     // Fetch payment intent
-    if (event?.id && targetTierId) {
-      createPaymentIntent(event.id, targetTierId)
+    if (event?.id && targetTier?.id) {
+      createPaymentIntent(event.id, targetTier.id)
         .then(data => {
           setClientSecret(data.clientSecret);
         })
@@ -59,9 +53,9 @@ export default function PaymentPage() {
           });
         });
     }
-  }, [event, targetTierId]);
+  }, [event, targetTier]);
 
-  if (!event || !targetTierId) {
+  if (!event || !targetTier) {
     // If we land here without an event or a target tier, the flow is broken.
     // Send user back to the start of the creation flow.
     toast.error("Invalid state", { description: "Missing event or tier information for payment."});
@@ -81,6 +75,8 @@ export default function PaymentPage() {
     clientSecret: clientSecret || undefined,
     appearance,
   };
+
+  const price = targetTier.prices.find(p => p.type === 'one_time')?.amount;
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -124,8 +120,8 @@ export default function PaymentPage() {
             event={event} 
             user={profile || undefined} 
             emergencyContacts={contacts} 
-            config={config}
-            isConfigLoading={isConfigLoading}
+            price={price}
+            isPriceLoading={!price && !clientSecret}
           />
         </div>
       </div>

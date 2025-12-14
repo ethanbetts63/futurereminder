@@ -9,11 +9,11 @@ interface SummaryProps {
   user?: UserProfile;
   emergencyContacts?: EmergencyContact[];
   className?: string;
-  config?: AppConfig | null;
-  isConfigLoading?: boolean;
+  price?: number; // Accept a direct price
+  isPriceLoading?: boolean;
 }
 
-const Summary: React.FC<SummaryProps> = ({ event, user, emergencyContacts, className, config, isConfigLoading }) => {
+const Summary: React.FC<SummaryProps> = ({ event, user, emergencyContacts, className, price, isPriceLoading }) => {
 
   return (
     <div className={`space-y-4 ${className}`}>
@@ -46,13 +46,13 @@ const Summary: React.FC<SummaryProps> = ({ event, user, emergencyContacts, class
               )}
             </div>
             <div className="border-t pt-3 space-y-2">
-              <div className="flex justify-between font-bold text-lg border-t pt-2 mt-2">
+              <div className="flex justify-between font-bold text-lg pt-2 mt-2">
                 <span>Total:</span>
                 <span>
-                  {isConfigLoading 
-                    ? '...' 
-                    : config 
-                      ? `$${config.amount.toFixed(2)}` 
+                  {isPriceLoading
+                    ? '...'
+                    : typeof price === 'number'
+                      ? `$${price.toFixed(2)}`
                       : 'N/A'
                   }
                 </span>

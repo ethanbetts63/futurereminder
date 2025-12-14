@@ -50,9 +50,9 @@ const TierChoicePage: React.FC = () => {
         }
     };
 
-    const handlePaidActivation = (targetTierId: number) => {
+    const handlePaidActivation = (targetTier: Tier) => {
         navigate('/create-flow/payment', { 
-            state: { event, targetTierId } 
+            state: { event, targetTier } 
         });
     };
 
@@ -128,7 +128,7 @@ const TierChoicePage: React.FC = () => {
                             <Button 
                                 className="w-full" 
                                 size="lg"
-                                onClick={() => handlePaidActivation(paidTier.id)}
+                                onClick={() => handlePaidActivation(paidTier)}
                                 disabled={isSubmitting}
                             >
                                 Proceed to Payment
