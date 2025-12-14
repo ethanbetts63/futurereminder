@@ -3,7 +3,8 @@ import datetime
 import shutil
 
 class BaseArchiver:
-    def __init__(self):
+    def __init__(self, command):
+        self.command = command
         self.date_stamp = datetime.datetime.now().strftime("%Y-%m-%d")
         self.base_output_dir = self._get_base_output_dir()
         self.archive_dir = os.path.join(self.base_output_dir, self.date_stamp)
@@ -16,7 +17,7 @@ class BaseArchiver:
         if os.path.exists(self.archive_dir):
             shutil.rmtree(self.archive_dir)
         os.makedirs(self.archive_dir)
-        print(f"Created archive directory: {self.archive_dir}")
+        self.command.stdout.write(self.command.style.SUCCESS(f"Created archive directory: {self.archive_dir}"))
 
     def archive(self):
         raise NotImplementedError("Subclasses must implement the archive() method.")
