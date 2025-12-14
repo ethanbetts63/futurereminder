@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { CreateEventLink } from "@/components/CreateEventLink";
 import {
@@ -81,7 +82,7 @@ function EventManagementPage() {
 
     try {
       const updatedEvent = await api.updateEvent(editingEvent.id, editingEvent);
-      setEvents(events.map(e => e.id === updatedEvent.id ? updatedEvent : e));
+      setEvents(events.map((e: Event) => e.id === updatedEvent.id ? updatedEvent : e));
       toast.success("Event updated successfully!");
       setEditingEvent(null);
     } catch (error) {
@@ -94,7 +95,7 @@ function EventManagementPage() {
 
     try {
       await api.deleteEvent(deleteCandidateId);
-      setEvents(events.filter(e => e.id !== deleteCandidateId));
+      setEvents(events.filter((e: Event) => e.id !== deleteCandidateId));
       toast.success("Event deleted successfully!");
     } catch (error) {
       toast.error("Failed to delete event", { description: (error as Error).message });
@@ -141,7 +142,7 @@ function EventManagementPage() {
         </TableHeader>
         <TableBody>
           {events.length > 0 ? (
-            events.map(event => {
+            events.map((event: Event) => {
               const isEditing = editingEvent?.id === event.id;
               return (
                 <TableRow key={event.id}>

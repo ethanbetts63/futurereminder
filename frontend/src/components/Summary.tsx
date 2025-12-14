@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import type { Event, UserProfile, EmergencyContact, AppConfig } from '@/types';
+import type { Event, UserProfile, EmergencyContact } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { formatDate } from '@/utils/utils';
