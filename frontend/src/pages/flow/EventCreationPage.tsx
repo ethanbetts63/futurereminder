@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox'; // Added Checkbox import
 import { toast } from 'sonner';
 import { Spinner } from '@/components/ui/spinner';
 import { createAuthenticatedEvent, getUserProfile, getEmergencyContacts } from '@/api';
@@ -17,6 +18,7 @@ const EventCreationPage: React.FC = () => {
     const [profile, setProfile] = useState<UserProfile | null>(null);
     const [contacts, setContacts] = useState<EmergencyContact[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [agreedToTerms, setAgreedToTerms] = useState(false); // Added state for terms agreement
 
     useEffect(() => {
         setIsLoading(true);
@@ -77,18 +79,38 @@ const EventCreationPage: React.FC = () => {
                                 onSubmit={handleFormSubmit}
                             />
                         </CardContent>
-                        <CardFooter className="flex justify-end">
-                            <Button 
-                                size="lg"
-                                disabled={isSubmitting}
-                                onClick={() => document.getElementById('event-creation-submit')?.click()}
-                                className="bg-blue-600 hover:bg-blue-700 text-white"
-                            >
-                                {isSubmitting && <Spinner className="mr-2 h-4 w-4" />}
-                                Finish & Create Event
-                            </Button>
-                        </CardFooter>
-                    </Card>
+                                                <CardFooter className="flex justify-between items-center"> {/* Changed to justify-between to space out checkbox and button */}
+                                                    <div className="flex items-center space-x-2">
+                                                        <Checkbox
+                                                            id="terms"
+                                                            checked={agreedToTerms}
+                                                            onCheckedChange={(checked: boolean) => setAgreedToTerms(checked)}
+                                                        />
+                                                        <label
+                                                            htmlFor="terms"
+                                                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-black"
+                                                        >
+                                                            I agree to the{" "}
+                                                            <a
+                                                                href="https://www.futurereminder.app/terms-and-conditions"
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                className="text-blue-500 hover:underline"
+                                                            >
+                                                                Terms and Conditions
+                                                            </a>
+                                                        </label>
+                                                    </div>
+                                                    <Button
+                                                        size="lg"
+                                                        disabled={isSubmitting || !agreedToTerms} {/* Added !agreedToTerms to disable condition */}
+                                                        onClick={() => document.getElementById('event-creation-submit')?.click()}
+                                                        className="bg-blue-600 hover:bg-blue-700 text-white"
+                                                    >
+                                                        {isSubmitting && <Spinner className="mr-2 h-4 w-4" />}
+                                                        Finish & Create Event
+                                                    </Button>
+                                                </CardFooter>                    </Card>
                 </div>
                 {/* Right Summary Column */}
                 <div className="w-full md:w-1/3">
