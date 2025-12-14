@@ -7,7 +7,7 @@ const ReminderAppsRanked = () => {
   return (
     <>
       <Seo
-        title="The Best Reminder Apps in 2025 — Ranked by a Reminder App"
+        title="The Best Reminder Apps in 2025 — Ranked by a Niche Reminder App"
         description="We live and breathe the reminder app ecosystem. We read every forum discussion to give you the community consensus for all the major apps, with a little of our own opinion sprinkled on top."
         canonicalPath="/articles/reminder-apps-ranked"
         ogType="article"
