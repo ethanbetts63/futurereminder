@@ -16,11 +16,11 @@ class TierUpdateOrchestrator:
             with open(self.tiers_file_path, 'r') as f:
                 for line in f:
                     self._process_line(line)
-            self.command.stdout.write(self.SUCCESS("Successfully processed all tiers and prices."))
+            self.command.stdout.write(self.command.style.SUCCESS("Successfully processed all tiers and prices."))
         except FileNotFoundError:
-            self.command.stdout.write(self.ERROR(f"{self.tiers_file_path} not found."))
+            self.command.stdout.write(self.command.style.ERROR(f"{self.tiers_file_path} not found."))
         except Exception as e:
-            self.command.stdout.write(self.ERROR(f"An error occurred: {e}"))
+            self.command.stdout.write(self.command.style.ERROR(f"An error occurred: {e}"))
 
     def _process_line(self, line):
         data = json.loads(line)
