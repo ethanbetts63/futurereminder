@@ -6,6 +6,7 @@ import { useAuth } from '@/context/AuthContext';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
@@ -22,13 +23,17 @@ type ContactFormData = Omit<EmergencyContact, 'id' | 'user'>;
 
 const tempId = () => -Math.floor(Math.random() * 1000000);
 
-// --- Sub-component for the "Add New Contact" form, now without its own Card ---
-const AddContactForm: React.FC<{ onAddContact: (data: ContactFormData) => Promise<void> }> = ({ onAddContact }) => {
+// --- Sub-component for the "Add New Contact" form ---
+const AddContactForm: React.FC<{
+    onAddContact: (data: ContactFormData) => Promise<void>,
+    hasConfirmedConsent: boolean,
+    onConsentChange: (checked: boolean) => void,
+}> = ({ onAddContact, hasConfirmedConsent, onConsentChange }) => {
     const { register, handleSubmit, reset, formState: { isSubmitting } } = useForm<ContactFormData>();
 
     const handleFormSubmit = async (data: ContactFormData) => {
         await onAddContact(data);
-        reset({ first_name: '', last_name: '', relationship: '', phone: '', email: '' }); // Reset form after successful submission
+        reset({ first_name: '', last_name: '', relationship: '', phone: '', email: '' });
     };
 
     return (
@@ -41,9 +46,22 @@ const AddContactForm: React.FC<{ onAddContact: (data: ContactFormData) => Promis
                     <Input {...register("relationship")} placeholder="Relationship (Optional)" />
                     <Input {...register("phone", { required: true })} placeholder="Phone" />
                     <Input {...register("email")} placeholder="Email (Optional)" />
-                    <Button type="submit" disabled={isSubmitting} className="w-full">
+                    <Button type="submit" disabled={isSubmitting || !hasConfirmedConsent} className="w-full">
                         {isSubmitting ? 'Saving...' : 'Save'}
                     </Button>
+                </div>
+                <div className="mt-4 flex items-center space-x-2">
+                    <Checkbox
+                        id="consent"
+                        checked={hasConfirmedConsent}
+                        onCheckedChange={onConsentChange}
+                    />
+                    <label
+                        htmlFor="consent"
+                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-black"
+                    >
+                        I confirm that any emergency contact I add has been informed, understands, and has agreed to being contacted.
+                    </label>
                 </div>
             </form>
         </div>
@@ -56,6 +74,7 @@ export const EmergencyContactsManager: React.FC<ManagerProps> = ({ initialContac
     const [contacts, setContacts] = useState<EmergencyContact[]>(initialContacts);
     const [editingId, setEditingId] = useState<number | null>(null);
     const [contactToDelete, setContactToDelete] = useState<EmergencyContact | null>(null);
+    const [hasConfirmedConsent, setHasConfirmedConsent] = useState(false);
 
     const { register: registerEdit, handleSubmit: handleSubmitEdit, reset: resetEdit } = useForm<ContactFormData>();
 
@@ -183,7 +202,11 @@ export const EmergencyContactsManager: React.FC<ManagerProps> = ({ initialContac
             </Table>
 
             <div className="mt-6">
-                <AddContactForm onAddContact={handleAdd} />
+                <AddContactForm
+                    onAddContact={handleAdd}
+                    hasConfirmedConsent={hasConfirmedConsent}
+                    onConsentChange={setHasConfirmedConsent}
+                />
             </div>
 
             <AlertDialog open={contactToDelete !== null} onOpenChange={() => setContactToDelete(null)}>
