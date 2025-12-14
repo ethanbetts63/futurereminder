@@ -196,7 +196,13 @@ function EventManagementPage() {
                     ) : (
                       <>
                         {event.tier?.name === 'Automated' && (
-                            <Button variant="secondary" size="sm" onClick={() => handleUpgrade(event)}>Upgrade</Button>
+                            <Button 
+                                size="sm" 
+                                onClick={() => handleUpgrade(event)}
+                                className="bg-green-600 hover:bg-green-700 text-white"
+                            >
+                                Upgrade
+                            </Button>
                         )}
                         <Button variant="outline" size="sm" onClick={() => handleEdit(event)}>Edit</Button>
                         <Button variant="destructive" size="sm" onClick={() => setDeleteCandidateId(event.id)}>Delete</Button>
