@@ -3,7 +3,7 @@ import React from 'react';
 import { useForm, type Resolver, type FieldErrors } from 'react-hook-form';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 
 // Manually define the data type, removing the dependency on Zod
 export interface ProfileCreationData {
@@ -96,7 +96,16 @@ export const ProfileCreationForm: React.FC<ProfileCreationFormProps> = ({ initia
                         <FormItem><FormLabel>Email</FormLabel><FormControl><Input {...field} type="email" /></FormControl><FormMessage /></FormItem>
                     )} />
                     <FormField control={form.control} name="phone" render={({ field }) => (
-                        <FormItem><FormLabel>Phone</FormLabel><FormControl><Input {...field} value={field.value || ''} /></FormControl><FormMessage /></FormItem>
+                        <FormItem>
+                            <FormLabel>Phone</FormLabel>
+                            <FormControl>
+                                <Input {...field} value={field.value || ''} />
+                            </FormControl>
+                            <FormDescription>
+                                We may not be able to contact numbers outside of North America, Europe, and ANZ.
+                            </FormDescription>
+                            <FormMessage />
+                        </FormItem>
                     )} />
                 </div>
 
@@ -115,7 +124,16 @@ export const ProfileCreationForm: React.FC<ProfileCreationFormProps> = ({ initia
                         <FormItem><FormLabel>Backup Email (optional)</FormLabel><FormControl><Input {...field} value={field.value || ''} type="email" /></FormControl><FormMessage /></FormItem>
                     )} />
                      <FormField control={form.control} name="backup_phone" render={({ field }) => (
-                        <FormItem><FormLabel>Backup Phone (optional)</FormLabel><FormControl><Input {...field} value={field.value || ''} /></FormControl><FormMessage /></FormItem>
+                        <FormItem>
+                            <FormLabel>Backup Phone (optional)</FormLabel>
+                            <FormControl>
+                                <Input {...field} value={field.value || ''} />
+                            </FormControl>
+                            <FormDescription>
+                                We may not be able to contact numbers outside of North America, Europe, and ANZ.
+                            </FormDescription>
+                            <FormMessage />
+                        </FormItem>
                     )} />
                     <FormField control={form.control} name="facebook_handle" render={({ field }) => (
                         <FormItem><FormLabel>Facebook (optional)</FormLabel><FormControl><Input placeholder="your.profile" {...field} value={field.value || ''} /></FormControl><FormMessage /></FormItem>
