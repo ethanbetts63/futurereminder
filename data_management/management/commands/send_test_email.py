@@ -43,7 +43,7 @@ class Command(BaseCommand):
         parser.add_argument(
             '--reminder_test',
             action='store_true',
-            help='Run a specific test for the event reminder email using User(pk=1) and Event(pk=1).'
+            help='Run a specific test for the event reminder email using a random User and Event.'
         )
 
     def handle(self, *args, **options):
@@ -52,11 +52,18 @@ class Command(BaseCommand):
         if options['reminder_test']:
             self.stdout.write(self.style.SUCCESS("--- Running Event Reminder Test ---"))
             try:
-                user = User.objects.get(pk=1)
-                event = Event.objects.get(pk=1)
+                user = User.objects.order_by('?').first()
+                event = Event.objects.order_by('?').first()
+
+                if not user:
+                    self.stderr.write(self.style.ERROR("Test failed: Could not find any Users in the database."))
+                    return
+                if not event:
+                    self.stderr.write(self.style.ERROR("Test failed: Could not find any Events in the database."))
+                    return
                 
-                self.stdout.write(f"Found User: {user.email}")
-                self.stdout.write(f"Found Event: {event.title}")
+                self.stdout.write(f"Found random User: {user.email}")
+                self.stdout.write(f"Found random Event: {event.title}")
 
                 # Create a temporary, in-memory Notification object for the test
                 notification = Notification(
@@ -74,10 +81,6 @@ class Command(BaseCommand):
                 else:
                     self.stderr.write(self.style.ERROR("The send_reminder_email function reported a failure."))
 
-            except User.DoesNotExist:
-                self.stderr.write(self.style.ERROR("Test failed: Could not find a User with pk=1."))
-            except Event.DoesNotExist:
-                self.stderr.write(self.style.ERROR("Test failed: Could not find an Event with pk=1."))
             except Exception as e:
                 self.stderr.write(self.style.ERROR(f"An unexpected error occurred during the reminder test: {e}"))
             return
