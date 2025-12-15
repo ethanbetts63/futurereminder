@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}FutureReminder{% endblock %}</title>
+    <style>
+        /* Basic Resets */
+        body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+        table { border-collapse: collapse !important; }
+        body { height: 100% !important; margin: 0 !important; padding: 0 !important; width: 100% !important; }
+    </style>
+</head>
+<body style="background-color: #1a1a1a; margin: 0 !important; padding: 20px !important;">
+    <!-- Visually hidden preheader text -->
+    <div style="display: none; max-height: 0; overflow: hidden;">
+        {% block preheader %}{% endblock %}
+    </div>
+
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <!-- LOGO -->
+        <tr>
+            <td align="center">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+                    <tr>
+                        <td align="center" valign="top" style="padding: 40px 10px 40px 10px;">
+                            <a href="{{ site_url | default:'https://www.futurereminder.app' }}" target="_blank">
+                                <img src="https://www.futurereminder.app/static/logo.webp" alt="FutureReminder Logo" width="100" style="display: block; width: 100px; max-width: 100px; min-width: 100px; font-family: 'Arial', sans-serif; color: #ffffff; font-size: 18px;" border="0">
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <!-- Main Content Section -->
+        <tr>
+            <td align="center" style="padding: 0 10px 0 10px;">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+                    <tr>
+                        <td bgcolor="#2E2945" align="left" valign="top" style="padding: 40px 30px 40px 30px; border-radius: 8px; color: #F0F0F0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
+                            
+                            {% block content %}
+                                <!-- This is a placeholder and will be replaced by child templates -->
+                                <h1 style="font-size: 24px; font-weight: 700; margin: 0; color: #ffffff;">Default Title</h1>
+                                <p style="margin: 20px 0 0 0;">This is the default content for the base email template. You should extend this template and override the 'content' block to provide specific content for each type of email.</p>
+                            {% endblock %}
+
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <!-- FOOTER -->
+        <tr>
+            <td align="center" style="padding: 40px 10px 40px 10px;">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+                    <tr>
+                        <td align="center" style="color: #999999; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 400; line-height: 18px;">
+                            <p style="margin: 0;">You received this email because you set a reminder on <a href="{{ site_url | default:'https://www.futurereminder.app' }}" target="_blank" style="color: #5A95FF; text-decoration: none;">FutureReminder.app</a>.</p>
+                            <p style="margin: 10px 0;">
+                                FutureReminder | Some Address, Some Town, 12345
+                            </p>
+                            {% if unsubscribe_url %}
+                                <p style="margin: 0;">
+                                    <a href="{{ unsubscribe_url }}" target="_blank" style="color: #999999; text-decoration: underline;">Unsubscribe</a>
+                                </p>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

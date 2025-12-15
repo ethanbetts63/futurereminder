@@ -1,0 +1,10 @@
+{% block content_text %}
+This is the default text content. Please override this block in your child template.
+{% endblock %}
+
+
+---
+FutureReminder | Never miss what matters.
+{% if unsubscribe_url %}
+To unsubscribe from these notifications, please visit: {{ unsubscribe_url }}
+{% endif %}

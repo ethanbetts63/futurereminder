@@ -34,6 +34,7 @@ STRIPE_WEBHOOK_SECRET = os.environ.get("STRIPE_WEBHOOK_SECRET", "")
 
 # Custom Application Settings
 EVENT_PRICE = 10.00
+SITE_URL = os.environ.get("API_SERVER_URL", "https://www.futurereminder.app")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 

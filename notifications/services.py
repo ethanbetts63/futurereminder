@@ -1,5 +1,3 @@
-from datetime import timedelta
-from django.utils import timezone
 from notifications.models import Notification
 
 def clear_pending_notifications(event: 'Event'):
