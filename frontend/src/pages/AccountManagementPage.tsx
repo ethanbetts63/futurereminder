@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import type { UserProfile, EmergencyContact } from '@/types';
-import { getUserProfile, getEmergencyContacts } from '@/api';
+import { getUserProfile, getEmergencyContacts, deleteAccount } from '@/api';
 import { Skeleton } from "@/components/ui/skeleton";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -9,14 +9,26 @@ import { Terminal } from "lucide-react";
 import { ProfileForm } from '@/forms/ProfileForm'; 
 import { EmergencyContactsManager } from '@/components/EmergencyContactsManager';
 import Seo from '@/components/Seo';
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 const AccountManagementPage: React.FC = () => {
     const [profile, setProfile] = useState<UserProfile | null>(null);
     const [contacts, setContacts] = useState<EmergencyContact[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-
     const [isEditing, setIsEditing] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [deleteError, setDeleteError] = useState<string | null>(null);
 
     const fetchData = async () => {
         setLoading(true);
@@ -44,6 +56,20 @@ const AccountManagementPage: React.FC = () => {
         setIsEditing(false); // Turn off editing mode on successful save
     };
     
+    const handleDeleteAccount = async () => {
+        setIsDeleting(true);
+        setDeleteError(null);
+        try {
+            await deleteAccount();
+            // On successful deletion, the session is invalidated by the backend.
+            // We just need to redirect the user to log them out.
+            window.location.href = '/'; 
+        } catch (err: any) {
+            setDeleteError(err.message || 'Failed to delete account. Please try again.');
+            setIsDeleting(false);
+        }
+    };
+
     if (loading) {
         return (
             <div className="space-y-8">
@@ -127,6 +153,54 @@ const AccountManagementPage: React.FC = () => {
                         onContactsChange={setContacts} 
                     />
                 </CardContent>
+            </Card>
+
+            <Card className="border-destructive">
+                <CardHeader>
+                    <CardTitle className="text-destructive">Danger Zone</CardTitle>
+                    <CardDescription>
+                        Be careful! These actions are irreversible.
+                    </CardDescription>
+                </CardHeader>
+                <CardContent className="flex justify-between items-center">
+                    <div className="flex flex-col">
+                        <p className="font-semibold">Delete Your Account</p>
+                        <p className="text-sm text-muted-foreground">Once you delete your account, there is no going back. All of your data, including events and contacts, will be permanently removed.</p>
+                    </div>
+
+                    <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                            <Button variant="destructive" disabled={isDeleting}>
+                                {isDeleting ? 'Deleting...' : 'Delete Account'}
+                            </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    This action cannot be undone. This will permanently delete your
+                                    account and remove all your data from our servers.
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction onClick={handleDeleteAccount} className="bg-destructive hover:bg-destructive/90">
+                                    Yes, delete my account
+                                </AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
+
+                </CardContent>
+                {deleteError && (
+                     <CardContent>
+                        <Alert variant="destructive">
+                            <Terminal className="h-4 w-4" />
+                            <AlertTitle>Deletion Failed</AlertTitle>
+                            <AlertDescription>{deleteError}</AlertDescription>
+                        </Alert>
+                    </CardContent>
+                )}
             </Card>
         </div>
     );

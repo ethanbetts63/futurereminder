@@ -200,3 +200,10 @@ export async function createPaymentIntent(eventId: number, targetTierId: number)
   });
   return handleResponse(response);
 }
+
+export async function deleteAccount(): Promise<void> {
+  const response = await authedFetch('/api/users/delete/', {
+    method: 'DELETE',
+  });
+  await handleResponse(response);
+}

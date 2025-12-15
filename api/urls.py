@@ -7,6 +7,7 @@ from .views.frontend_views.terms_and_conditions_view import LatestTermsAndCondit
 from payments.views.tier_list_view import TierListView
 from users.views.register_view import RegisterView
 from users.views.user_profile_view import UserProfileView
+from users.views.backend_views.user_management_views import DeleteUserView
 from events.views.event_view import EventViewSet
 from .views.backend_views.notification_views import NotificationStatsView, AdminTaskListView
 from .views.backend_views.analytics_views import (
@@ -27,6 +28,7 @@ urlpatterns = [
     # User management endpoints
     path('users/me/', UserProfileView.as_view(), name='user-profile'),
     path('users/register/', RegisterView.as_view(), name='register'),
+    path('users/delete/', DeleteUserView.as_view(), name='delete-user'),
     
     # Configuration endpoints
     path('products/single-event-price/', SingleEventPriceView.as_view(), name='single-event-price'),
