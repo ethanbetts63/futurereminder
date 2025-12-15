@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { deleteAccount } from '@/api';
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Terminal } from "lucide-react";
 import {
@@ -25,9 +25,14 @@ const DeleteAccountSection: React.FC = () => {
         setDeleteError(null);
         try {
             await deleteAccount();
-            // On successful deletion, the session is invalidated by the backend.
-            // Redirect to log out.
+            
+            // Clear the JWT tokens from storage to log the user out on the client side.
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+            
+            // Redirect to the homepage. The user is now logged out.
             window.location.href = '/'; 
+
         } catch (err: any) {
             setDeleteError(err.message || 'Failed to delete account. Please try again.');
             setIsDeleting(false);
