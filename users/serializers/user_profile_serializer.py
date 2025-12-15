@@ -17,7 +17,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'first_name',
             'last_name',
             'phone',
-            'backup_phone',
             'backup_email',
             'facebook_handle',
             'instagram_handle',

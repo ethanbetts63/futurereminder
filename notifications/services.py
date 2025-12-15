@@ -58,7 +58,6 @@ def schedule_notifications_for_event(event: 'Event'):
         # Block 2: Backup contacts
         if i == 1:
             _create_notification(event, 'backup_email', block_start_date, user.backup_email)
-            _create_notification(event, 'backup_sms', block_end_date, user.backup_phone)
 
         # Block 3: Admin phone call task
         elif i == 2:

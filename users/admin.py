@@ -15,10 +15,10 @@ class CustomUserAdmin(UserAdmin):
     """
     inlines = (EmergencyContactInline,)
     fieldsets = UserAdmin.fieldsets + (
-        ('Additional Contact Info', {'fields': ('phone', 'backup_phone', 'physical_address')}),
+        ('Additional Contact Info', {'fields': ('phone',)}),
     )
     add_fieldsets = UserAdmin.add_fieldsets + (
-        ('Additional Contact Info', {'fields': ('phone', 'backup_phone', 'physical_address')}),
+        ('Additional Contact Info', {'fields': ('phone',)}),
     )
 
 admin.site.register(User, CustomUserAdmin)

@@ -15,7 +15,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         model = User
         fields = [
             'email', 'password', 'first_name', 'last_name', 'phone', 
-            'backup_email', 'backup_phone', 'facebook_handle', 
+            'backup_email', 'facebook_handle', 
             'instagram_handle', 'snapchat_handle', 'x_handle'
         ]
         extra_kwargs = {

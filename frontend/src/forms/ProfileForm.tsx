@@ -23,7 +23,6 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({ profile, onProfileUpda
             email: profile.email || '',
             phone: profile.phone || '',
             backup_email: profile.backup_email || '',
-            backup_phone: profile.backup_phone || '',
             facebook_handle: profile.facebook_handle || '',
             instagram_handle: profile.instagram_handle || '',
             snapchat_handle: profile.snapchat_handle || '',
@@ -70,9 +69,8 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({ profile, onProfileUpda
                      <ShadcnFormField control={control} name="backup_email" render={({ field }) => (
                         <FormItem><FormLabel>Backup Email <span className="text-muted-foreground text-xs">(Optional)</span></FormLabel><FormControl><Input {...field} value={field.value || ''} disabled={!isEditing} /></FormControl><FormMessage /></FormItem>
                     )} />
-                     <ShadcnFormField control={control} name="backup_phone" render={({ field }) => (
-                        <FormItem><FormLabel>Backup Phone <span className="text-muted-foreground text-xs">(Optional)</span></FormLabel><FormControl><Input {...field} value={field.value || ''} disabled={!isEditing} /></FormControl><FormMessage /></FormItem>
-                    )} />
+
+
                 </div>
                 <h3 className="text-lg font-medium border-t pt-4">Social Media</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

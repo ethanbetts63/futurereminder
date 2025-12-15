@@ -14,7 +14,6 @@ export interface ProfileCreationData {
     password?: string;
     confirmPassword?: string;
     backup_email?: string;
-    backup_phone?: string;
     facebook_handle?: string;
     instagram_handle?: string;
     snapchat_handle?: string;
@@ -123,19 +122,7 @@ export const ProfileCreationForm: React.FC<ProfileCreationFormProps> = ({ initia
                      <FormField control={form.control} name="backup_email" render={({ field }) => (
                         <FormItem><FormLabel>Backup Email (optional)</FormLabel><FormControl><Input {...field} value={field.value || ''} type="email" /></FormControl><FormMessage /></FormItem>
                     )} />
-                     <FormField control={form.control} name="backup_phone" render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Backup Phone (optional)</FormLabel>
-                            <FormControl>
-                                <Input {...field} value={field.value || ''} />
-                            </FormControl>
-                            <FormDescription>
-                                We may not be able to contact numbers outside of North America, Europe, and ANZ.
-                            </FormDescription>
-                            <FormMessage />
-                        </FormItem>
-                    )} />
-                    <FormField control={form.control} name="facebook_handle" render={({ field }) => (
+<FormField control={form.control} name="facebook_handle" render={({ field }) => (
                         <FormItem><FormLabel>Facebook (optional)</FormLabel><FormControl><Input placeholder="your.profile" {...field} value={field.value || ''} /></FormControl><FormMessage /></FormItem>
                     )} />
                     <FormField control={form.control} name="instagram_handle" render={({ field }) => (

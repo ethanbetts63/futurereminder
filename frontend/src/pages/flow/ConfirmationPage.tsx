@@ -169,7 +169,6 @@ const ConfirmationPage = () => {
                   <p><strong>Email:</strong> {profile?.email || 'Not provided'}</p>
                   <p><strong>Phone:</strong> {profile?.phone || 'Not provided'}</p>
                   <p><strong>Backup Email:</strong> {profile?.backup_email || 'Not provided'}</p>
-                  <p><strong>Backup Phone:</strong> {profile?.backup_phone || 'Not provided'}</p>
                   <p><strong>Facebook:</strong> {profile?.facebook_handle || 'Not provided'}</p>
                   <p><strong>Instagram:</strong> {profile?.instagram_handle || 'Not provided'}</p>
                   <p><strong>Snapchat:</strong> {profile?.snapchat_handle || 'Not provided'}</p>

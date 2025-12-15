@@ -10,7 +10,6 @@ class User(AbstractUser):
     phone = models.CharField(max_length=20)
 
     # Backup contact details
-    backup_phone = models.CharField(max_length=20, blank=True, null=True)
     backup_email = models.EmailField(blank=True, null=True)
 
     # Social media handles

@@ -46,7 +46,6 @@ export interface UserProfile {
     first_name: string;
     last_name: string;
     phone: string | null;
-    backup_phone: string | null;
     backup_email: string | null;
     facebook_handle: string | null;
     instagram_handle: string | null;
