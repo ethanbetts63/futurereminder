@@ -50,10 +50,10 @@ const HomePage = () => {
       </section>
 
       {/* --- Main Content & Sticky Sidebar --- */}
-      <div className="container mx-auto px-4 lg:grid lg:grid-cols-3 lg:gap-8">
+      <div className="px-4 lg:grid lg:grid-cols-3 lg:gap-8">
         
         {/* Main Content Column (2/3 width) */}
-        <div className="lg:col-span-2 bg-primary text-primary-foreground rounded-lg p-8 flex flex-col gap-8">
+        <div className="lg:col-span-2 bg-primary text-primary-foreground rounded-lg p-2 sm:p-4 md:p-8 flex flex-col gap-8">
           <Letter />
           <section>
             <Pricing />
