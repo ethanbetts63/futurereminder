@@ -1,0 +1,19 @@
+This document outlines the 5-step process for handling a user account deletion to ensure both data privacy and system integrity.
+
+1. Initiation
+A user requests to delete their account through the application's interface. This action triggers the deletion workflow.
+
+2. Cancel All Pending Notifications
+The system immediately finds all notifications for this user that have a 'pending' status. These notifications, which represent reminders that have not yet been sent, are permanently deleted from the database to prevent them from running after the account is anonymized.
+
+3. Anonymize User Data via Hashing
+For all personally identifiable information (PII) on the User model (e.g., first name, phone number), the system calculates a secure, salted hash of the value. This hash is then stored in a corresponding 'hash_' field (e.g., 'hash_first_name'). A special 'hash_email' field is also populated with the hash of the user's primary email address. Salt is used in the hashing process. 
+
+4. Overwrite Personal Data
+After the hashes are stored, the original fields are all set to null, expcept the email field which we give the value of user_pk_{user_pk}@deleted.com to satisify our unique constraint.
+
+5. Overwrite notification model
+The notification model has a record of the email, or number or whatever else it was sent to. this is a simple string field. This too needs to be hashed with salt. But the pk to the associated and now hashed user model remains.
+
+6. Deactivate Account
+Finally, the user's account is marked as inactive (e.g., 'is_active = False'). This action prevents any future logins and effectively removes the user's access to the system, completing the deletion process.

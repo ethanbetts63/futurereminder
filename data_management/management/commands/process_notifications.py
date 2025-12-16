@@ -34,29 +34,43 @@ class Command(BaseCommand):
         for notification in due_notifications:
             self.stdout.write(f"Processing Notification {notification.pk} for event '{notification.event.name}'...")
             
-            # --- Channel Routing ---
-            # Currently, we only have email. This is where we would add logic
-            # for SMS, calls, etc. in the future.
+            user = notification.user
+            contact_address = None
             
+            # --- Live Lookup for Contact Info ---
+            if notification.channel == 'primary_email':
+                contact_address = user.email
+            elif notification.channel == 'backup_email':
+                contact_address = user.backup_email
+            # In the future, other channels like SMS would be handled here.
+            
+            if not contact_address:
+                self.stderr.write(self.style.ERROR(f"  -> No contact address found for channel '{notification.channel}'. Skipping."))
+                notification.status = 'failed'
+                notification.save(update_fields=['status'])
+                failure_count += 1
+                continue
+
+            # --- Channel Routing ---
             was_sent = False
             if notification.channel in ['primary_email', 'backup_email']:
-                was_sent = send_reminder_email(notification)
+                was_sent = send_reminder_email(notification, contact_address)
             else:
-                self.stdout.write(self.style.WARNING(f"Unsupported channel '{notification.channel}'. Skipping."))
-                # We could mark it as failed or just ignore it. For now, we ignore.
+                self.stdout.write(self.style.WARNING(f"  -> Unsupported channel '{notification.channel}'. Skipping."))
                 continue
 
             # --- Update Status ---
             if was_sent:
                 notification.status = 'sent'
-                notification.save(update_fields=['status'])
+                notification.recipient_contact_info = contact_address # Save the address that was used
+                notification.save(update_fields=['status', 'recipient_contact_info'])
                 success_count += 1
-                self.stdout.write(self.style.SUCCESS(f"  -> Successfully sent."))
+                self.stdout.write(self.style.SUCCESS(f"  -> Successfully sent to {contact_address}."))
             else:
                 notification.status = 'failed'
                 notification.save(update_fields=['status'])
                 failure_count += 1
-                self.stderr.write(self.style.ERROR(f"  -> Failed to send."))
+                self.stderr.write(self.style.ERROR(f"  -> Failed to send to {contact_address}."))
 
         self.stdout.write(f"[{timezone.now()}] Notification processing job finished.")
         self.stdout.write(self.style.SUCCESS(f"Successfully sent: {success_count}"))

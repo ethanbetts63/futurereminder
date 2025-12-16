@@ -5,7 +5,7 @@ from django.utils.html import strip_tags
 
 from notifications.models import Notification
 
-def send_reminder_email(notification: Notification) -> bool:
+def send_reminder_email(notification: Notification, recipient_address: str) -> bool:
     """
     Sends a single event reminder email based on a Notification object.
 
@@ -14,12 +14,13 @@ def send_reminder_email(notification: Notification) -> bool:
 
     Args:
         notification: The Notification instance to be sent.
+        recipient_address: The email address to send the reminder to.
 
     Returns:
         True if the email was sent successfully, False otherwise.
     """
-    if not notification.user or not notification.event:
-        # Cannot send an email without a user or event context.
+    if not notification.user or not notification.event or not recipient_address:
+        # Cannot send an email without context or a recipient.
         return False
 
     try:
@@ -48,7 +49,7 @@ def send_reminder_email(notification: Notification) -> bool:
             subject=subject,
             body=text_content,
             from_email=settings.DEFAULT_FROM_EMAIL,
-            to=[notification.recipient_contact_info]
+            to=[recipient_address]
         )
         msg.attach_alternative(html_content, "text/html")
         msg.send(fail_silently=False)

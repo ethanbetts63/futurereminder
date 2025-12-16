@@ -31,9 +31,13 @@ class Notification(models.Model):
     channel = models.CharField(max_length=20, choices=CHANNEL_CHOICES)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending', db_index=True)
     
-    # Store the contact info at the time of scheduling to prevent issues if the user
-    # changes their contact details later.
-    recipient_contact_info = models.CharField(max_length=255, help_text="The email, phone number, or handle to contact.")
+    # This will be populated with the contact info that was used at the time of sending.
+    recipient_contact_info = models.CharField(
+        max_length=255,
+        help_text="The contact info used for sending. Populated after the notification is sent.",
+        null=True,
+        blank=True
+    )
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
