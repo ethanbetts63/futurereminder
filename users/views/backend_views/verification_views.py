@@ -27,9 +27,8 @@ class EmailVerificationView(APIView):
                 user.is_email_verified = True
                 user.save()
             
-            # Redirect to a frontend page indicating success
-            # The frontend can then show a "verified!" message and prompt login.
+            # Redirect to a frontend page indicating success.
             return redirect(f"{settings.SITE_URL}/verification-success/")
         else:
-            # Redirect to a frontend page indicating failure
+            # Redirect to a frontend page indicating failure.
             return redirect(f"{settings.SITE_URL}/verification-failed/")
