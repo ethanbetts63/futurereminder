@@ -3,6 +3,7 @@ from django.template.loader import render_to_string
 from django.conf import settings
 from django.utils.html import strip_tags
 
+from data_management.models import BlockedEmail
 from notifications.models import Notification
 
 def send_reminder_email(notification: Notification, recipient_address: str) -> bool:
@@ -19,6 +20,11 @@ def send_reminder_email(notification: Notification, recipient_address: str) -> b
     Returns:
         True if the email was sent successfully, False otherwise.
     """
+    # --- Blocklist Check ---
+    if BlockedEmail.objects.filter(email=recipient_address).exists():
+        print(f"Email to {recipient_address} suppressed because it is on the blocklist.")
+        return False # Returning False because the email was not sent.
+    
     if not notification.user or not notification.event or not recipient_address:
         # Cannot send an email without context or a recipient.
         return False
