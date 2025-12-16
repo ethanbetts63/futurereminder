@@ -1,5 +1,5 @@
 from django.urls import path
-from .views.backend_views import verification_views
+from .views import verification_views
 
 app_name = 'users'
 
