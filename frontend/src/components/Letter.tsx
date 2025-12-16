@@ -3,7 +3,7 @@ import React from 'react';
 export const Letter: React.FC = () => {
   return (
     <section>
-      <div className="container mx-auto px-2 md:px-4">
+      <div className="">
         <h2 className="text-center text-4xl md:text-5xl font-bold tracking-tight text-primary-foreground mb-4">
           Forgetfulness is <span className= "italic underline font-bold">expensive</span>.
         </h2>

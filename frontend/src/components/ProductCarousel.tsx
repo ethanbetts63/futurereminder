@@ -33,11 +33,11 @@ const hierarchyLevels = [
 
 export const ProductCarousel = () => {
   return (
-    <div className="w-full py-12">
+    <div className="w-full py-6">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold tracking-tight text-center text-primary-foreground mb-2">The <span className= "font-bold italic underline">FutureReminder</span> System</h2>
         <p className="text-lg text-primary-foreground text-center mb-8">
-          Our automated, escalating hierarchy ensures you never miss what matters most.
+          You can define how long before your event we begin to try and reach you. Then we will repeat email notifications, whilst also stepping through our hierachy of other contact options until you acknowledge.
         </p>
         <div className="flex overflow-x-auto space-x-6 pb-4">
           {hierarchyLevels.map((item) => (
