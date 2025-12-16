@@ -13,7 +13,7 @@ export const Letter: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-8 text-lg text-primary-foreground">
           <div className="flex flex-col gap-4">
             <p>
-              We all have obligations that matter far more than a calendar reminder was ever designed to handle. Visa or IUD expiries, trademark or domain renewals and even warranties, patents or business licences. Things that are harmless today but catastrophic when the deadline quietly slips by.
+              We all have obligations that matter far more than calendar reminders were ever designed to handle. Visa or IUD expiries, trademark or domain renewals and even warranties, patents or business licences. Things that are harmless today but catastrophic when the deadline quietly slips by.
             </p>
             <p>
               <span className="font-bold italic underline">Calendar apps are for dentists appointments.</span> Not high-consequence events. That gap costs people real money, real stress, and real consequences. Worst of all, it usually happens silently. You don’t realize what you forgot until the fallout arrives.
