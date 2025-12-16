@@ -25,6 +25,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'x_handle',
             'is_staff',
             'is_superuser',
+            'is_email_verified',
         ]
         # The username should not be changed after creation.
         read_only_fields = ['username', 'id']
