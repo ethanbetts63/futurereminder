@@ -127,7 +127,7 @@ export const ProfileCreationForm: React.FC<ProfileCreationFormProps> = ({ initia
                                     />
                                 </div>
                             </FormControl>
-                            <FormDescription>&nbsp;</FormDescription>
+                            <FormDescription className="min-h-10">&nbsp;</FormDescription>
                             <FormMessage />
                         </FormItem>
                     )} />
@@ -137,7 +137,7 @@ export const ProfileCreationForm: React.FC<ProfileCreationFormProps> = ({ initia
                             <FormControl>
                                 <Input {...field} value={field.value || ''} placeholder="5551234567" />
                             </FormControl>
-                            <FormDescription>
+                            <FormDescription className="min-h-10">
                                 We may not be able to contact numbers outside of North America, Europe, and ANZ.
                             </FormDescription>
                             <FormMessage />
