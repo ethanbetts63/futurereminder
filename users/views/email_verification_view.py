@@ -3,8 +3,6 @@ from django.utils.encoding import force_str
 from django.contrib.auth.tokens import default_token_generator
 from django.shortcuts import redirect
 from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
 from users.models import User
 from django.conf import settings
 
