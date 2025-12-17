@@ -39,6 +39,12 @@ const AnniversaryReminders = lazy(() => import('./pages/articles/AnniversaryRemi
 const VisaExpiry = lazy(() => import('./pages/articles/VisaExpiry'));
 const SubscriptionRenewal = lazy(() => import('./pages/articles/SubscriptionRenewal'));
 const ReminderAppsRanked = lazy(() => import('./pages/articles/ReminderAppsRanked'));
+const CaringForRosesSeasonalGuide = lazy(() => import('./pages/articles/CaringForRosesSeasonalGuide'));
+const CaringForHydrangeasSeasonalGuide = lazy(() => import('./pages/articles/CaringForHydrangeasSeasonalGuide'));
+const CaringForLavenderSeasonalGuide = lazy(() => import('./pages/articles/CaringForLavenderSeasonalGuide'));
+const CaringForCrepeMyrtleSeasonalGuide = lazy(() => import('./pages/articles/CaringForCrepeMyrtleSeasonalGuide'));
+const CaringForAzaleasSeasonalGuide = lazy(() => import('./pages/articles/CaringForAzaleasSeasonalGuide'));
+const CaringForCherryTreesSeasonalGuide = lazy(() => import('./pages/articles/CaringForCherryTreesSeasonalGuide'));
 
 
 const LoadingFallback = () => (
@@ -70,6 +76,12 @@ function App() {
               <Route path="/articles/visa-expiry" element={<VisaExpiry />} />
               <Route path="/articles/subscription-renewal" element={<SubscriptionRenewal />} />
               <Route path="/articles/reminder-apps-ranked" element={<ReminderAppsRanked />} />
+              <Route path="/articles/caring-for-roses-seasonal-guide" element={<CaringForRosesSeasonalGuide />} />
+              <Route path="/articles/caring-for-hydrangeas-seasonal-guide" element={<CaringForHydrangeasSeasonalGuide />} />
+              <Route path="/articles/caring-for-lavender-seasonal-guide" element={<CaringForLavenderSeasonalGuide />} />
+              <Route path="/articles/caring-for-crepe-myrtle-seasonal-guide" element={<CaringForCrepeMyrtleSeasonalGuide />} />
+              <Route path="/articles/caring-for-azaleas-seasonal-guide" element={<CaringForAzaleasSeasonalGuide />} />
+              <Route path="/articles/caring-for-cherry-trees-seasonal-guide" element={<CaringForCherryTreesSeasonalGuide />} />
 
               {/* Event Creation Flow */}
               <Route path="/event-gate" element={<EventGate />} />
