@@ -9,6 +9,12 @@ import postnotesImage from '../assets/postnotes.webp';
 
 const articles = [
   {
+    title: 'The Best Reminder Apps of 2025, Ranked',
+    imageSrc: postnotesImage,
+    link: '/articles/reminder-apps-ranked',
+    alt: 'A corkboard covered in colorful sticky notes with reminder icons'
+  },
+  {
     title: 'How to Write a Letter to Your Future Self',
     imageSrc: futureSelfImage,
     link: '/articles/letter-to-future-self',
@@ -45,10 +51,58 @@ const articles = [
     alt: 'A person looking shocked at a credit card statement'
   },
   {
-    title: 'The Best Reminder Apps of 2025, Ranked',
+    title: 'Caring for Roses: A Seasonal Guide',
     imageSrc: postnotesImage,
-    link: '/articles/reminder-apps-ranked',
-    alt: 'A corkboard covered in colorful sticky notes with reminder icons'
+    link: '/articles/caring-for-roses-seasonal-guide',
+    alt: 'A guide to caring for roses throughout the seasons'
+  },
+  {
+    title: 'Caring for Hydrangeas: A Seasonal Guide',
+    imageSrc: postnotesImage,
+    link: '/articles/caring-for-hydrangeas-seasonal-guide',
+    alt: 'A guide to caring for hydrangeas throughout the seasons'
+  },
+  {
+    title: 'Caring for Lavender: A Seasonal Guide',
+    imageSrc: postnotesImage,
+    link: '/articles/caring-for-lavender-seasonal-guide',
+    alt: 'A guide to caring for lavender throughout the seasons'
+  },
+  {
+    title: 'Caring for Crepe Myrtle: A Seasonal Guide',
+    imageSrc: postnotesImage,
+    link: '/articles/caring-for-crepe-myrtle-seasonal-guide',
+    alt: 'A guide to caring for crepe myrtle throughout the seasons'
+  },
+  {
+    title: 'Caring for Azaleas: A Seasonal Guide',
+    imageSrc: postnotesImage,
+    link: '/articles/caring-for-azaleas-seasonal-guide',
+    alt: 'A guide to caring for azaleas throughout the seasons'
+  },
+  {
+    title: 'Caring for Cherry Trees: A Seasonal Guide',
+    imageSrc: postnotesImage,
+    link: '/articles/caring-for-cherry-trees-seasonal-guide',
+    alt: 'A guide to caring for cherry trees throughout the seasons'
+  },
+  {
+    title: 'Caring for Apple Trees: A Seasonal Guide',
+    imageSrc: postnotesImage,
+    link: '/articles/caring-for-apple-trees-seasonal-guide',
+    alt: 'A guide to caring for apple trees throughout the seasons'
+  },
+  {
+    title: 'Caring for Peonies: A Seasonal Guide',
+    imageSrc: postnotesImage,
+    link: '/articles/caring-for-peonies-seasonal-guide',
+    alt: 'A guide to caring for peonies throughout the seasons'
+  },
+  {
+    title: 'Caring for Blueberry Bushes: A Seasonal Guide',
+    imageSrc: postnotesImage,
+    link: '/articles/caring-for-blueberry-bushes-seasonal-guide',
+    alt: 'A guide to caring for blueberry bushes throughout the seasons'
   }
 ];
 
