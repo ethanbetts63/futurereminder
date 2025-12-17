@@ -39,7 +39,7 @@ export const ArticleLayout: React.FC<ArticleLayoutProps> = ({ title, subtitle, i
       <div className="container mx-auto px-4 lg:grid lg:grid-cols-3 lg:gap-8 mt-6">
         
         {/* Main Content Column (2/3 width) */}
-        <div className="lg:col-span-2 bg-primary text-primary-foreground rounded-lg p-4 md:p-8 lg:p-16 flex flex-col gap-8">
+        <div className="lg:col-span-2 bg-background text-primary-foreground rounded-lg p-4 md:p-8 lg:p-16 flex flex-col gap-8">
           <div>
             {children}
           </div>
