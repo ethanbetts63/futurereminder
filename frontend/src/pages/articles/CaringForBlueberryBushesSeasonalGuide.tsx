@@ -18,6 +18,7 @@ const CaringForBlueberryBushesSeasonalGuide = () => {
         subtitle={<>Blueberries are rewarding but particular: they need acidic, well‑drained soil, regular pruning to renew fruiting wood, and consistent moisture during fruit set. <strong>Pruning at the wrong time or neglecting soil pH are the fastest ways to reduce yields.</strong></>}
         imageSrc={articleImage}
         imageAlt="A blueberry bush with ripe blueberries ready for picking"
+        faqPage="caring-for-blueberry-bushes-seasonal-guide"
       >
         <div className="text-lg text-primary-foreground">
           <h2 className="text-3xl font-bold tracking-tight mb-4 mt-0">When should you prune blueberry bushes?</h2>

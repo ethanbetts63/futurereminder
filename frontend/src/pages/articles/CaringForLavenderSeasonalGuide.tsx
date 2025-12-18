@@ -18,6 +18,7 @@ const CaringForLavenderSeasonalGuide = () => {
         subtitle={<>Lavender care revolves around proper timing rather than heavy-handed shaping. Most problems come from pruning into the plant’s woody base or encouraging lush, tender growth with too much water or fertilizer. <strong>Knowing your lavender type and scheduling light, timely maintenance preserves blooms</strong> and the plant’s aromatic, compact shape.</>}
         imageSrc={articleImage}
         imageAlt="A field of blooming lavender under the sun"
+        faqPage="caring-for-lavender-seasonal-guide"
       >
         <div className="text-lg text-primary-foreground">
           <h2 className="text-3xl font-bold tracking-tight mb-4 mt-0">When should you prune lavender?</h2>

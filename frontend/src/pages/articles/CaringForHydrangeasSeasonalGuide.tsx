@@ -18,6 +18,7 @@ const CaringForHydrangeasSeasonalGuide = () => {
         subtitle={<>Hydrangea care depends on the type you’re growing. Pruning at the wrong time is the fastest way to remove next season’s flowers, which is why <strong>understanding when to prune matters more than how to prune.</strong></>}
         imageSrc={articleImage}
         imageAlt="A row of vibrant hydrangea bushes with large blooms"
+        faqPage="caring-for-hydrangeas-seasonal-guide"
       >
         <div className="text-lg text-primary-foreground">
           <h2 className="text-3xl font-bold tracking-tight mb-4 mt-0">When should you prune hydrangeas?</h2>

@@ -18,6 +18,7 @@ const CaringForAzaleasSeasonalGuide = () => {
         subtitle={<>Azalea care depends heavily on bloom timing and root health. These shallow‑rooted shrubs form flower buds soon after blooming, so <strong>pruning at the wrong time quickly removes next year’s display.</strong> Protecting roots from heat, drought, and over‑fertilizing is more important than shaping.</>}
         imageSrc={articleImage}
         imageAlt="A flowering azalea bush with bright pink blooms"
+        faqPage="caring-for-azaleas-seasonal-guide"
       >
         <div className="text-lg text-primary-foreground">
           <h2 className="text-3xl font-bold tracking-tight mb-4 mt-0">When should you prune azaleas?</h2>

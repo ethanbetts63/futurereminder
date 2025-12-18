@@ -18,6 +18,7 @@ const CaringForRosesSeasonalGuide = () => {
         subtitle={<>Roses need care timed to their growth cycle: prune in dormancy, deadhead while flowering, and feed only during active growth. Mistimed pruning or feeding is the single biggest reason roses underperform — <strong>timing matters more than fancy products.</strong></>}
         imageSrc={articleImage}
         imageAlt="A beautiful rose garden in full bloom"
+        faqPage="caring-for-roses-seasonal-guide"
       >
         <div className="text-lg text-primary-foreground">
           <h2 className="text-3xl font-bold tracking-tight mb-4 mt-0">When should you prune roses?</h2>

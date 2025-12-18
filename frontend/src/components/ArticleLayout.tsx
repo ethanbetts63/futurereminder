@@ -48,7 +48,7 @@ export const ArticleLayout: React.FC<ArticleLayoutProps> = ({ title, subtitle, i
               <div className="container mx-auto px-4">
           <Faq 
             title="Have Questions?"
-            page="home"
+            page={faqPage}
             imageSrc={faqImage}
             imageSrcLandscape={faqImageLandscape}
             srcSet={`${faqImage320} 320w, ${faqImage640} 640w, ${faqImage768} 768w, ${faqImage1024} 1024w, ${faqImage1280} 1280w`}

@@ -18,6 +18,7 @@ const CaringForCherryTreesSeasonalGuide = () => {
         subtitle={<>Cherry tree care hinges on timing and restraint. Whether ornamental flowering cherries or fruiting varieties, pruning too late or too aggressively reduces blooms, increases disease risk, and weakens future harvests. <strong>Prioritizing air circulation, structure, and careful seasonal timing</strong> keeps trees healthy and productive.</>}
         imageSrc={articleImage}
         imageAlt="A cherry tree in full blossom with pink and white flowers"
+        faqPage="caring-for-cherry-trees-seasonal-guide"
       >
         <div className="text-lg text-primary-foreground">
           <h2 className="text-3xl font-bold tracking-tight mb-4 mt-0">When should you prune cherry trees?</h2>

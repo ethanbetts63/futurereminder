@@ -18,6 +18,7 @@ const CaringForAppleTreesSeasonalGuide = () => {
         subtitle={<>Apple tree care centers on well‑timed pruning and disease prevention. Apples bloom and fruit on specialized spurs that form over several years, so <strong>pruning affects both airflow and future harvests.</strong> The biggest mistakes are pruning too late, removing too much fruiting wood, and over‑fertilizing new trees.</>}
         imageSrc={articleImage}
         imageAlt="An apple tree with red apples ready for harvest"
+        faqPage="caring-for-apple-trees-seasonal-guide"
       >
         <div className="text-lg text-primary-foreground">
           <h2 className="text-3xl font-bold tracking-tight mb-4 mt-0">When should you prune apple trees?</h2>

@@ -18,6 +18,7 @@ const CaringForPeoniesSeasonalGuide = () => {
         subtitle={<>Peony care is mostly about patience and seasonal cleanup rather than pruning. Peonies rarely need shaping, but dead foliage, improper cutting timing, and poor support can stress plants and reduce blooms. <strong>Understanding when to cut back foliage and divide roots protects next year's flowers.</strong></>}
         imageSrc={articleImage}
         imageAlt="A large pink peony flower in full bloom"
+        faqPage="caring-for-peonies-seasonal-guide"
       >
         <div className="text-lg text-primary-foreground">
           <h2 className="text-3xl font-bold tracking-tight mb-4 mt-0">When should you prune peonies?</h2>

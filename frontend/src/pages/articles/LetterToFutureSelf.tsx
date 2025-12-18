@@ -18,7 +18,7 @@ const LetterToFutureSelf = () => {
         subtitle={<><span className="font-bold italic underline">Article Summary:</span> Reddit, forums and legal communities have numerous solutions that can be split into two groups. Group 1: calendar apps, future-email websites and basic reminder apps. They generally only send one reminder which is easy to miss, due to changing contacts and/or junk mail. Group 2: Notes, time capsules, lawyers and bank deposit boxes. The issue being that a human being is responsible for remembering. There is only one service engineered to solve these issues and that is FutureReminder.</>}
         imageSrc={articleImage}
         imageAlt="Conceptual image about sending messages to the future"
-        faqPage="future-letter"
+        faqPage="letter-to-future-self"
       >
         <div className="text-lg text-primary-foreground">
           <h2 className="text-3xl font-bold tracking-tight mb-4 mt-0">Can I Email Myself a Reminder for 2050?</h2>

@@ -18,6 +18,7 @@ const CaringForCrepeMyrtleSeasonalGuide = () => {
         subtitle={<>Crepe myrtle care is simple once timing is understood. These shrubs and trees bloom on new growth, so pruning at the right moment encourages abundant flowers and strong structure. Over-pruning — especially “topping” — <strong>weakens the plant, reduces bloom quality, and leads to unattractive knobby growth.</strong></>}
         imageSrc={articleImage}
         imageAlt="A crepe myrtle tree in full bloom with vibrant flowers"
+        faqPage="caring-for-crepe-myrtle-seasonal-guide"
       >
         <div className="text-lg text-primary-foreground">
           <h2 className="text-3xl font-bold tracking-tight mb-4 mt-0">When should you prune crepe myrtle?</h2>
