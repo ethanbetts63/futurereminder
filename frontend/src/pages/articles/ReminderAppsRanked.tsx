@@ -11,7 +11,7 @@ const ReminderAppsRanked = () => {
         description="We live and breathe the reminder app ecosystem. We read every forum discussion to give you the community consensus for all the major apps, with a little of our own opinion sprinkled on top."
         canonicalPath="/articles/reminder-apps-ranked"
         ogType="article"
-        ogImage="/og-images/og-reminder-apps.webp" // <-- TODO: Add this OG image
+        ogImage="/og-images/og-reminder-apps.webp" 
       />
       <ArticleLayout
         title="The Best Reminder Apps in 2025 — Ranked by a Reminder App That Only Wants 1% of You"
@@ -125,7 +125,7 @@ const ReminderAppsRanked = () => {
                 <p><span className="font-bold">Cross-platform sync:</span> N/A</p>
                 <p><span className="font-bold">Hard-to-ignore:</span> 999/5 (We’ll explain in a moment)</p>
                 <p><span className="font-bold">Ease & aesthetics:</span> 3/5</p>
-                <p><span className="font-bold">Cost:</span> 1/5</p>
+                <p><span className="font-bold">Cost:</span> 3/5</p>
                 <p><span className="font-bold">Featurefulness:</span> 1/5</p>
                 <h4 className="font-semibold mt-4 mb-2">Community Opinion</h4>
                 <p className="mb-4">We’re too new to have a large community consensus yet. But we’d love to know what you think. You can find the boss's email on our home page.</p>
@@ -134,7 +134,7 @@ const ReminderAppsRanked = () => {
                 <p className="mb-4"><span className="font-bold italic underline">We won’t just ping you a notification.</span> We’ll email you. Then we’ll text you. Then we’ll try your backup contacts. Then we’ll call you. You can even give us emergency contacts to reach out to. We can even reach out via social media manually if all else fails. Sounds like overkill? It isn’t. Regular notifications get missed. Emails can end up in junk. Phone numbers or emails change over time. There are a lot of ways your average reminder system can go wrong.</p>
                 <p className="mb-4">Overstay a visa and you could end a career or a relationship. Leave an IUD in past expiry and you could get pregnant. Forget to renew a trademark, domain or business license. That could be bankruptcy. All because you “just forgot”.</p>
                 <p className="mb-4">Why N/A for cross-platform sync? <span className="font-bold italic underline">We aren’t an app and we don’t want to be on your phone.</span> Set up an event with us once and then forget about us. We won’t contact you at all until the date you’ve told us to.</p>
-                <p className="mb-4">Why Cost 1/5 ? You pay per event you want to be reminded about. We don’t expect you to use us for every little thing in your life. No subscriptions. You pay upfront and once. And then you forget about us.</p>
+                <p className="mb-4">Why Cost 13/5 ? You pay per event you want to be reminded about. We don’t expect you to use us for every little thing in your life. No subscriptions. You pay upfront and once. And then you forget about us.</p>
                 <p className="mb-4">Why featurefulness 1/5 ? We only do one thing. And at this point we think you understand that. <span className="font-bold italic underline">It’s not a flaw, it's our whole business model.</span></p>
               </div>
             </div>

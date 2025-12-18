@@ -30,6 +30,11 @@ class User(AbstractUser):
         blank=True,
         help_text="Timestamp of when the last verification email was sent."
     )
+    password_reset_last_sent_at = models.DateTimeField(
+        null=True,
+        blank=True,
+        help_text="Timestamp of when the last password reset email was sent."
+    )
 
     # Legal
     agreed_to_terms = models.ForeignKey(
