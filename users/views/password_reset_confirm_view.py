@@ -3,32 +3,10 @@ from django.utils.encoding import force_str
 from django.contrib.auth.tokens import default_token_generator
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status, serializers
+from rest_framework import status
 from rest_framework.permissions import AllowAny
 from users.models import User
-
-class PasswordResetConfirmSerializer(serializers.Serializer):
-    """
-    Serializer for the password reset confirmation endpoint.
-    Validates that the two password fields match and meet complexity requirements.
-    """
-    password = serializers.CharField(
-        write_only=True,
-        required=True,
-        style={'input_type': 'password'},
-        min_length=8  # Enforce a minimum length
-    )
-    password_confirm = serializers.CharField(
-        write_only=True,
-        required=True,
-        style={'input_type': 'password'}
-    )
-
-    def validate(self, attrs):
-        if attrs['password'] != attrs['password_confirm']:
-            raise serializers.ValidationError({"password_confirm": "The two password fields didn't match."})
-        # Note: You could add more complex password validation here if needed.
-        return attrs
+from users.serializers.password_reset_confirm_serializer import PasswordResetConfirmSerializer
 
 class PasswordResetConfirmView(APIView):
     """

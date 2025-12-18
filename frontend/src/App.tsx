@@ -24,6 +24,8 @@ const PaymentStatusPage = lazy(() => import('./pages/flow/PaymentStatusPage'));
 const VerificationSuccessPage = lazy(() => import('./pages/flow/VerificationSuccessPage'));
 const BlocklistSuccessPage = lazy(() => import('./pages/flow/BlocklistSuccessPage'));
 const TermsAndConditionsPage = lazy(() => import('./pages/TermsAndConditionsPage'));
+const ForgotPasswordPage = lazy(() => import('./pages/ForgotPasswordPage'));
+const ResetPasswordConfirmPage = lazy(() => import('./pages/ResetPasswordConfirmPage'));
 
 // --- Lazy-loaded Admin Pages ---
 const AdminLayout = lazy(() => import('./pages/admin/AdminLayout'));
@@ -70,6 +72,8 @@ function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/confirmation/:eventId" element={<ConfirmationPage />} />
               <Route path="/login" element={<LoginPage />} />
+              <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+              <Route path="/reset-password-confirm/:uid/:token" element={<ResetPasswordConfirmPage />} />
               <Route path="/terms-and-conditions" element={<TermsAndConditionsPage />} />
               <Route path="/verification-success" element={<VerificationSuccessPage />} />
               <Route path="/blocklist-success" element={<BlocklistSuccessPage />} />

@@ -5,13 +5,11 @@ from django.utils import timezone
 from datetime import timedelta
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status, serializers
+from rest_framework import status
 from rest_framework.permissions import AllowAny
 from users.models import User
 from users.utils.send_password_reset_email import send_password_reset_email
-
-class EmailSerializer(serializers.Serializer):
-    email = serializers.EmailField(max_length=254)
+from users.serializers.password_reset_request_serializer import EmailSerializer
 
 class PasswordResetRequestView(APIView):
     """

@@ -9,6 +9,8 @@ from users.views.register_view import RegisterView
 from users.views.user_profile_view import UserProfileView
 from users.views.delete_user_view import DeleteUserView
 from users.views.change_password_view import ChangePasswordView
+from users.views.password_reset_request_view import PasswordResetRequestView
+from users.views.password_reset_confirm_view import PasswordResetConfirmView
 from events.views.event_view import EventViewSet
 from .views.backend_views.notification_views import NotificationStatsView, AdminTaskListView
 from .views.backend_views.analytics_views import (
@@ -31,6 +33,8 @@ urlpatterns = [
     path('users/register/', RegisterView.as_view(), name='register'),
     path('users/delete/', DeleteUserView.as_view(), name='delete-user'),
     path('users/change-password/', ChangePasswordView.as_view(), name='change-password'),
+    path('users/password-reset/request/', PasswordResetRequestView.as_view(), name='password-reset-request'),
+    path('users/password-reset/confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password-reset-confirm'),
     
     # Configuration endpoints
     path('products/single-event-price/', SingleEventPriceView.as_view(), name='single-event-price'),
