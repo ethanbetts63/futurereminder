@@ -175,6 +175,9 @@ REST_FRAMEWORK = {
         # SessionAuth is still useful for browsing the API, and for the 'claim account' flow
         'rest_framework.authentication.SessionAuthentication', 
     ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
 }
 
 # Email Settings (Mailgun)

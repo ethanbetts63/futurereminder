@@ -7,13 +7,15 @@ from payments.models import Price
 from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
 
+from rest_framework.permissions import AllowAny
+
 @method_decorator(cache_page(60 * 60 * 24), name='dispatch')
 class SingleEventPriceView(APIView):
     """
     Provides the price for a standard, single event.
     This is a public endpoint used by the frontend to display the price.
     """
-    permission_classes = [] # No authentication required
+    permission_classes = [AllowAny] # No authentication required
 
     def get(self, request, *args, **kwargs):
         cache_key = 'single_event_price_data'

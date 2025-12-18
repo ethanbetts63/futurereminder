@@ -1,6 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import AllowAny
 from data_management.models import TermsAndConditions
 from api.serializers.terms_and_conditions_serializer import TermsAndConditionsSerializer
 
@@ -12,6 +13,8 @@ class LatestTermsAndConditionsView(APIView):
     """
     Returns the most recent version of the Terms and Conditions.
     """
+    permission_classes = [AllowAny]
+    
     def get(self, request, *args, **kwargs):
         latest_terms = TermsAndConditions.objects.order_by('-published_at').first()
         if not latest_terms:
