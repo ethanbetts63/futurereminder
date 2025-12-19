@@ -1,0 +1,13 @@
+# payments/views/tier_list_view.py
+from rest_framework import generics
+from rest_framework.permissions import AllowAny
+from payments.models import Tier
+from payments.serializers.tier_serializer import TierSerializer
+
+class TierListView(generics.ListAPIView):
+    """
+    Provides a list of all active pricing tiers.
+    """
+    permission_classes = [AllowAny]
+    serializer_class = TierSerializer
+    queryset = Tier.objects.filter(is_active=True).prefetch_related('prices')
