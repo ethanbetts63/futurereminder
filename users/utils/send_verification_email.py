@@ -24,7 +24,7 @@ def send_verification_email(user: User):
         uid = urlsafe_base64_encode(force_bytes(user.pk))
         
         # Construct the verification URL
-        verification_url = f"{settings.SITE_URL}/api/users/verify-email/{uid}/{token}/"
+        verification_url = f"{settings.SITE_URL}/api/users/verify-email/{uid}/{token}"
 
         # Construct the unique blocklist URL
         signed_email = signer.sign(user.email)

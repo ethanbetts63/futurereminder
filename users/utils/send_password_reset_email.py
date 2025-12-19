@@ -24,7 +24,7 @@ def send_password_reset_email(user: User):
         uid = urlsafe_base64_encode(force_bytes(user.pk))
         
         # Construct the password reset URL for the frontend
-        reset_url = f"{settings.SITE_URL}/reset-password-confirm/{uid}/{token}/"
+        reset_url = f"{settings.SITE_URL}/reset-password-confirm/{uid}/{token}"
 
         # Construct the unique blocklist URL
         signed_email = signer.sign(user.email)
