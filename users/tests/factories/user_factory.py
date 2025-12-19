@@ -1,25 +1,25 @@
 import factory
 from factory.django import DjangoModelFactory
-from factory import Faker
 from users.models import User
+from faker import Faker
+
+fake = Faker()
 
 class UserFactory(DjangoModelFactory):
     class Meta:
         model = User
         django_get_or_create = ('username',)
 
-    username = Faker('user_name')
-    first_name = Faker('first_name')
-    last_name = Faker('last_name')
-    email = Faker('email')
-    is_staff = False
+    first_name = factory.Faker('first_name')
+    last_name = factory.Faker('last_name')
+    username = factory.Faker('user_name')
+    email = factory.Faker('email')
+    password = factory.PostGeneration(lambda obj, create, extracted, **kwargs: obj.set_password('password'))
     is_active = True
-    is_superuser = False
-    country_code = Faker('country_code')
-    phone = Faker('phone_number')
-    backup_email = Faker('email')
-    facebook_handle = Faker('user_name')
-    instagram_handle = Faker('user_name')
-    snapchat_handle = Faker('user_name')
-    x_handle = Faker('user_name')
-    is_email_verified = Faker('boolean')
+    country_code = factory.Faker('country_code')
+    phone = factory.LazyFunction(lambda: fake.numerify(text='##########'))
+    backup_email = factory.Faker('email')
+    facebook_handle = factory.Faker('user_name')
+    instagram_handle = factory.Faker('user_name')
+    snapchat_handle = factory.Faker('user_name')
+    x_handle = factory.Faker('user_name')

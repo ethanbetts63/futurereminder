@@ -43,7 +43,7 @@ class Notification(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Notification for {self.event.title} to {self.user.email} via {self.get_channel_display()} on {self.scheduled_send_time}"
+        return f"Notification for {self.event.name} to {self.user.email} via {self.get_channel_display()} on {self.scheduled_send_time}"
 
     class Meta:
         ordering = ['scheduled_send_time']
