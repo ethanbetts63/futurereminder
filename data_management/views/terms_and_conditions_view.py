@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 from data_management.models import TermsAndConditions
-from ..serializers.terms_and_conditions_serializer import TermsAndConditionsSerializer
+from data_management.serializers.terms_and_conditions_serializer import TermsAndConditionsSerializer
 
 from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator

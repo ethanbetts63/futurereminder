@@ -7,7 +7,7 @@ from datetime import timedelta
 from collections import Counter
 
 from notifications.models import Notification
-from ..serializers.notification_serializer import AdminTaskSerializer
+from notifications.serializers.notification_serializer import AdminTaskSerializer
 
 class NotificationStatsView(APIView):
     """

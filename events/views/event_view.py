@@ -4,7 +4,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from events.models import Event
 from events.serializers.event_serializer import EventSerializer
-from api.serializers.event_creation_serializers import AuthenticatedEventCreateSerializer
+from events.serializers.event_creation_serializers import AuthenticatedEventCreateSerializer
 
 class EventViewSet(viewsets.ModelViewSet):
     """

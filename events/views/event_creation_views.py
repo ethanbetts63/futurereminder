@@ -1,5 +1,5 @@
 from rest_framework import generics, permissions
-from api.serializers.event_creation_serializers import (
+from events.serializers.event_creation_serializers import (
     AuthenticatedEventCreateSerializer,
 )
 
