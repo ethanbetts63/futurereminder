@@ -30,7 +30,7 @@ const HomePage = () => {
   return (
     <main>
       <Seo
-        title="FutureReminder | Persistent reminders for important and distant events."
+        title="FutureReminder | Persistent reminders for important or distant events."
         description="Standard calendars fail for distant or important events. FutureReminder uses an escalating hierarchy of notifications to ensure you never miss a critical deadline or event again."
         canonicalPath="/"
         ogImage="/og-images/og-homepage.webp"

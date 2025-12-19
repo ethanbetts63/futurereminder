@@ -13,21 +13,28 @@ interface SeoProps {
 const Seo: React.FC<SeoProps> = ({ title, description, canonicalPath, ogType = 'website', ogImage, noindex }) => {
   const siteUrl = 'https://www.futurereminder.app'; // This should ideally come from an environment variable
   const canonicalUrl = canonicalPath ? `${siteUrl}${canonicalPath}` : undefined;
-  const imageUrl = ogImage ? `${siteUrl}${ogImage}` : undefined;
+  const imageUrl = ogImage ? `${siteUrl}${ogImage}` : `${siteUrl}/static/square-image.jpg`; // Fallback image
 
   return (
     <Helmet>
+      {/* Standard SEO */}
       <title>{title}</title>
       {description && <meta name="description" content={description} />}
       {noindex && <meta name="robots" content="noindex" />}
       {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
       
-      {/* Open Graph Tags */}
+      {/* Open Graph Tags (Facebook, etc.) */}
       <meta property="og:title" content={title} />
       {description && <meta property="og:description" content={description} />}
       <meta property="og:type" content={ogType} />
       {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
-      {imageUrl && <meta property="og:image" content={imageUrl} />}
+      <meta property="og:image" content={imageUrl} />
+      
+      {/* Twitter Card Tags */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={title} />
+      {description && <meta name="twitter:description" content={description} />}
+      <meta name="twitter:image" content={imageUrl} />
     </Helmet>
   );
 };
