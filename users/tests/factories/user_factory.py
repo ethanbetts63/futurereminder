@@ -2,6 +2,7 @@ import factory
 from factory.django import DjangoModelFactory
 from users.models import User
 from faker import Faker
+from data_management.tests.factories.terms_and_conditions_factory import TermsAndConditionsFactory
 
 fake = Faker()
 
@@ -23,3 +24,4 @@ class UserFactory(DjangoModelFactory):
     instagram_handle = factory.Faker('user_name')
     snapchat_handle = factory.Faker('user_name')
     x_handle = factory.Faker('user_name')
+    agreed_to_terms = factory.SubFactory(TermsAndConditionsFactory)
