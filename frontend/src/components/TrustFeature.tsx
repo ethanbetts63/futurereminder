@@ -3,18 +3,23 @@ import letterLasers from '../assets/lasers.webp';
 
 const TrustFeature: React.FC = () => {
   return (
-    <div className="bg-primary p-6 rounded-lg shadow-md">
-      <div className="flex flex-col lg:flex-row items-center">
-        <div className="w-full lg:w-1/3 pb-2 flex justify-center">
-          <img src={letterLasers} alt="A letter protected by a glass case and laser beams" className="w-full h-auto rounded-md object-contain" />
+    <div className="bg-primary rounded-lg shadow-md overflow-hidden">
+      <div className="lg:grid lg:grid-cols-2">
+        {/* Image Section */}
+        <div 
+          className="min-h-64 max-h-32 lg:min-h-full bg-cover bg-center"
+          style={{ backgroundImage: `url(${letterLasers})` }}
+        >
+           {/* This div is for the background image */}
         </div>
-        <div className="w-full lg:w-2/3 lg:pl-4 text-center">
-          <h2 className="text-2xl font-bold mb-8">Built on trust, not data.</h2>
-          <p className="mb-4">When you secure an event with FutureReminder, we take your trust seriously.</p>
-          <ul className="list-disc list-inside">
-            <li className="mb-2"><strong>True Deletion:</strong> We go beyond industry-standard hashing to ensure that when you delete your data, it stays gone.</li>
-            <li className="mb-2"><strong>No Ads, No Selling:</strong> Your contact info is used for one thing: finding you when it matters. We do not sell data.</li>
-            <li><strong>One-Click Stop:</strong> You are always in control. A link is present in all notifications to stop reminder sequence instantly.</li>
+        
+        {/* Text Section */}
+        <div className="p-4 md:p-6 lg:p-8">
+          <h2 className="text-4xl lg:text-4xl font-bold mb-8 text-center">Built on reputation, not <span className="italic">data.</span></h2>
+          <ul className="list-disc list-inside text-lg">
+            <li className="mb-4"><strong>True Deletion:</strong> We go beyond industry-standard hashing to ensure that when you delete your data, it stays gone.</li>
+            <li className="mb-4"><strong>No Ads, No Selling:</strong> Your contact info is used for one thing: finding you when it matters. We do not sell data.</li>
+            <li className="mb-4"><strong>One-Click Stop:</strong> A link is present in all notifications to stop reminder sequences instantly. Events timelines and contact methods are manageable editable even after creation.</li>
           </ul>
         </div>
       </div>
