@@ -61,6 +61,12 @@ const articles = [
     alt: 'A person looking shocked at a credit card statement'
   },
   {
+    title: 'Guide - Tax Season 2026',
+    imageSrc: postnotesImage,
+    link: '/articles/tax-season-2026',
+    alt: 'A guide to tax season 2026'
+  },
+  {
     title: 'Caring for Roses: A Seasonal Guide',
     imageSrc: rosesImage,
     link: '/articles/caring-for-roses-seasonal-guide',

@@ -51,6 +51,7 @@ const CaringForCherryTreesSeasonalGuide = lazy(() => import('./pages/articles/Ca
 const CaringForAppleTreesSeasonalGuide = lazy(() => import('./pages/articles/CaringForAppleTreesSeasonalGuide'));
 const CaringForPeoniesSeasonalGuide = lazy(() => import('./pages/articles/CaringForPeoniesSeasonalGuide'));
 const CaringForBlueberryBushesSeasonalGuide = lazy(() => import('./pages/articles/CaringForBlueberryBushesSeasonalGuide'));
+const TaxSeason2026 = lazy(() => import('./pages/articles/TaxSeason2026'));
 const BlogExplorePage = lazy(() => import('./pages/BlogExplorePage'));
 
 
@@ -95,6 +96,7 @@ function App() {
                 <Route path="/articles/caring-for-apple-trees-seasonal-guide" element={<CaringForAppleTreesSeasonalGuide />} />
                 <Route path="/articles/caring-for-peonies-seasonal-guide" element={<CaringForPeoniesSeasonalGuide />} />
                 <Route path="/articles/caring-for-blueberry-bushes-seasonal-guide" element={<CaringForBlueberryBushesSeasonalGuide />} />
+                <Route path="/articles/tax-season-2026" element={<TaxSeason2026 />} />
                 <Route path="/articles" element={<BlogExplorePage />} />
 
                 {/* Event Creation Flow */}
