@@ -35,16 +35,3 @@ class AddToBlocklistView(APIView):
         # In the future, this could be a dedicated frontend page.
         # For now, a simple message is sufficient.
         return redirect(f"{settings.SITE_URL}/blocklist-success/")
-
-
-class BlocklistSuccessView(APIView):
-    """
-    A simple view to show a generic success message.
-    This is what the AddToBlocklistView redirects to.
-    """
-    def get(self, request, *args, **kwargs):
-        # This will be routed on the frontend to a simple page.
-        # This approach avoids needing a template here.
-        # For now, this is just a placeholder to make the redirect work.
-        # The actual content will be a new React component.
-        return Response({}, status=status.HTTP_200_OK)

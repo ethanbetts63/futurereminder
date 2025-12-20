@@ -1,25 +1,24 @@
 from django.urls import path
-from .views import blocklist_view
+from .views.add_to_blocklist_view import AddToBlocklistView
+from .views.blocklist_success_view import BlocklistSuccessView
 from .views.faq_list_view import FaqListView
 from .views.terms_and_conditions_view import LatestTermsAndConditionsView
 from .views.product_views import SingleEventPriceView
-from .views.analytics_views import (
-    AutomatedNotificationHistoryView,
-    ManualNotificationHistoryView,
-    HistoricalSummaryView
-)
+from .views.automated_notification_history_view import AutomatedNotificationHistoryView
+from .views.manual_notification_history_view import ManualNotificationHistoryView
+from .views.historical_summary_view import HistoricalSummaryView
 
 app_name = 'data_management'
 
 urlpatterns = [
     path(
         'blocklist/block/<str:signed_email>/',
-        blocklist_view.AddToBlocklistView.as_view(),
+        AddToBlocklistView.as_view(),
         name='add_to_blocklist'
     ),
     path(
         'blocklist-success/',
-        blocklist_view.BlocklistSuccessView.as_view(),
+        BlocklistSuccessView.as_view(),
         name='blocklist_success'
     ),
     path('faqs/', FaqListView.as_view(), name='faq-list'),
