@@ -32,7 +32,7 @@ class TestStripeWebhookView:
 
     def test_webhook_success(self, mocker):
         tier = TierFactory()
-        event = EventFactory()
+        event = EventFactory(is_active=False)
         payment = PaymentFactory(event=event, stripe_payment_intent_id='pi_123', status='pending')
         
         webhook_event = self._get_webhook_event('payment_intent.succeeded', 'pi_123', tier.id)
@@ -77,7 +77,7 @@ class TestStripeWebhookView:
         assert response.status_code == 200
 
     def test_tier_not_found(self, mocker):
-        event = EventFactory()
+        event = EventFactory(is_active=False)
         payment = PaymentFactory(event=event, stripe_payment_intent_id='pi_789', status='pending')
         
         webhook_event = self._get_webhook_event('payment_intent.succeeded', 'pi_789', 9999) # Non-existent tier ID

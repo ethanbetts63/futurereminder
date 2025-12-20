@@ -27,5 +27,24 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'is_superuser',
             'is_email_verified',
         ]
-        # The username should not be changed after creation.
-        read_only_fields = ['username', 'id']
+        read_only_fields = [
+            'username', 
+            'id', 
+            'is_staff', 
+            'is_superuser', 
+            'is_email_verified'
+        ]
+
+    def validate_email(self, value):
+        """
+        Ensure the new email is not already in use by another user.
+        """
+        lower_email = value.lower()
+        # The instance is available during updates
+        if self.instance and self.instance.email == lower_email:
+            return lower_email # No change, so it's valid
+            
+        if User.objects.filter(email__iexact=lower_email).exists():
+            raise serializers.ValidationError("An account with this email address already exists.")
+        return lower_email
+

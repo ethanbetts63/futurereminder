@@ -11,5 +11,5 @@ class EmergencyContactFactory(DjangoModelFactory):
     first_name = factory.Faker('first_name')
     last_name = factory.Faker('last_name')
     relationship = factory.Faker('word')
-    phone = factory.Faker('phone_number')
+    phone = factory.Faker('numerify', text='##########')
     email = factory.Faker('email')

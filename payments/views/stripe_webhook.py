@@ -61,7 +61,7 @@ class StripeWebhookView(APIView):
                         return HttpResponse(status=200)
 
             except Payment.DoesNotExist:
-                print(f"Error: Received successful payment intent for non-existent charge ID: {payment_intent.id}")
+                print(f"Error: Received successful payment intent for non-existent charge ID: {payment_intent['id']}")
                 return HttpResponse(status=200)
 
         elif event['type'] == 'payment_intent.payment_failed':
@@ -71,7 +71,7 @@ class StripeWebhookView(APIView):
                 payment.status = 'failed'
                 payment.save()
             except Payment.DoesNotExist:
-                print(f"Error: Received failed payment intent for non-existent charge ID: {payment_intent.id}")
+                print(f"Error: Received failed payment intent for non-existent charge ID: {payment_intent['id']}")
                 return HttpResponse(status=200)
 
         # Passed signature verification

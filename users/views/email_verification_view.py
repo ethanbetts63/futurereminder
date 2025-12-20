@@ -7,7 +7,7 @@ from django.shortcuts import redirect
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from users.models import User
 from django.conf import settings
 from users.utils.send_verification_email import send_verification_email
@@ -17,6 +17,8 @@ class EmailVerificationView(APIView):
     """
     View to handle the email verification link clicked by the user.
     """
+    permission_classes = [AllowAny]
+
     def get(self, request, uidb64, token, *args, **kwargs):
         """
         Verifies the user's email address.
