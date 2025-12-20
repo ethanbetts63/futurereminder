@@ -152,7 +152,7 @@ export const Faq: React.FC<FaqProps> = ({ title, subtitle, page, imageSrc, image
             >
               {faqs.map((faq, index) => (
                 <AccordionItem value={`item-${index + 1}`} key={index} className="faq-item border-b-0">
-                  <AccordionTrigger>{faq.question}</AccordionTrigger>
+                  <AccordionTrigger className="text-lg">{faq.question}</AccordionTrigger>
                   <AccordionContent className="flex flex-col gap-4 text-balance">
                     <p>{faq.answer}</p>
                   </AccordionContent>

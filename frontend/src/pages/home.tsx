@@ -18,7 +18,6 @@ import faqImageLandscape1024 from '../assets/faq_image_landscape-1024w.webp';
 import faqImageLandscape1280 from '../assets/faq_image_landscape-1280w.webp';
 import Seo from '../components/Seo';
 import { ProductCarousel } from '../components/ProductCarousel';
-import Pricing from '../components/Pricing';
 import { Faq } from '../components/Faq';
 import { Letter } from '../components/Letter';
 import { CtaCard } from '../components/CtaCard';
