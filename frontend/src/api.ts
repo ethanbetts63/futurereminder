@@ -162,14 +162,14 @@ export async function updateUserProfile(profileData: Partial<UserProfile>): Prom
 }
 
 export async function getEmergencyContacts(): Promise<EmergencyContact[]> {
-    const response = await authedFetch('/api/emergency-contacts/', {
+    const response = await authedFetch('/api/users/emergency-contacts/', {
         method: 'GET',
     });
     return handleResponse(response);
 }
 
 export async function createEmergencyContact(contactData: Omit<EmergencyContact, 'id'>): Promise<EmergencyContact> {
-    const response = await authedFetch('/api/emergency-contacts/', {
+    const response = await authedFetch('/api/users/emergency-contacts/', {
         method: 'POST',
         body: JSON.stringify(contactData),
     });
@@ -177,7 +177,7 @@ export async function createEmergencyContact(contactData: Omit<EmergencyContact,
 }
 
 export async function updateEmergencyContact(id: number, contactData: Partial<EmergencyContact>): Promise<EmergencyContact> {
-    const response = await authedFetch(`/api/emergency-contacts/${id}/`, {
+    const response = await authedFetch(`/api/users/emergency-contacts/${id}/`, {
         method: 'PATCH',
         body: JSON.stringify(contactData),
     });
@@ -185,7 +185,7 @@ export async function updateEmergencyContact(id: number, contactData: Partial<Em
 }
 
 export async function deleteEmergencyContact(id: number): Promise<void> {
-    const response = await authedFetch(`/api/emergency-contacts/${id}/`, {
+    const response = await authedFetch(`/api/users/emergency-contacts/${id}/`, {
         method: 'DELETE',
     });
     await handleResponse(response);
@@ -202,7 +202,7 @@ export async function changePassword(passwordData: { old_password: string, new_p
 // --- Payment Endpoints ---
 
 export async function getTiers(): Promise<Tier[]> {
-  const response = await authedFetch('/api/tiers/', {
+  const response = await authedFetch('/api/payments/tiers/', {
     method: 'GET',
   });
   return handleResponse(response);

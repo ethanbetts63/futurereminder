@@ -21,7 +21,7 @@ The payment step and a dedicated confirmation page are planned but not yet imple
 ### Step 3: Emergency Contacts (Optional)
 
 *   **User Experience:** The user is presented with the option to add emergency contacts. They can add multiple contacts or skip this step entirely and manage contacts later via their account settings.
-*   **System Action (Backend):** For the now-authenticated user, the `EmergencyContactsManager` component makes direct API calls (e.g., `/api/emergency-contacts/`) to create, retrieve, update, or delete emergency contacts associated with their profile.
+*   **System Action (Backend):** For the now-authenticated user, the `EmergencyContactsManager` component makes direct API calls (e.g., `/api/users/emergency-contacts/`) to create, retrieve, update, or delete emergency contacts associated with their profile.
 *   **Frontend Implementation:** The `EmergencyContactPage` (`/create-flow/contacts`) hosts the `EmergencyContactsManager`, which handles the persistence of contact data.
 
 ### Step 4: Event Details

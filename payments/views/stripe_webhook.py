@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
+from rest_framework.permissions import AllowAny
 from payments.models import Payment, Tier
 
 class StripeWebhookView(APIView):
@@ -13,6 +14,8 @@ class StripeWebhookView(APIView):
     This view is responsible for handling payment confirmations and updating
     the payment status in the local database.
     """
+    permission_classes = [AllowAny]
+    
     def post(self, request, *args, **kwargs):
         payload = request.body
         sig_header = request.META.get('HTTP_STRIPE_SIGNATURE')
@@ -37,7 +40,7 @@ class StripeWebhookView(APIView):
 
             # Find the corresponding Payment in our database
             try:
-                payment = Payment.objects.get(stripe_payment_intent_id=payment_intent.id)
+                payment = Payment.objects.get(stripe_payment_intent_id=payment_intent['id'])
                 payment.status = 'succeeded'
                 payment.save()
                 
@@ -64,7 +67,7 @@ class StripeWebhookView(APIView):
         elif event['type'] == 'payment_intent.payment_failed':
             payment_intent = event['data']['object']
             try:
-                payment = Payment.objects.get(stripe_payment_intent_id=payment_intent.id)
+                payment = Payment.objects.get(stripe_payment_intent_id=payment_intent['id'])
                 payment.status = 'failed'
                 payment.save()
             except Payment.DoesNotExist:
