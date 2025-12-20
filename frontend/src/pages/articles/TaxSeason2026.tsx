@@ -1,5 +1,5 @@
 import { ArticleLayout } from '../../components/ArticleLayout';
-import articleImage from '../../assets/postnotes.webp';
+import articleImage from '../../assets/taxes.webp';
 import { ArticleCarousel } from '../../components/ArticleCarousel';
 import Seo from '../../components/Seo';
 
@@ -11,7 +11,7 @@ const TaxSeason2026 = () => {
         description="A country-by-country guide for tax dates, deadlines, penalties, and extensions for the USA, UK, Australia, New Zealand, and Canada."
         canonicalPath="/articles/tax-season-2026"
         ogType="article"
-        ogImage="/og-images/og-tax-season-2026.webp"
+        ogImage={articleImage}
       />
       <ArticleLayout
         title="Guide - Tax Season 2026"
@@ -22,7 +22,7 @@ const TaxSeason2026 = () => {
       >
         <div className="text-lg text-primary-foreground">
           <h2 className="text-3xl font-bold tracking-tight mb-4 mt-0">Quick Note — what this article covers (tax 2026, tax deadline, tax due date)</h2>
-          <p className="mb-6">This article explains the key tax deadlines you’ll see in 2026, when to start preparing, and the practical consequences of filing late — including late filing penalty rules and interest. If you’re searching “can i file taxes late” or “i forgot my taxes,” read the country section that applies to you and follow the immediate steps at the end. We however, are not laywers. We have tried to do our research as thoroughly as possible in preperation for this article but can not assume any liablity for your taxes. Please check information to know what is right for you.</p>
+          <p className="mb-6">This article explains the key tax deadlines you’ll see in 2026, when to start preparing, and the practical consequences of filing late — including late filing penalty rules and interest. If you’re searching “can I file taxes late” or “I forgot my taxes,” read the country section that applies to you and follow the immediate steps at the end. We however, are not laywers. We have tried to do our research as thoroughly as possible in preperation for this article but can not assume any liablity for your taxes. Please check information to know what is right for you.</p>
           
           <h2 className="text-3xl font-bold tracking-tight mb-4 mt-8">United States (federal) — key tax dates and what to do if you missed the deadline</h2>
           <p className="mb-6"><strong>Tax due date (federal):</strong> For most individual filers the federal return for the 2025 tax year is due April 15, 2026 (if April 15 falls on a weekend or federal holiday the due date moves to the next business day). The IRS publishes annual filing schedules; generally the IRS begins accepting e-filed returns in mid-late January.</p>

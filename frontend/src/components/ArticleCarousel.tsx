@@ -16,6 +16,7 @@ import rosesImage from '../assets/roses.webp';
 import crepeMyrtleImage from '../assets/crepe_myrtle.webp';
 import blueberriesImage from '../assets/blueberries.webp';
 import hydrangeasImage from '../assets/hydrangeas.webp';
+import taxImage from '../assets/taxes.webp';
 
 const articles = [
   {
@@ -62,7 +63,7 @@ const articles = [
   },
   {
     title: 'Guide - Tax Season 2026',
-    imageSrc: postnotesImage,
+    imageSrc: taxImage,
     link: '/articles/tax-season-2026',
     alt: 'A guide to tax season 2026'
   },
