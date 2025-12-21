@@ -26,6 +26,24 @@ const articles = [
     alt: 'A collection of sticky notes representing daily reminders'
   },
   {
+    title: 'Best Free Reminder Apps in 2025 — No Fees, No Friction',
+    imageSrc: postnotesImage,
+    link: '/articles/best-free-reminder-apps',
+    alt: 'A collection of sticky notes representing daily reminders'
+  },
+  {
+    title: 'Best Email Reminder Apps in 2025 — Ranked',
+    imageSrc: postnotesImage,
+    link: '/articles/best-email-reminder-apps',
+    alt: 'A collection of sticky notes representing email reminders'
+  },
+  {
+    title: 'Best Text-Message Reminder Apps in 2025 — Ranked',
+    imageSrc: postnotesImage,
+    link: '/articles/best-text-message-reminder-apps',
+    alt: 'A collection of sticky notes representing text message reminders'
+  },
+  {
     title: 'The Best Reminder Apps of 2025, Ranked',
     imageSrc: postnotesImage,
     link: '/articles/reminder-apps-ranked',

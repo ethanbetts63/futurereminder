@@ -53,6 +53,9 @@ const CaringForPeoniesSeasonalGuide = lazy(() => import('./pages/articles/Caring
 const CaringForBlueberryBushesSeasonalGuide = lazy(() => import('./pages/articles/CaringForBlueberryBushesSeasonalGuide'));
 const TaxSeason2026 = lazy(() => import('./pages/articles/TaxSeason2026'));
 const BestDailyReminderApps = lazy(() => import('./pages/articles/BestDailyReminderApps'));
+const BestFreeReminderApps = lazy(() => import('./pages/articles/BestFreeReminderApps'));
+const BestEmailReminderApps = lazy(() => import('./pages/articles/BestEmailReminderApps'));
+const BestTextMessageReminderApps = lazy(() => import('./pages/articles/BestTextMessageReminderApps'));
 const BlogExplorePage = lazy(() => import('./pages/BlogExplorePage'));
 
 
@@ -99,6 +102,9 @@ function App() {
                 <Route path="/articles/caring-for-blueberry-bushes-seasonal-guide" element={<CaringForBlueberryBushesSeasonalGuide />} />
                 <Route path="/articles/tax-season-2026" element={<TaxSeason2026 />} />
                 <Route path="/articles/best-daily-reminder-apps" element={<BestDailyReminderApps />} />
+                <Route path="/articles/best-free-reminder-apps" element={<BestFreeReminderApps />} />
+                <Route path="/articles/best-email-reminder-apps" element={<BestEmailReminderApps />} />
+                <Route path="/articles/best-text-message-reminder-apps" element={<BestTextMessageReminderApps />} />
                 <Route path="/articles" element={<BlogExplorePage />} />
 
                 {/* Event Creation Flow */}
