@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 import * as api from "@/api";
-import type { Event } from "@/types";
+import type { Event, Tier } from "@/types";
 import { formatDate } from "@/utils/utils";
 import Seo from "@/components/Seo";
 
@@ -32,24 +32,29 @@ import Seo from "@/components/Seo";
 function EventManagementPage() {
   const navigate = useNavigate();
   const [events, setEvents] = useState<Event[]>([]);
+  const [tiers, setTiers] = useState<Tier[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [editingEvent, setEditingEvent] = useState<Partial<Event> | null>(null);
   const [deleteCandidateId, setDeleteCandidateId] = useState<number | null>(null);
 
   // --- Data Fetching ---
   useEffect(() => {
-    const fetchEvents = async () => {
+    const fetchData = async () => {
       try {
         setIsLoading(true);
-        const fetchedEvents = await api.getEvents();
+        const [fetchedEvents, fetchedTiers] = await Promise.all([
+            api.getEvents(),
+            api.getTiers()
+        ]);
         setEvents(fetchedEvents);
+        setTiers(fetchedTiers);
       } catch (error) {
-        toast.error("Failed to fetch events", { description: (error as Error).message });
+        toast.error("Failed to fetch page data.", { description: (error as Error).message });
       } finally {
         setIsLoading(false);
       }
     };
-    fetchEvents();
+    fetchData();
   }, []);
 
   // --- Handlers ---
@@ -61,19 +66,40 @@ function EventManagementPage() {
     setEditingEvent(null);
   };
 
-  const handleUpgrade = async (event: Event) => {
-    try {
-        const tiers = await api.getTiers();
-        const paidTier = tiers.find(t => t.name === 'Full Escalation');
-        if (!paidTier) {
-            toast.error("Could not find upgrade tier.", { description: "The 'Full Escalation' tier is not available." });
-            return;
-        }
+  const handleUpgrade = (event: Event) => {
+    if (!event.tier) {
+        toast.error("Cannot determine the event's current tier.");
+        return;
+    }
+
+    const currentTier = tiers.find(t => t.id === event.tier.id);
+    if (!currentTier) {
+        toast.error("Could not verify the current tier's details.");
+        return;
+    }
+    
+    // Assuming prices array is sorted or the first price is the relevant one
+    const currentPrice = currentTier.prices[0]?.amount ?? 0;
+
+    const availableUpgrades = tiers
+        .filter(t => (t.prices[0]?.amount ?? 0) > currentPrice)
+        .sort((a, b) => (a.prices[0]?.amount ?? 0) - (b.prices[0]?.amount ?? 0));
+
+    if (availableUpgrades.length === 0) {
+        toast.info("You are already on the highest available tier.");
+        return;
+    }
+
+    if (availableUpgrades.length === 1) {
+        // Only one path, go straight to payment
         navigate('/create-flow/payment', { 
-            state: { event, targetTier: paidTier } 
+            state: { event, targetTier: availableUpgrades[0] } 
         });
-    } catch (error) {
-        toast.error("Failed to start upgrade process.", { description: (error as Error).message });
+    } else {
+        // Multiple options, go to the choice page
+        navigate(`/events/${event.id}/activate`, { 
+            state: { event, currentTier } 
+        });
     }
   };
 
@@ -195,7 +221,7 @@ function EventManagementPage() {
                       </>
                     ) : (
                       <>
-                        {event.tier?.name === 'Automated' && (
+                        {event.tier?.name !== 'Full Escalation' && (
                             <Button 
                                 size="sm" 
                                 onClick={() => handleUpgrade(event)}

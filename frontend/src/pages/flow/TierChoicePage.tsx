@@ -17,18 +17,24 @@ const TierChoicePage: React.FC = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     const event: Event | undefined = location.state?.event;
+    const currentTierForUpgrade: Tier | undefined = location.state?.currentTier;
 
     useEffect(() => {
         getTiers()
             .then(data => {
-                setTiers(data);
+                let displayTiers = data;
+                if (currentTierForUpgrade) {
+                    const currentPrice = currentTierForUpgrade.prices[0]?.amount ?? 0;
+                    displayTiers = data.filter(t => (t.prices[0]?.amount ?? 0) > currentPrice);
+                }
+                setTiers(displayTiers);
                 setIsLoading(false);
             })
             .catch(error => {
                 toast.error("Failed to load pricing tiers.", { description: error.message });
                 setIsLoading(false);
             });
-    }, []);
+    }, [currentTierForUpgrade]);
 
     if (!event) {
         toast.error("No event specified.", { description: "You need to create an event first." });
@@ -68,22 +74,33 @@ const TierChoicePage: React.FC = () => {
         );
     }
 
+    const isUpgradeFlow = currentTierForUpgrade !== undefined;
+
     return (
         <div className="container mx-auto max-w-6xl py-12 px-4">
-            <Seo title="Activate Your Event | FutureReminder" />
+            <Seo title={isUpgradeFlow ? "Upgrade Event | FutureReminder" : "Activate Your Event | FutureReminder"} />
             <div className="text-center mb-10">
-                <h1 className="text-4xl font-bold tracking-tight">Activate Your Reminder</h1>
+                <h1 className="text-4xl font-bold tracking-tight">
+                    {isUpgradeFlow ? 'Upgrade Your Reminder' : 'Activate Your Reminder'}
+                </h1>
                 <p className="mt-2 text-lg text-muted-foreground">
-                    You've created the event: <span className="font-semibold text-primary">{event.name}</span>.
+                    {isUpgradeFlow
+                        ? `You are currently on the "${currentTierForUpgrade.name}" tier for:`
+                        : "You've created the event:"
+                    }
+                    <span className="font-semibold text-primary"> {event.name}</span>.
                     <br />
-                    Now, choose your level of security to activate it.
+                    {isUpgradeFlow
+                        ? "Please choose your new level of security."
+                        : "Now, choose your level of security to activate it."
+                    }
                 </p>
             </div>
             
-            <div className="flex flex-col-reverse md:grid md:grid-cols-3 gap-8">
+            <div className="flex flex-col-reverse md:flex-row md:justify-center gap-8">
                 {/* Automated Tier Card */}
                 {automatedTier && (
-                    <Card className="flex flex-col h-full">
+                    <Card className="flex flex-col h-full md:w-96">
                         <CardHeader>
                             <CardTitle>{automatedTier.name}</CardTitle>
                             <CardDescription>{automatedTier.description}</CardDescription>
@@ -112,7 +129,7 @@ const TierChoicePage: React.FC = () => {
 
                 {/* Advanced Tier Card */}
                 {advancedTier && (
-                    <Card className="flex flex-col h-full border-2 border-primary shadow-lg">
+                    <Card className="flex flex-col h-full border-2 border-primary shadow-lg md:w-96">
                         <CardHeader>
                             <CardTitle>{advancedTier.name}</CardTitle>
                             <CardDescription>{advancedTier.description}</CardDescription>
@@ -141,7 +158,7 @@ const TierChoicePage: React.FC = () => {
 
                 {/* Full Escalation Tier Card */}
                 {fullEscalationTier && (
-                    <Card className="flex flex-col h-full">
+                    <Card className="flex flex-col h-full md:w-96">
                         <CardHeader>
                             <CardTitle>{fullEscalationTier.name}</CardTitle>
                             <CardDescription>{fullEscalationTier.description}</CardDescription>
