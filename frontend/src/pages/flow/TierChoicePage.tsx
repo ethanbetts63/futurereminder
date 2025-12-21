@@ -97,10 +97,10 @@ const TierChoicePage: React.FC = () => {
                 </p>
             </div>
             
-            <div className="flex flex-col-reverse md:flex-row md:justify-center gap-8">
+            <div className="flex flex-col-reverse md:flex-row md:justify-center md:items-stretch gap-8">
                 {/* Automated Tier Card */}
                 {automatedTier && (
-                    <Card className="flex flex-col h-full md:w-96">
+                    <Card className="flex flex-col md:w-96">
                         <CardHeader>
                             <CardTitle>{automatedTier.name}</CardTitle>
                             <CardDescription>{automatedTier.description}</CardDescription>
@@ -129,7 +129,7 @@ const TierChoicePage: React.FC = () => {
 
                 {/* Advanced Tier Card */}
                 {advancedTier && (
-                    <Card className="flex flex-col h-full border-2 border-primary shadow-lg md:w-96">
+                    <Card className="flex flex-col border-2 border-primary shadow-lg md:w-96">
                         <CardHeader>
                             <CardTitle>{advancedTier.name}</CardTitle>
                             <CardDescription>{advancedTier.description}</CardDescription>
@@ -158,7 +158,7 @@ const TierChoicePage: React.FC = () => {
 
                 {/* Full Escalation Tier Card */}
                 {fullEscalationTier && (
-                    <Card className="flex flex-col h-full md:w-96">
+                    <Card className="flex flex-col md:w-96">
                         <CardHeader>
                             <CardTitle>{fullEscalationTier.name}</CardTitle>
                             <CardDescription>{fullEscalationTier.description}</CardDescription>
