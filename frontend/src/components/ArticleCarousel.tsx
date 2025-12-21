@@ -161,17 +161,15 @@ const articles = [
 
 interface ArticleCarouselProps {
   exclude?: string;
-  variant?: 'homepage';
+  showAll?: boolean;
 }
 
-export const ArticleCarousel: React.FC<ArticleCarouselProps> = ({ exclude, variant }) => {
+export const ArticleCarousel: React.FC<ArticleCarouselProps> = ({ exclude, showAll = false }) => {
   let filteredArticles = articles.filter(article => article.link !== exclude);
 
-  if (variant === 'homepage') {
-    filteredArticles = filteredArticles.slice(0, 3);
-  }
+  const articlesToShow = showAll ? filteredArticles : filteredArticles.slice(0, 3);
 
-  if (filteredArticles.length === 0) {
+  if (articlesToShow.length === 0) {
     return null;
   }
 
@@ -183,7 +181,7 @@ export const ArticleCarousel: React.FC<ArticleCarouselProps> = ({ exclude, varia
           Insights and guides for long-term planning.
         </p>
         <div className="flex overflow-x-auto space-x-6 pb-4">
-          {filteredArticles.map((article) => (
+          {articlesToShow.map((article) => (
             <Link to={article.link} key={article.link} className="flex-shrink-0 w-80 h-48 group">
               <div 
                 className="relative w-full h-full bg-cover bg-center rounded-xl shadow-md overflow-hidden transform transition-transform hover:-translate-y-1"
@@ -196,7 +194,7 @@ export const ArticleCarousel: React.FC<ArticleCarouselProps> = ({ exclude, varia
               </div>
             </Link>
           ))}
-          {variant === 'homepage' && (
+          {!showAll && (
             <Link to="/articles" className="flex-shrink-0 w-80 h-48 group">
               <div className="relative w-full h-full bg-secondary rounded-xl shadow-md overflow-hidden transform transition-transform hover:-translate-y-1">
                 <div className="relative z-10 flex flex-col items-center justify-center h-full p-6 text-center text-secondary-foreground">

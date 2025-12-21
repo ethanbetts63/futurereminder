@@ -85,9 +85,9 @@ const HomePage = () => {
         </aside>
 
       </div>
-      <section className="mt-16">
-        <ArticleCarousel variant="homepage" />
-      </section>
+      <div className="mt-16" id="blog">
+        <ArticleCarousel />
+      </div>
     </main>
   );
 };

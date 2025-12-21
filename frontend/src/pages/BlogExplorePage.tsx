@@ -51,7 +51,7 @@ const BlogExplorePage = () => {
         </div>
 
         {/* Article Carousel Section */}
-        <ArticleCarousel />
+        <ArticleCarousel showAll={true} />
       </div>
     </>
   );
