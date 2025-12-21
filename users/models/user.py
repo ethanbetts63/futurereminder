@@ -13,6 +13,8 @@ class User(AbstractUser):
 
     # Backup contact details
     backup_email = models.EmailField(blank=True, null=True)
+    secondary_backup_email = models.EmailField(blank=True, null=True)
+    backup_phone = models.CharField(max_length=20, blank=True)
 
     # Social media handles
     facebook_handle = models.CharField(max_length=255, blank=True, null=True)
@@ -66,6 +68,8 @@ class User(AbstractUser):
     hash_country_code = models.CharField(max_length=64, blank=True, editable=False)
     hash_phone = models.CharField(max_length=64, blank=True, editable=False)
     hash_backup_email = models.CharField(max_length=64, blank=True, editable=False)
+    hash_secondary_backup_email = models.CharField(max_length=64, blank=True, editable=False)
+    hash_backup_phone = models.CharField(max_length=64, blank=True, editable=False)
     hash_facebook_handle = models.CharField(max_length=64, blank=True, editable=False)
     hash_instagram_handle = models.CharField(max_length=64, blank=True, editable=False)
     hash_snapchat_handle = models.CharField(max_length=64, blank=True, editable=False)

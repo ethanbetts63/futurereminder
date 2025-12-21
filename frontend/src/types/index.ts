@@ -48,6 +48,8 @@ export interface UserProfile {
     country_code: string;
     phone: string | null;
     backup_email: string | null;
+    secondary_backup_email: string | null;
+    backup_phone: string | null;
     facebook_handle: string | null;
     instagram_handle: string | null;
     snapchat_handle: string | null;

@@ -19,6 +19,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'country_code',
             'phone',
             'backup_email',
+            'secondary_backup_email',
+            'backup_phone',
             'facebook_handle',
             'instagram_handle',
             'snapchat_handle',
