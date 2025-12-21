@@ -1,3 +1,4 @@
+from rest_framework.permissions import AllowAny
 from django.core.signing import Signer, BadSignature
 from django.shortcuts import redirect
 from django.conf import settings
@@ -8,10 +9,14 @@ from ..models import BlockedEmail
 
 signer = Signer()
 
+from rest_framework.permissions import AllowAny
+
 class AddToBlocklistView(APIView):
     """
     View to handle the blocklist link clicked by a user in an email.
     """
+    permission_classes = [AllowAny]
+
     def get(self, request, signed_email, *args, **kwargs):
         """
         Verifies the signature and adds the email to the blocklist.

@@ -2,7 +2,7 @@ import requests
 from django.template.loader import render_to_string
 from django.conf import settings
 from data_management.models import BlockedEmail
-from data_management.views.blocklist_view import signer # Import the signer
+from data_management.views.add_to_blocklist_view import signer # Import the signer
 from notifications.models import Notification
 
 def send_reminder_email(notification: Notification, recipient_address: str) -> bool:

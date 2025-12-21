@@ -1,0 +1,42 @@
+import pytest
+from io import StringIO
+from django.core.management import call_command
+from django.contrib.sites.models import Site
+
+@pytest.mark.django_db
+class TestFixSiteDomainsCommand:
+
+    def test_updates_default_site(self):
+        """
+        Test that the command successfully updates the domain of the 'example.com' site.
+        """
+        # Ensure the default site exists
+        site = Site.objects.get(pk=1)
+        site.domain = 'example.com'
+        site.name = 'example.com'
+        site.save()
+        
+        out = StringIO()
+        call_command('fix_site_domains', stdout=out)
+        
+        site.refresh_from_db()
+        
+        assert site.domain == 'www.futurereminder.app'
+        assert site.name == 'www.futurereminder.app'
+        assert "Successfully updated site domain" in out.getvalue()
+
+    def test_site_already_updated(self):
+        """
+        Test that the command handles the case where the site is already updated
+        or does not have the 'example.com' domain.
+        """
+        # Ensure the site does not have the 'example.com' domain
+        site = Site.objects.get(pk=1)
+        site.domain = 'www.futurereminder.app'
+        site.name = 'www.futurereminder.app'
+        site.save()
+        
+        err = StringIO()
+        call_command('fix_site_domains', stderr=err)
+        
+        assert "Could not find a site with domain 'example.com'" in err.getvalue()

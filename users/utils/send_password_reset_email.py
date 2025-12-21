@@ -6,7 +6,7 @@ from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from users.models import User
 from data_management.models import BlockedEmail
-from data_management.views.blocklist_view import signer
+from data_management.views.add_to_blocklist_view import signer
 
 
 def send_password_reset_email(user: User):
