@@ -15,7 +15,7 @@ const ReminderAppsRanked = () => {
       />
       <ArticleLayout
         title="The Best Reminder Apps in 2025 — Ranked by a Reminder App That Only Wants 1% of You"
-        subtitle={<>We’re not actually a reminder app. We’re reminder app adjacent. If you need to be reminded about something really, really important well into the future go check out our home page. If not, keep reading. We live and breathe the reminder app ecosystem and we don’t want your business. Who else’s opinion would you rather. Some guy on reddit? </>}
+        subtitle={<>We’re not actually a reminder app. We’re reminder app adjacent. If you need to be reminded about something really important and/or well into the future go check out our home page. If not, keep reading. We live and breathe the reminder app ecosystem and we don’t want your business. Who else’s opinion would you rather. Some guy on reddit? </>}
         imageSrc={articleImage}
         imageAlt="A corkboard covered in colorful sticky notes with reminder icons"
         faqPage="reminder-apps-ranked"
