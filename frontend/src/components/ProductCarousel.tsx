@@ -27,7 +27,7 @@ const hierarchyLevels = [
   {
     level: 6,
     title: 'Socials',
-    description: "If all else fails, admin will reach out to you manually via any social media platforms that you provided. That's can be a lot of work which is why this only works becuase we are so confident you will respond before this stage!",
+    description: "If all else fails, admin will reach out to you manually via any social media platforms that you provided.",
   }
 ];
 
