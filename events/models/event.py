@@ -63,7 +63,7 @@ class Event(models.Model):
         from ..utils.schedule_notifications_for_event import schedule_notifications_for_event
 
         # Auto-calculate the notification start date before saving
-        if self.event_date and self.weeks_in_advance:
+        if self.event_date and self.weeks_in_advance is not None:
             self.notification_start_date = self.event_date - timedelta(weeks=self.weeks_in_advance)
         
         # Data integrity check for paid, active events
