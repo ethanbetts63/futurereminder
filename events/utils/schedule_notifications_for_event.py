@@ -1,67 +1,77 @@
+from datetime import timedelta
 from ..models import Event
 from .clear_pending_notifications import clear_pending_notifications
 from ._create_notification import _create_notification
 
+# The single source of truth for notification schedules per tier.
+# The order defines the escalation hierarchy (cheapest first).
+TIER_MANIFESTS = {
+    'Free': [
+        'primary_email',
+        'primary_email',
+    ],
+    'Standard': [
+        'primary_email',
+        'secondary_email',
+        'primary_email',
+        'primary_sms',
+        'primary_email',
+    ],
+    'Premium': [
+        'primary_email',
+        'secondary_email',
+        'primary_sms',
+        'primary_email',
+        'backup_sms', # Assumes backup_phone is used for SMS
+        'admin_call',
+        'primary_email',
+        'emergency_contact',
+        'social_media',
+    ]
+}
+
+
 def schedule_notifications_for_event(event: 'Event'):
     """
-    Generates the entire notification schedule for a given event based on a 
-    6-block, non-cumulative escalation logic.
+    Generates an evenly-distributed notification schedule for a given event
+    based on the 'Manifest and Interval' approach.
 
     This function should be called whenever an event is created or updated.
     """
-    
     # 1. Clear any existing pending notifications for this event
     clear_pending_notifications(event)
 
-    # 2. Basic validation and date calculation
-    user = event.user
-    if not event.notification_start_date or not event.event_date or event.notification_start_date >= event.event_date:
+    # 2. Basic validation
+    if not all([event.is_active, event.tier, event.notification_start_date, event.event_date]) or \
+       event.notification_start_date >= event.event_date:
         return
 
-    duration = event.event_date - event.notification_start_date
-    block_length = duration / 6
+    # 3. Get the manifest for the event's tier
+    manifest = TIER_MANIFESTS.get(event.tier.name)
+    if not manifest:
+        return
 
-    # 3. Loop through the 6 blocks and create notifications
-    for i in range(6):
-        block_start_date = event.notification_start_date + (block_length * i)
-        # The last block should end exactly on the event date
-        block_end_date = event.notification_start_date + (block_length * (i + 1)) if i < 5 else event.event_date
+    # 4. Calculate timing intervals
+    total_duration = event.event_date - event.notification_start_date
+    total_notifications = len(manifest)
 
-        # --- Always-on Notifications ---
-        _create_notification(event, 'primary_email', block_start_date, user.email)
-        _create_notification(event, 'primary_sms', block_end_date, user.phone)
+    if total_notifications == 0:
+        return
+    
+    # If there's only one notification, schedule it at the start.
+    # Otherwise, calculate the interval to spread them out.
+    interval = total_duration / total_notifications if total_notifications > 1 else timedelta(0)
 
-        # --- Block-specific Escalations (Non-Cumulative) ---
+    # 5. Create notifications based on the manifest
+    for i, channel in enumerate(manifest):
+        # The last notification should be on the interval, not on the event date itself,
+        # to give some time for action.
+        send_time = event.notification_start_date + (interval * i)
         
-        # Block 2: Backup contacts
-        if i == 1:
-            _create_notification(event, 'backup_email', block_start_date, user.backup_email)
-
-        # Block 3: Admin phone call task
-        elif i == 2:
-            _create_notification(event, 'admin_call', block_start_date, user.phone)
-
-        # Block 4: Social media outreach task
-        elif i == 3:
-            handles = [
-                f"X: {user.x_handle}" if user.x_handle else None,
-                f"Facebook: {user.facebook_handle}" if user.facebook_handle else None,
-                f"Instagram: {user.instagram_handle}" if user.instagram_handle else None,
-                f"Snapchat: {user.snapchat_handle}" if user.snapchat_handle else None,
-            ]
-            social_info = ", ".join(filter(None, handles))
-            _create_notification(event, 'social_media', block_start_date, social_info)
-
-        # Block 6: Emergency contacts outreach
-        elif i == 5:
-            emergency_contacts = user.emergency_contacts.all()
-            if not emergency_contacts:
-                continue
-            
-            for contact in emergency_contacts:
-                # Prioritize email, fall back to phone
-                contact_info = contact.email if contact.email else contact.phone
-                # Add context for the recipient
-                # Bug fix: Was 'contact.info', corrected to 'contact_info'
-                full_contact_details = f"{contact_info} (For: {user.first_name} {user.last_name}, Relation: {contact.relationship})"
-                _create_notification(event, 'emergency_contact', block_start_date, full_contact_details)
+        # Schedule the notification. The _create_notification helper is simple and
+        # does not require contact info, which is looked up at send time.
+        _create_notification(
+            event=event,
+            channel=channel,
+            send_time=send_time
+        )

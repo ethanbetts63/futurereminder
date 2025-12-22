@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from datetime import timedelta
 from django.core.exceptions import ValidationError
+from ..utils.schedule_notifications_for_event import schedule_notifications_for_event
 
 class Event(models.Model):
     """
@@ -80,6 +81,11 @@ class Event(models.Model):
                     )
         
         super().save(*args, **kwargs)
+        
+        # After saving, regenerate the notification schedule.
+        # This function will clear pending notifications and create a new schedule
+        # based on the event's current state (tier, dates, active status).
+        schedule_notifications_for_event(self)
 
     class Meta:
         ordering = ['-event_date']
