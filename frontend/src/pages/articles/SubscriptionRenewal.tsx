@@ -16,7 +16,7 @@ const SubscriptionRenewal = () => {
       />
       <ArticleLayout
         title="Predatory Subscription Renewals: Why They Happen and How to Fight Back"
-        subtitle={<><span className="font-bold italic underline">Article Summary:</span> Many cheap introductory subscription deals are designed to make money from users who forget to cancel before the full-price renewal. This article covers why this model is effective, what steps to take if you get charged, and how to prevent it from happening again.</>}
+        subtitle={<><span className="font-bold italic underline">Article Summary:</span> <Link to="/articles/best-bill-and-subscription-reminder-apps" className="font-bold text-white underline hover:text-primary">Many cheap introductory subscription deals</Link> are designed to make money from users who forget to cancel before the full-price renewal. This article covers why this model is effective, what steps to take if you get charged, and how to prevent it from happening again.</>}
         imageSrc={articleImage}
         imageAlt="A person looking shocked at a credit card statement"
         faqPage="subscription-renewal"
