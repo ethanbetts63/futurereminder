@@ -30,6 +30,13 @@ class StaticViewSitemap(Sitemap):
             '/articles/caring-for-apple-trees-seasonal-guide',
             '/articles/caring-for-peonies-seasonal-guide',
             '/articles/caring-for-blueberry-bushes-seasonal-guide',
+            '/articles/tax-season-2026',
+            '/articles/best-daily-reminder-apps',
+            '/articles/best-free-reminder-apps',
+            '/articles/best-email-reminder-apps',
+            '/articles/best-text-message-reminder-apps',
+            '/articles/best-medication-reminder-apps',
+            '/articles/best-bill-and-subscription-reminder-apps',
         ]
 
     def location(self, item):
@@ -39,12 +46,12 @@ class StaticViewSitemap(Sitemap):
 
     def changefreq(self, item):
         if item == '/articles':
-            return 'weekly'
+            return 'monthly'
         if item.startswith('/articles/'):
             return 'monthly'
         if item == '/':
-            return 'monthly'
-        return 'yearly'
+            return 'weekly'
+        return 'monthly'
 
     def priority(self, item):
         if item == '/articles':
