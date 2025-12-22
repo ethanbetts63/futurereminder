@@ -2,6 +2,7 @@ import { ArticleLayout } from '../../components/ArticleLayout';
 import articleImage from '../../assets/postnotes.webp';
 import { ArticleCarousel } from '../../components/ArticleCarousel';
 import Seo from '../../components/Seo';
+import { Link } from 'react-router-dom';
 
 const BestDailyReminderApps = () => {
   return (
@@ -99,7 +100,7 @@ const BestDailyReminderApps = () => {
 
           <h2 className="text-3xl font-bold tracking-tight mb-4 mt-12">Honourable Mention: FutureReminder</h2>
           <p className="mb-6">Daily reminder apps are perfect for routines, habits, and short-term recurring tasks. FutureReminder isn’t meant for morning alarms or daily chores.</p>
-          <p className="mb-6">We shine for once-in-a-lifetime or critical events months or years away. Use cases include visa expirations, major legal deadlines, or life milestones like anniversaries. We escalate via email, SMS, backup contacts, emergency contacts, and social media. Persistence is key: unlike regular apps that send one notification, we continue until the reminder is confirmed. Contact info changes over long periods, so multiple channels are essential. Our free tier includes both email and text reminders, letting you secure critical events at no cost.</p>
+          <p className="mb-6">We shine for once-in-a-lifetime or critical events months or years away. Use cases include <Link to="/articles/visa-expiry" className="font-bold text-white underline hover:text-primary">visa expirations</Link>, major legal deadlines, or life milestones like <Link to="/articles/anniversary-reminders" className="font-bold text-white underline hover:text-primary">anniversaries</Link>. We escalate via <Link to="/articles/best-email-reminder-apps" className="font-bold text-white underline hover:text-primary">email</Link>, <Link to="/articles/best-text-message-reminder-apps" className="font-bold text-white underline hover:text-primary">SMS</Link>, backup contacts, emergency contacts, and social media. Persistence is key: unlike regular apps that send one notification, we continue until the reminder is confirmed. Contact info changes over long periods, so multiple channels are essential. Our <Link to="/articles/best-free-reminder-apps" className="font-bold text-white underline hover:text-primary">free tier</Link> includes both email and <Link to="/articles/best-text-message-reminder-apps" className="font-bold text-white underline hover:text-primary">text reminders</Link>, letting you secure critical events at no cost.</p>
         </div>
       </ArticleLayout>
       <section className="mt-16">

@@ -2,6 +2,7 @@ import { ArticleLayout } from '../../components/ArticleLayout';
 import articleImage from '../../assets/postnotes.webp'; // Using the same image as the other ranked article
 import { ArticleCarousel } from '../../components/ArticleCarousel';
 import Seo from '../../components/Seo';
+import { Link } from 'react-router-dom';
 
 const BestFreeReminderApps = () => {
   return (
@@ -99,7 +100,7 @@ const BestFreeReminderApps = () => {
 
           <h2 className="text-3xl font-bold tracking-tight mb-4 mt-12">Honourable Mention: FutureReminder</h2>
           <p className="mb-6">FutureReminder isn’t meant to replace everyday free reminder apps. Those are great for quick, frequent tasks—but they usually fail when a reminder matters months or years down the line.</p>
-          <p className="mb-6">We specialize in rare, high-stakes events. Think visa expirations, warranty deadlines, domain renewals, or major anniversaries. We escalate reminders via email, SMS, backup contacts, emergency contacts, and even social media if necessary. Unlike regular apps that send a single notification, we persistently remind you until the task is confirmed. Over long timeframes, contact info changes, so multiple channels are essential. And our free tier is generous, including both email and text reminders for trying it risk-free.</p>
+          <p className="mb-6">We specialize in rare, high-stakes events. Think <Link to="/articles/visa-expiry" className="font-bold text-white underline hover:text-primary">visa expirations</Link>, warranty deadlines, domain renewals, or <Link to="/articles/anniversary-reminders" className="font-bold text-white underline hover:text-primary">major anniversaries</Link>. We escalate reminders via email, SMS, backup contacts, emergency contacts, and even social media if necessary. Unlike regular apps that send a single notification, we persistently remind you until the task is confirmed. Over long timeframes, contact info changes, so multiple channels are essential. And our free tier is generous, including both email and text reminders for trying it risk-free.</p>
         </div>
       </ArticleLayout>
       <section className="mt-16">

@@ -2,6 +2,7 @@ import { ArticleLayout } from '../../components/ArticleLayout';
 import articleImage from '../../assets/postnotes.webp'; // Using a generic image
 import { ArticleCarousel } from '../../components/ArticleCarousel';
 import Seo from '../../components/Seo';
+import { Link } from 'react-router-dom';
 
 const BestTextMessageReminderApps = () => {
   return (
@@ -99,7 +100,7 @@ const BestTextMessageReminderApps = () => {
 
           <h2 className="text-3xl font-bold tracking-tight mb-4 mt-12">Honourable Mention: FutureReminder</h2>
           <p className="mb-6">SMS reminders are perfect for immediate tasks—but they usually only send one alert. FutureReminder handles reminders that really matter and/or happen far in the future.</p>
-          <p className="mb-6">We escalate across email, SMS, backup contacts, emergency contacts, and social media, ensuring persistent delivery. Standard text reminders can be missed or become outdated as contact info changes over time. With FutureReminder, you get persistence across multiple channels. Our free tier is generous, including both email and text, so critical reminders are covered without any upfront cost.</p>
+          <p className="mb-6">We escalate across <Link to="/articles/best-email-reminder-apps" className="font-bold text-white underline hover:text-primary">email</Link>, SMS, backup contacts, emergency contacts, and social media, ensuring persistent delivery. Standard text reminders can be missed or become outdated as contact info changes over time. With FutureReminder, you get persistence across multiple channels. Our <Link to="/articles/best-free-reminder-apps" className="font-bold text-white underline hover:text-primary">free tier</Link> is generous, including both email and text, so critical reminders are covered without any upfront cost.</p>
         </div>
       </ArticleLayout>
       <section className="mt-16">

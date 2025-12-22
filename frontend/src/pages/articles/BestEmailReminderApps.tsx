@@ -2,6 +2,7 @@ import { ArticleLayout } from '../../components/ArticleLayout';
 import articleImage from '../../assets/postnotes.webp'; // Using a generic image
 import { ArticleCarousel } from '../../components/ArticleCarousel';
 import Seo from '../../components/Seo';
+import { Link } from 'react-router-dom';
 
 const BestEmailReminderApps = () => {
   return (
@@ -99,7 +100,7 @@ const BestEmailReminderApps = () => {
 
           <h2 className="text-3xl font-bold tracking-tight mb-4 mt-12">Honourable Mention: FutureReminder</h2>
           <p className="mb-6">Email reminders work well for short-term follow-ups or inbox-based tasks. FutureReminder isn’t meant to replace them for day-to-day email management.</p>
-          <p className="mb-6">We focus on high-stakes, long-term events where single reminders aren’t enough. Our system uses email, SMS, backup contacts, emergency contacts, and even social media to reach you persistently. Contact info changes over months and years, so multiple channels are essential. Plus, our free tier includes both email and text reminders, making it easy to test out our coverage without committing.</p>
+          <p className="mb-6">We focus on high-stakes, long-term events where single reminders aren’t enough. Our system uses email, <Link to="/articles/best-text-message-reminder-apps" className="font-bold text-white underline hover:text-primary">SMS</Link>, backup contacts, emergency contacts, and even social media to reach you persistently. Contact info changes over months and years, so multiple channels are essential. Plus, our <Link to="/articles/best-free-reminder-apps" className="font-bold text-white underline hover:text-primary">free tier</Link> includes both email and <Link to="/articles/best-text-message-reminder-apps" className="font-bold text-white underline hover:text-primary">text reminders</Link>, making it easy to test out our coverage without committing.</p>
         </div>
       </ArticleLayout>
       <section className="mt-16">
