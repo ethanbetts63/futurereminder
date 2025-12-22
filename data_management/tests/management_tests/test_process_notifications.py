@@ -4,7 +4,7 @@ from unittest.mock import patch
 from django.core.management import call_command
 from django.utils import timezone
 from datetime import timedelta
-from notifications.models import Notification
+from events.models import Notification
 from users.tests.factories.user_factory import UserFactory
 from events.tests.factories.event_factory import EventFactory
 

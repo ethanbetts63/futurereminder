@@ -2,7 +2,7 @@
 import pytest
 from rest_framework.test import APIClient
 from users.tests.factories.user_factory import UserFactory
-from notifications.tests.factories.notification_factory import NotificationFactory
+from events.tests.factories.notification_factory import NotificationFactory
 from django.conf import settings
 
 from django.test import override_settings

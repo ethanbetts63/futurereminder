@@ -4,7 +4,7 @@ from django.utils import timezone
 from datetime import timedelta, datetime
 from rest_framework.test import APIClient
 from users.models import User
-from notifications.models import Notification
+from events.models import Notification
 from events.tests.factories.event_factory import EventFactory
 
 pytestmark = pytest.mark.django_db
