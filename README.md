@@ -153,3 +153,14 @@ The project includes several custom Django management commands to help with deve
 *   `python manage.py fix_site_domains`: Corrects the domain name in the Django Sites framework, which is useful for local development.
 
 You can run these commands individually after setting up the project.
+
+## License
+
+This project is licensed under the **Functional Source License 1.1 (FSL-1.1-MIT)**.
+
+### What this means:
+* **Personal & Internal Use:** You are free to use, modify, and distribute this code for personal projects, internal business tools, and educational purposes.
+* **Non-Compete:** You **cannot** use this code to create a commercial product or service that competes with **FutureReminder**.
+* **Future Open Source:** This specific version of the code will automatically become fully open-source under the **MIT License** on **December 23, 2027**.
+
+For the full legal terms, please see the [LICENSE.md](./LICENSE.md) file.
