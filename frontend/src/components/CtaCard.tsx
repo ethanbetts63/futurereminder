@@ -60,7 +60,7 @@ export const CtaCard: React.FC = () => {
                         className="h-full w-full object-contain"
                     />
             </div>
-            <CardTitle className="text-3xl"><span className="bg-primary text-primary-foreground px-2 py-1 rounded-md italic underline">FutureReminder</span></CardTitle>
+            <h2 className="text-3xl leading-none font-semibold"><span className="bg-primary text-primary-foreground px-2 py-1 rounded-md italic underline">FutureReminder</span></h2>
         </div>
 
         {/* Tier Switcher */}
@@ -96,7 +96,7 @@ export const CtaCard: React.FC = () => {
               )}
             </p>
             <div>
-                <h4 className="font-semibold text-md mb-2">What’s included?</h4>
+                <h3 className="font-semibold text-md mb-2">What’s included?</h3>
                 <ul className="space-y-2 text-sm">
                     {currentTier.features.map((feature, index) => (
                         <li key={index} className="flex items-start gap-2">
@@ -107,7 +107,7 @@ export const CtaCard: React.FC = () => {
                 </ul>
             </div>
             <div>
-                <h4 className="font-semibold text-md mb-2">How does it work?</h4>
+                <h3 className="font-semibold text-md mb-2">How does it work?</h3>
                 <p className="text-sm">
                     We need as many ways to contact you as possible, the name and date of the event and when you want the reminders to start.
                 </p>
