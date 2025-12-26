@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Check } from 'lucide-react';
 import logo from '../assets/logo.webp';
 import logo320 from '../assets/logo-320w.webp';
