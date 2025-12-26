@@ -46,7 +46,7 @@ export const CtaCard: React.FC = () => {
   const currentTier = tierData[selectedTier];
 
   return (
-    <Card className="w-full bg-white text-gray-900">
+    <Card className="w-full bg-white text-gray-900 rounded-none sm:rounded-xl">
       <CardHeader className="text-center">
         <div className="flex justify-center items-center gap-3 mb-4">
             <div className="flex items-center justify-center h-12 w-12 bg-primary rounded-lg">

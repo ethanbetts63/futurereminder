@@ -53,7 +53,7 @@ const HomePage = () => {
       <div className="container mx-auto px-0 sm:px-4 lg:grid lg:grid-cols-3 lg:gap-8">
         
         {/* Main Content Column (2/3 width) */}
-        <div className="lg:col-span-2 bg-background text-primary-foreground rounded-lg py-4 px-0 sm:p-8 md:p-8 lg:p-8 flex flex-col gap-8">
+        <div className="lg:col-span-2 bg-background text-primary-foreground rounded-lg py-4 px-0 sm:p-8 md:p-8 lg:p-8 flex flex-col gap-0 sm:gap-8">
           <Letter />
           <section>
             <TrustFeature />

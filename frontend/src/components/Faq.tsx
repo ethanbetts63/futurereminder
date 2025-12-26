@@ -109,7 +109,7 @@ export const Faq: React.FC<FaqProps> = ({ title, subtitle, page, imageSrc, image
 
   if (isLoading) {
     return (
-      <Card className="bg-white text-gray-900 rounded-lg overflow-hidden border-0 shadow-none">
+      <Card className="bg-white text-gray-900 rounded-none sm:rounded-lg overflow-hidden border-0 shadow-none">
         <CardContent className="grid p-0 lg:grid-cols-2">
           <div className="p-6 lg:p-8 order-2 lg:order-1">
             <h2 className="text-3xl font-bold tracking-tight text-gray-900">{title}</h2>
@@ -140,7 +140,7 @@ export const Faq: React.FC<FaqProps> = ({ title, subtitle, page, imageSrc, image
   return (
     <>
       {generateJsonLd()}
-      <Card className="bg-white text-gray-900 rounded-lg overflow-hidden border-0 shadow-none">
+      <Card className="bg-white text-gray-900 rounded-none sm:rounded-lg overflow-hidden border-0 shadow-none">
         <CardContent className="grid p-0 lg:grid-cols-2">
           <div className="p-6 lg:p-8 order-2 lg:order-1">
             <h2 className="text-3xl font-bold tracking-tight text-gray-900">{title}</h2>
