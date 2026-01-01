@@ -31,6 +31,7 @@ class TierUpdateOrchestrator:
             defaults={
                 'description': data['tier_description'],
                 'stripe_product_id': data['stripe_product_id'],
+                'manifest': data.get('manifest', []), # Get manifest, default to empty list
             }
         )
 

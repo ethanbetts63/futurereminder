@@ -14,6 +14,10 @@ class Tier(models.Model):
         blank=True,
         help_text="A customer-facing description of the tier's features."
     )
+    manifest = models.JSONField(
+        default=list,
+        help_text="A list of notification channel strings defining the schedule for this tier."
+    )
     stripe_product_id = models.CharField(
         max_length=255, 
         blank=True,

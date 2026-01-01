@@ -51,10 +51,10 @@ def schedule_notifications_for_event(event: 'Event'):
         print(f"Skipping notification scheduling for event ID {event.id} due to invalid state.")
         return
 
-    # 3. Get the manifest for the event's tier
-    manifest = TIER_MANIFESTS.get(event.tier.name)
+    # 3. Get the manifest from the event's tier
+    manifest = event.tier.manifest
     if not manifest:
-        print(f"No manifest found for tier '{event.tier.name}' on event ID {event.id}.")
+        # Log this event? For now, we just stop.
         return
 
     # 4. Calculate timing intervals
