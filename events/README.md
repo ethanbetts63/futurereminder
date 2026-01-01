@@ -53,6 +53,14 @@ The architecture has been refactored to a "fat service" model where all sending 
     *   If the API call fails, the exception is caught, and the `status` is updated to `failed` with the error message logged in `failure_reason`. The entire operation is atomic for each notification.
 5.  **Webhook Feedback Loop:** The webhook process remains the same. External providers call our webhook endpoints to provide final delivery status updates (`delivered` or `failed`), which are looked up by `message_sid`.
 
+### Social Media ADMIN Task Creation: Notification Inception
+To handle notification channels that require manual intervention, a special flow is initiated directly from the `Notification` model.
+
+1.  **Trigger:** The `save()` method on the `Notification` model contains logic that checks the notification's channel when it is first created.
+2.  **Condition:** If a notification is being created with the channel `social_media`, the logic is triggered.
+3.  **Action:** The `save()` method calls the `create_admin_tasks_for_notification` utility. This utility creates one new `Event` for each social media handle found on the original user's profile. These new events are assigned to a designated admin user and use a special "Admin Task" tier. The `event_date` for these tasks is set to the scheduled send time of the original `social_media` notification, and `weeks_in_advance` is set to 1, giving the admin a one-week notice.
+4.  **Status Update:** After successfully creating the admin tasks, the original `social_media` notification has its status immediately set to `admin_task_created`. Because its status is no longer `pending`, the `process_notifications` command will never pick it up, effectively ending its lifecycle.
+
 ## End-to-End Testing
 To ensure the entire notification pipeline works correctly with live credentials, a dedicated end-to-end test command is provided.
 

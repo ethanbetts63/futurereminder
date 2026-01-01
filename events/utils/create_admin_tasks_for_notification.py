@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.utils import timezone
-from events.models import Event, Tier
+from events.models import Event
+from payments.models import Tier
 from users.models import User
 
 def create_admin_tasks_for_notification(notification):
