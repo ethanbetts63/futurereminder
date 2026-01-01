@@ -6,5 +6,6 @@ stripe
 Pillow
 pandas
 pytz
+twilio
 
 pytest-mock

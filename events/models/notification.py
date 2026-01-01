@@ -1,6 +1,8 @@
 from django.db import models
 from django.conf import settings
 from .event import Event
+from ..utils.send_reminder_email import send_reminder_email
+from ..utils.send_reminder_sms import send_reminder_sms
 
 class Notification(models.Model):
     """
@@ -44,6 +46,44 @@ class Notification(models.Model):
 
     def __str__(self):
         return f"Notification for {self.event.name} to {self.user.email} via {self.get_channel_display()} on {self.scheduled_send_time}"
+
+    def send(self):
+        """
+
+        Sends the notification based on its channel.
+        Updates the notification status to 'sent' or 'failed'.
+        """
+        if self.status != 'pending':
+            return # Don't send notifications that are not pending
+
+        sent = False
+        recipient = None
+
+        if self.channel == 'primary_email':
+            recipient = self.user.email
+            if recipient:
+                sent = send_reminder_email(self, recipient)
+        elif self.channel == 'backup_email':
+            recipient = self.user.backup_email
+            if recipient:
+                sent = send_reminder_email(self, recipient)
+        elif self.channel == 'primary_sms':
+            recipient = self.user.phone_number
+            if recipient:
+                sent = send_reminder_sms(self, recipient)
+        elif self.channel == 'backup_sms':
+            recipient = self.user.backup_phone_number
+            if recipient:
+                sent = send_reminder_sms(self, recipient)
+        # Add other channels here in the future (admin calls, etc.)
+        
+        if sent:
+            self.status = 'sent'
+            self.recipient_contact_info = recipient
+        else:
+            self.status = 'failed'
+        
+        self.save()
 
     class Meta:
         ordering = ['scheduled_send_time']
