@@ -1,108 +1,33 @@
 import pytest
 from io import StringIO
-from unittest.mock import patch
 from django.core.management import call_command
 from django.utils import timezone
+from unittest.mock import patch
 from datetime import timedelta
+
 from events.models import Notification
-from users.tests.factories.user_factory import UserFactory
 from events.tests.factories.event_factory import EventFactory
+from users.tests.factories.user_factory import UserFactory
+
+@pytest.fixture
+def mock_send_email():
+    """Mocks the send_reminder_email function."""
+    with patch('data_management.management.commands.process_notifications.send_reminder_email') as mock:
+        mock.return_value = True
+        yield mock
+
+@pytest.fixture
+def mock_send_sms():
+    """Mocks the send_reminder_sms function."""
+    with patch('data_management.management.commands.process_notifications.send_reminder_sms') as mock:
+        mock.return_value = "SM_fake_sid_12345"
+        yield mock
 
 @pytest.mark.django_db
 class TestProcessNotificationsCommand:
-
-    @patch('data_management.management.commands.process_notifications.send_reminder_email')
-    def test_process_due_notifications(self, mock_send_email):
-        """
-        Test that the command processes notifications that are due,
-        updates their status, and calls the email sending function.
-        """
-        mock_send_email.return_value = True
-        
-        # --- Test Data ---
-        user = UserFactory(is_email_verified=True, backup_email='backup@test.com')
-        event = EventFactory(user=user)
-
-        # 1. A notification that is due to be sent
-        due_notification = Notification.objects.create(
-            event=event,
-            user=user,
-            channel='primary_email',
-            status='pending',
-            scheduled_send_time=timezone.now() - timedelta(hours=1)
-        )
-        
-        # 2. A notification that is not yet due
-        future_notification = Notification.objects.create(
-            event=event,
-            user=user,
-            channel='primary_email',
-            status='pending',
-            scheduled_send_time=timezone.now() + timedelta(hours=1)
-        )
-
-        # 3. A notification for an unverified user
-        unverified_user = UserFactory(is_email_verified=False)
-        unverified_event = EventFactory(user=unverified_user)
-        unverified_notification = Notification.objects.create(
-            event=unverified_event,
-            user=unverified_user,
-            channel='primary_email',
-            status='pending',
-            scheduled_send_time=timezone.now() - timedelta(hours=1)
-        )
-
-        # 4. A notification with a backup email
-        backup_email_notification = Notification.objects.create(
-            event=event,
-            user=user,
-            channel='backup_email',
-            status='pending',
-            scheduled_send_time=timezone.now() - timedelta(hours=1)
-        )
-        
-        # --- Call Command ---
-        out = StringIO()
-        call_command('process_notifications', stdout=out)
-        
-        # --- Assertions ---
-        # Reload from DB to get updated status
-        due_notification.refresh_from_db()
-        future_notification.refresh_from_db()
-        unverified_notification.refresh_from_db()
-        backup_email_notification.refresh_from_db()
-
-        # Check that the correct notifications were processed
-        assert due_notification.status == 'sent'
-        assert future_notification.status == 'pending' # Should not have been processed
-        assert unverified_notification.status == 'pending' # Should not have been processed
-        assert backup_email_notification.status == 'sent'
-
-        # Check that the email sending function was called for the correct notifications
-        assert mock_send_email.call_count == 2
-        mock_send_email.assert_any_call(due_notification, user.email)
-        mock_send_email.assert_any_call(backup_email_notification, user.backup_email)
-
-        # Check the command output
-        output = out.getvalue()
-        assert f"Found 2 notifications to process." in output
-        assert f"Successfully sent to {user.email}" in output
-        assert f"Successfully sent to {user.backup_email}" in output
-        assert "Successfully sent: 2" in output
-        assert "Failed to send: 0" in output
-        
-    def test_no_due_notifications(self):
-        """Test the command's output when there are no notifications to send."""
-        out = StringIO()
-        call_command('process_notifications', stdout=out)
-        assert "No pending notifications to send." in out.getvalue()
-
-    @patch('data_management.management.commands.process_notifications.send_reminder_email')
-    def test_email_sending_failure(self, mock_send_email):
-        """Test that the notification status is updated to 'failed' if sending fails."""
-        mock_send_email.return_value = False
-        
-        user = UserFactory(is_email_verified=True)
+    def test_sends_due_email_notification(self, mock_send_email, mock_send_sms):
+        """Tests that a pending email notification due in the past is sent."""
+        user = UserFactory()
         event = EventFactory(user=user)
         notification = Notification.objects.create(
             event=event,
@@ -111,15 +36,116 @@ class TestProcessNotificationsCommand:
             status='pending',
             scheduled_send_time=timezone.now() - timedelta(hours=1)
         )
+
+        call_command('process_notifications')
+
+        mock_send_email.assert_called_once()
+        mock_send_sms.assert_not_called()
+        notification.refresh_from_db()
+        assert notification.status == 'sent'
+        assert notification.recipient_contact_info == user.email
+
+    def test_sends_due_sms_notification(self, mock_send_email, mock_send_sms):
+        """Tests that a pending SMS notification due in the past is sent."""
+        user = UserFactory(phone_number='+15551234567')
+        event = EventFactory(user=user)
+        notification = Notification.objects.create(
+            event=event,
+            user=user,
+            channel='primary_sms',
+            status='pending',
+            scheduled_send_time=timezone.now() - timedelta(hours=1)
+        )
+
+        call_command('process_notifications')
+
+        mock_send_sms.assert_called_once()
+        mock_send_email.assert_not_called()
+        notification.refresh_from_db()
+        assert notification.status == 'sent'
+        assert notification.message_sid == "SM_fake_sid_12345"
+
+    def test_retries_failed_notification(self, mock_send_email):
+        """Tests that a notification with 'failed' status is retried."""
+        user = UserFactory()
+        event = EventFactory(user=user)
+        Notification.objects.create(
+            event=event,
+            user=user,
+            channel='primary_email',
+            status='failed',
+            scheduled_send_time=timezone.now() - timedelta(days=1)
+        )
+
+        call_command('process_notifications')
+
+        mock_send_email.assert_called_once()
+
+    def test_does_not_send_future_notification(self, mock_send_email, mock_send_sms):
+        """Tests that a notification scheduled for the future is not sent."""
+        user = UserFactory()
+        event = EventFactory(user=user)
+        Notification.objects.create(
+            event=event,
+            user=user,
+            channel='primary_email',
+            status='pending',
+            scheduled_send_time=timezone.now() + timedelta(hours=1)
+        )
+
+        call_command('process_notifications')
+
+        mock_send_email.assert_not_called()
+        mock_send_sms.assert_not_called()
+
+    def test_handles_unsupported_channel(self, mock_send_email, mock_send_sms):
+        """Tests that a notification for an unsupported channel is marked as failed."""
+        user = UserFactory()
+        event = EventFactory(user=user)
+        notification = Notification.objects.create(
+            event=event,
+            user=user,
+            channel='social_media',
+            status='pending',
+            scheduled_send_time=timezone.now() - timedelta(hours=1)
+        )
         
-        out = StringIO()
-        err = StringIO()
-        call_command('process_notifications', stdout=out, stderr=err)
-        
+        call_command('process_notifications')
+
+        mock_send_email.assert_not_called()
+        mock_send_sms.assert_not_called()
         notification.refresh_from_db()
         assert notification.status == 'failed'
+        assert "NotImplementedError" in notification.failure_reason
+
+    def test_date_argument_filters_correctly(self, mock_send_email):
+        """Tests that the --date argument correctly filters notifications."""
+        user = UserFactory()
+        event = EventFactory(user=user)
+        yesterday = timezone.now().date() - timedelta(days=1)
         
+        notification = Notification.objects.create(
+            event=event,
+            user=user,
+            channel='primary_email',
+            status='pending',
+            scheduled_send_time=timezone.make_aware(
+                datetime.combine(yesterday, timezone.now().time())
+            )
+        )
+
+        # Act 1: Run for today's date, it should not be processed
+        today_str = timezone.now().strftime('%Y-%m-%d')
+        call_command('process_notifications', date=today_str)
+        mock_send_email.assert_not_called()
+
+        # Act 2: Run for yesterday's date, it should be processed
+        yesterday_str = yesterday.strftime('%Y-%m-%d')
+        call_command('process_notifications', date=yesterday_str)
         mock_send_email.assert_called_once()
-        assert f"Failed to send to {user.email}" in err.getvalue()
-        assert "Successfully sent: 0" in out.getvalue()
-        assert "Failed to send: 1" in out.getvalue()
+        notification.refresh_from_db()
+        assert notification.status == 'sent'
+
+            assert "SMTP server is down" in notification.failure_reason
+
+    

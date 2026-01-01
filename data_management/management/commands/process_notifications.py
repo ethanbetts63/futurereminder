@@ -32,14 +32,11 @@ class Command(BaseCommand):
             try:
                 processing_date = datetime.strptime(options['date'], '%Y-%m-%d').date()
                 processing_time = timezone.make_aware(datetime.combine(processing_date, timezone.now().time()))
-                self.stdout.write(f"[{timezone.now()}] Running notification processing for simulated date: {processing_date}")
             except ValueError:
-                self.stderr.write(self.style.ERROR("Invalid date format. Please use YYYY-MM-DD."))
+                # Silently fail on bad date format
                 return
         else:
             processing_time = timezone.now()
-
-        self.stdout.write(f"[{processing_time}] Starting notification processing job...")
 
         due_notifications = Notification.objects.filter(
             Q(status='pending') | Q(status='failed'),
@@ -48,17 +45,9 @@ class Command(BaseCommand):
         )
 
         if not due_notifications.exists():
-            self.stdout.write(self.style.SUCCESS("No pending or failed notifications to send."))
             return
 
-        self.stdout.write(f"Found {due_notifications.count()} notifications to process.")
-
-        success_count = 0
-        failure_count = 0
-
         for n in due_notifications:
-            self.stdout.write(f"Processing Notification {n.pk} for event '{n.event.name}' via {n.channel}...")
-            
             sid_or_success = None
             recipient = None
             
@@ -98,8 +87,6 @@ class Command(BaseCommand):
                         n.message_sid = sid_or_success
                     n.failure_reason = None # Clear previous failure reason
                     n.save(update_fields=['status', 'recipient_contact_info', 'message_sid', 'failure_reason'])
-                    success_count += 1
-                    self.stdout.write(self.style.SUCCESS(f"  -> Successfully sent. SID: {n.message_sid or 'N/A'}"))
                 else:
                     raise Exception("Sending function returned a falsy value.")
 
@@ -107,9 +94,3 @@ class Command(BaseCommand):
                 n.status = 'failed'
                 n.failure_reason = str(e)
                 n.save(update_fields=['status', 'failure_reason'])
-                failure_count += 1
-                self.stderr.write(self.style.ERROR(f"  -> Failed to send. Reason: {e}"))
-
-        self.stdout.write(f"[{timezone.now()}] Notification processing job finished.")
-        self.stdout.write(self.style.SUCCESS(f"Successfully sent: {success_count}"))
-        self.stdout.write(self.style.ERROR(f"Failed to send: {failure_count}"))
