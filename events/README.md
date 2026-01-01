@@ -33,9 +33,9 @@ This model represents a single, scheduled communication to be sent for a specifi
 ### Notification Scheduling: The "Manifest and Interval" Approach
 The core logic for scheduling is located in the `events/utils/schedule_notifications_for_event.py` utility. This provides a flexible and tier-based scheduling system.
 
-1.  **Trigger:** The process is initiated whenever an `Event` is saved (e.g., upon creation or update).
+1.  **Trigger:** The process is initiated whenever an `Event` is saved (e.g., upon creation, update, or activation).
 2.  **Cleanup:** The utility first deletes all existing `pending` notifications for the event to ensure a clean slate.
-3.  **Manifest Lookup:** It uses the event's `tier.name` to look up a corresponding "manifest" in a `TIER_MANIFESTS` dictionary. A manifest is an ordered list of notification channel strings (e.g., `['primary_email', 'primary_sms', 'emergency_contact_email']`). The order defines the escalation path.
+3.  **Manifest Lookup:** It retrieves the notification schedule (the "manifest") directly from the `manifest` field of the event's associated `Tier` object (`event.tier.manifest`). A manifest is an ordered list of notification channel strings (e.g., `['primary_email', 'primary_sms', 'emergency_contact_email']`). The order defines the escalation path. This approach allows schedules to be managed dynamically in the database.
 4.  **Interval Calculation:** The system calculates an even time interval by dividing the total duration (from `notification_start_date` to `event_date`) by the number of notifications in the manifest.
 5.  **Creation:** It then iterates through the manifest, creating a `Notification` object for each channel, with the `scheduled_send_time` staggered by the calculated interval. All new notifications have a status of `pending`.
 

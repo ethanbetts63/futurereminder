@@ -62,60 +62,6 @@ class Notification(models.Model):
     def __str__(self):
         return f"Notification for {self.event.name} to {self.user.email} via {self.get_channel_display()} on {self.scheduled_send_time}"
 
-    def send(self):
-        """
-        Sends the notification based on its channel.
-        Updates status, saves message_sid on success, and logs exceptions on failure.
-        """
-        if self.status != 'pending':
-            return
-
-        self.status = 'in_progress'
-        self.save()
-
-        sid_or_success = None
-        recipient = None
-
-        try:
-            if self.channel == 'primary_email':
-                recipient = self.user.email
-                if recipient:
-                    sid_or_success = send_reminder_email(self, recipient)
-            elif self.channel == 'backup_email':
-                recipient = self.user.backup_email
-                if recipient:
-                    sid_or_success = send_reminder_email(self, recipient)
-            elif self.channel == 'primary_sms':
-                recipient = self.user.phone_number
-                if recipient:
-                    sid_or_success = send_reminder_sms(self, recipient)
-            elif self.channel == 'backup_sms':
-                recipient = self.user.backup_phone_number
-                if recipient:
-                    sid_or_success = send_reminder_sms(self, recipient)
-            elif self.channel == 'emergency_contact_email':
-                emergency_contact = self.user.emergency_contacts.first()
-                if emergency_contact and emergency_contact.email:
-                    recipient = emergency_contact.email
-                    sid_or_success = send_reminder_email(self, recipient)
-
-            if sid_or_success:
-                self.status = 'sent'
-                self.recipient_contact_info = recipient
-                # For SMS, this will be the SID. For email, it might just be True.
-                if isinstance(sid_or_success, str):
-                    self.message_sid = sid_or_success
-            else:
-                self.status = 'failed'
-                if not self.failure_reason: # Don't overwrite a reason if one was already logged
-                    self.failure_reason = "Sending function returned a falsy value."
-
-        except Exception as e:
-            self.status = 'failed'
-            self.failure_reason = str(e)
-        
-        self.save()
-
     class Meta:
         ordering = ['scheduled_send_time']
         indexes = [

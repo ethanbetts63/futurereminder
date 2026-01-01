@@ -1,0 +1,31 @@
+# Session Summary: 2026-01-01
+
+This session focused on diagnosing and fixing a critical bug in the notification scheduling system, refactoring the system to be more robust, and adding comprehensive tests to ensure its stability.
+
+## Key Activities & Outcomes
+
+### 1. Initial Bug Fixing & Investigation
+- **Test Failures:** Addressed several existing test failures related to an `http` vs `https` redirect URL and changes in the analytics view's data structure.
+- **Frontend CSS:** Corrected a horizontal alignment issue with a success icon on the event activation page by wrapping it in a centered flex container.
+- **New Tooling:** Created a new management command, `inspect_notifications`, to provide a detailed, color-coded view of all notifications in the system for easier debugging.
+
+### 2. Notification Scheduling Bug
+- **Diagnosis:** Investigated a critical bug where notifications were not being created when events were saved. The root cause was identified as a mismatch between hardcoded tier names in the scheduling logic (`'Free'`, `'Standard'`) and the actual tier names in the database (`'Automated'`, `'Advanced'`). A secondary issue was identified where the hardcoded notification schedules were using outdated channel names.
+- **Refactoring to Data-Driven System:** To solve this permanently, we undertook a significant refactoring:
+    1.  The notification schedule ("manifest") was removed from a hardcoded Python dictionary.
+    2.  A `manifest` JSONField was added to the `payments.Tier` model.
+    3.  The `data_management/data/tiers.jsonl` file was updated to include the manifest for each tier.
+    4.  The tier generation script was updated to populate this new database field.
+    5.  The scheduling utility was updated to pull the manifest directly from the event's associated tier (`event.tier.manifest`), making the system entirely data-driven.
+
+### 3. Comprehensive Testing ("Bulletproofing")
+- **Layer 1 (Unit Tests):**
+    - Created a new test suite for the `schedule_notifications_for_event` utility, covering the happy path, cleanup logic, validation (e.g., for inactive events), and edge cases (e.g., empty manifests).
+    - Added a mock-based unit test to the `Event` model tests to explicitly verify that `Event.save()` calls the scheduling utility.
+- **Layer 2 (Integration Tests):**
+    - Created a new integration test suite to test the entire backend scheduling flow without mocks.
+    - Implemented tests to cover the three most critical scenarios: the full creation flow, the event update flow (ensuring schedules are regenerated), and the activation flow (ensuring notifications are only created for active events).
+- **Test Debugging:** Resolved several `ImportError` and `AttributeError` issues in the new test files related to incorrect factory import paths and `unittest.mock.patch` targets, resulting in all new tests passing.
+
+## Session Conclusion
+The notification scheduling system is now working correctly, is significantly more robust due to its data-driven design, and is protected by a comprehensive suite of unit and integration tests. This has made the system far more "bulletproof" and easier to maintain.
