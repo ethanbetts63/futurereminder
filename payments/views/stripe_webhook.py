@@ -7,6 +7,7 @@ from rest_framework import status
 
 from rest_framework.permissions import AllowAny
 from payments.models import Payment, Tier
+from payments.utils.send_admin_payment_notification import send_admin_payment_notification
 
 class StripeWebhookView(APIView):
     """
@@ -55,6 +56,9 @@ class StripeWebhookView(APIView):
                         event_to_update.tier = paid_tier
                         event_to_update.is_active = True
                         event_to_update.save() # The custom save method will validate
+
+                        # Send a notification to the admin
+                        send_admin_payment_notification(payment_id=payment.stripe_payment_intent_id)
 
                     except Tier.DoesNotExist:
                         print(f"CRITICAL ERROR: Tier with ID {target_tier_id} not found. Cannot upgrade event {payment.event.id}.")
