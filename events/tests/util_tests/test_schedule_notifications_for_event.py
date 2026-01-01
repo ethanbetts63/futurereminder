@@ -1,155 +1,145 @@
 import pytest
-from datetime import date, timedelta
+from datetime import timedelta, time
+from django.utils import timezone
+from unittest.mock import patch
 from events.models import Notification
-from events.utils.schedule_notifications_for_event import TIER_MANIFESTS
+from events.utils.schedule_notifications_for_event import schedule_notifications_for_event
 from events.tests.factories.event_factory import EventFactory
 from payments.tests.factories.tier_factory import TierFactory
-from users.tests.factories.user_factory import UserFactory
 
 pytestmark = pytest.mark.django_db
 
-@pytest.fixture
-def free_tier():
-    return TierFactory(name='Free')
 
 @pytest.fixture
-def standard_tier():
-    return TierFactory(name='Standard')
+def base_time():
+    # Use a fixed, timezone-aware date for deterministic testing
+    return timezone.make_aware(timezone.datetime(2025, 1, 1, 12, 0, 0))
 
-@pytest.fixture
-def premium_tier():
-    return TierFactory(name='Premium')
 
-def test_schedule_for_inactive_event(free_tier):
+def test_happy_path_creates_correct_notifications(base_time):
     """
-    Tests that no notifications are created for an inactive event.
-    The schedule function is called via the model's save() method.
+    Tests that the function creates the correct number and sequence of notifications.
     """
-    EventFactory(is_active=False, tier=free_tier)
-    assert Notification.objects.count() == 0
-
-def test_schedule_for_event_with_no_tier():
-    """
-    Tests that no notifications are created if the event has no tier.
-    """
-    EventFactory(is_active=True, tier=None)
-    assert Notification.objects.count() == 0
-
-def test_schedule_for_event_with_invalid_dates(premium_tier):
-    """
-    Tests that no notifications are created if the start date is on or after the event date.
-    Here, we achieve this by setting weeks_in_advance to 0.
-    """
+    manifest = ['primary_email', 'primary_sms', 'backup_email']
+    tier = TierFactory(manifest=manifest)
     event = EventFactory(
         is_active=True,
-        tier=premium_tier,
-        event_date=date.today() + timedelta(days=10),
-        weeks_in_advance=0
-    )
-    assert event.notification_start_date == event.event_date
-    assert Notification.objects.count() == 0
-
-def test_free_tier_schedule(free_tier):
-    """
-    Tests the notification schedule generation for a Free tier event.
-    """
-    weeks_in_advance = 2
-    event_date = date(2025, 1, 15)
-    expected_start_date = event_date - timedelta(weeks=weeks_in_advance) # 2025-01-01
-
-    event = EventFactory(
-        is_active=True,
-        tier=free_tier,
-        event_date=event_date,
-        weeks_in_advance=weeks_in_advance
-    )
-
-    assert event.notification_start_date == expected_start_date
-    
-    notifications = Notification.objects.filter(event=event).order_by('scheduled_send_time')
-    manifest = TIER_MANIFESTS['Free']
-    assert notifications.count() == len(manifest)
-    
-    total_duration = event.event_date - event.notification_start_date
-    interval = total_duration / len(manifest) # 14 days / 2 = 7 days
-
-    assert notifications[0].channel == manifest[0]
-    assert notifications[0].scheduled_send_time.date() == expected_start_date
-    
-    assert notifications[1].channel == manifest[1]
-    assert notifications[1].scheduled_send_time.date() == expected_start_date + interval
-
-def test_standard_tier_schedule(standard_tier):
-    """
-    Tests the notification schedule generation for a Standard tier event.
-    """
-    weeks_in_advance = 5
-    event_date = date(2025, 2, 25)
-    expected_start_date = event_date - timedelta(weeks=weeks_in_advance) # 2025-01-21
-
-    event = EventFactory(
-        is_active=True,
-        tier=standard_tier,
-        event_date=event_date,
-        weeks_in_advance=weeks_in_advance
+        tier=tier,
+        event_date=base_time.date() + timedelta(days=30),
+        weeks_in_advance=4 # approx 28 days
     )
     
-    assert event.notification_start_date == expected_start_date
+    # event.notification_start_date is 2025-01-03
+    
+    schedule_notifications_for_event(event)
 
     notifications = Notification.objects.filter(event=event).order_by('scheduled_send_time')
-    manifest = TIER_MANIFESTS['Standard']
-    assert notifications.count() == len(manifest)
     
-    total_duration = event.event_date - event.notification_start_date # 35 days
-    interval = total_duration / len(manifest) # 35 / 5 = 7 days
+    assert notifications.count() == 3
+    assert [n.channel for n in notifications] == manifest
 
-    for i, notification in enumerate(notifications):
-        assert notification.channel == manifest[i]
-        assert notification.scheduled_send_time.date() == expected_start_date + (interval * i)
+    # Check timing: 3 notifications over 28 days. Interval is ~9.33 days.
+    # Notif 1: Jan 3 (start_date + 0 * interval)
+    # Notif 2: Jan 12 (start_date + 1 * interval)
+    # Notif 3: Jan 21 (start_date + 2 * interval)
+    expected_day1 = event.notification_start_date
+    expected_day2 = event.notification_start_date + timedelta(days=9)
+    expected_day3 = event.notification_start_date + timedelta(days=18)
 
-def test_premium_tier_schedule(premium_tier):
+    assert notifications[0].scheduled_send_time.date() == expected_day1
+    assert notifications[1].scheduled_send_time.date() == expected_day2
+    assert notifications[2].scheduled_send_time.date() == expected_day3
+
+
+def test_cleanup_deletes_pending_notifications(base_time):
     """
-    Tests the notification schedule generation for a Premium tier event.
+    Tests that any pre-existing 'pending' notifications are cleared.
     """
-    weeks_in_advance = 1
-    event_date = date(2025, 1, 10)
-    expected_start_date = event_date - timedelta(weeks=weeks_in_advance) # 2025-01-03
+    tier = TierFactory(manifest=['primary_email'])
+    event = EventFactory(is_active=True, tier=tier, event_date=base_time.date() + timedelta(days=10))
 
+    # Manually create a pending notification that should be deleted
+    stale_notification = Notification.objects.create(
+        event=event,
+        user=event.user,
+        channel='primary_sms',
+        status='pending',
+        scheduled_send_time=base_time
+    )
+
+    # Manually create a non-pending notification that should NOT be deleted
+    sent_notification = Notification.objects.create(
+        event=event,
+        user=event.user,
+        channel='primary_email',
+        status='sent',
+        scheduled_send_time=base_time - timedelta(days=1)
+    )
+
+    schedule_notifications_for_event(event)
+
+    # The stale 'pending' notification should be gone
+    assert not Notification.objects.filter(pk=stale_notification.pk).exists()
+    # The 'sent' notification should remain
+    assert Notification.objects.filter(pk=sent_notification.pk).exists()
+    # A new notification from the manifest should be created
+    assert Notification.objects.filter(event=event, status='pending').count() == 1
+
+
+def test_does_nothing_for_inactive_event(base_time):
+    """
+    Tests that no notifications are scheduled for an event with is_active=False.
+    """
+    tier = TierFactory(manifest=['primary_email'])
+    event = EventFactory(is_active=False, tier=tier, event_date=base_time.date())
+
+    schedule_notifications_for_event(event)
+
+    assert Notification.objects.filter(event=event).count() == 0
+
+
+def test_does_nothing_for_event_without_tier(base_time):
+    """
+    Tests that no notifications are scheduled for an event with tier=None.
+    """
+    event = EventFactory(is_active=True, tier=None, event_date=base_time.date())
+
+    schedule_notifications_for_event(event)
+    
+    assert Notification.objects.filter(event=event).count() == 0
+
+
+def test_handles_empty_manifest(base_time):
+    """
+    Tests that the function runs without error and creates no notifications
+    for a tier with an empty manifest.
+    """
+    tier = TierFactory(manifest=[])
+    event = EventFactory(is_active=True, tier=tier, event_date=base_time.date())
+    
+    schedule_notifications_for_event(event)
+
+    assert Notification.objects.filter(event=event).count() == 0
+
+
+def test_handles_single_item_manifest(base_time):
+    """
+    Tests that a single-item manifest schedules one notification on the start date.
+    """
+    tier = TierFactory(manifest=['primary_email'])
     event = EventFactory(
         is_active=True,
-        tier=premium_tier,
-        event_date=event_date,
-        weeks_in_advance=weeks_in_advance
+        tier=tier,
+        event_date=base_time.date() + timedelta(days=10),
+        weeks_in_advance=1
     )
+    # notification_start_date should be 10 days - 7 days = 3 days from base_time
     
-    assert event.notification_start_date == expected_start_date
-
-    notifications = Notification.objects.filter(event=event).order_by('scheduled_send_time')
-    manifest = TIER_MANIFESTS['Premium']
-    assert notifications.count() == len(manifest)
+    schedule_notifications_for_event(event)
     
-    total_duration = event.event_date - event.notification_start_date # 7 days
-    interval = total_duration / len(manifest) # 7 days / 9 notifications is < 1 day
-
-    for i, notification in enumerate(notifications):
-        assert notification.channel == manifest[i]
-        expected_date = expected_start_date + (interval * i)
-        assert notification.scheduled_send_time.date() == expected_date
-
-def test_schedule_clears_old_notifications_on_update(free_tier, premium_tier):
-    """
-    Tests that updating an event clears the old schedule and creates a new one.
-    """
-    event = EventFactory(is_active=True, tier=free_tier)
+    notifications = Notification.objects.filter(event=event)
+    assert notifications.count() == 1
     
-    # Initial creation (triggers schedule_notifications_for_event via save)
-    assert Notification.objects.filter(event=event).count() == len(TIER_MANIFESTS['Free'])
-    
-    # Update the tier and save again
-    event.tier = premium_tier
-    event.save()
-    
-    # Assert that the old notifications are gone and the new schedule is in place
-    assert Notification.objects.filter(event=event).count() == len(TIER_MANIFESTS['Premium'])
-    assert Notification.objects.filter(event=event, channel='primary_sms').exists() # a channel only in premium
-
+    notification = notifications.first()
+    assert notification.channel == 'primary_email'
+    assert notification.scheduled_send_time.date() == event.notification_start_date

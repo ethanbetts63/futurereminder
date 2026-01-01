@@ -20,3 +20,4 @@ Sometimes a summary file must be created to document the work performed. This su
 # User Preferences
 - never run npm or runserver
 - do not ask to read files just read them. 
+- never run pytest on its own alway specify a dir or file. 

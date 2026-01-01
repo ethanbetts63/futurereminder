@@ -1,5 +1,6 @@
 import pytest
 from datetime import date, timedelta
+from unittest.mock import patch
 from django.core.exceptions import ValidationError
 from events.models import Event
 from events.tests.factories.event_factory import EventFactory
@@ -16,6 +17,19 @@ def test_event_creation():
     assert event.event_date is not None
     assert event.user is not None
     assert event.tier is not None
+
+@patch('events.utils.schedule_notifications_for_event.schedule_notifications_for_event')
+@pytest.mark.django_db
+def test_save_calls_schedule_notifications(mock_schedule_func):
+    """
+    Tests that saving an Event instance calls the scheduling utility.
+    This test uses a mock to isolate the save method's behavior.
+    """
+    event = EventFactory()
+    
+    # The event is created and saved by the factory.
+    # Now, check if the mock was called.
+    mock_schedule_func.assert_called_once_with(event)
 
 @pytest.mark.django_db
 def test_notification_start_date_calculation():
