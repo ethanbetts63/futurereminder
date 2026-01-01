@@ -8,13 +8,10 @@ class Command(BaseCommand):
     help = 'Sends a test SMS message to a specified number using Twilio.'
 
     def handle(self, *args, **options):
-        # The phone number to send the test SMS to
         test_phone_number = "+4591749128"
 
         self.stdout.write(f"Attempting to send a test SMS to {test_phone_number}...")
 
-        # The send_reminder_sms function requires a Notification object, which in turn
-        # requires a User and an Event. We can use mock objects for these to avoid
         # create mock objects to satisfy the function signature
         mock_user = MagicMock(spec=User)
         mock_user.email = 'test@example.com'
@@ -26,10 +23,9 @@ class Command(BaseCommand):
         mock_notification = MagicMock(spec=Notification)
         mock_notification.user = mock_user
         mock_notification.event = mock_event
-        mock_notification.pk = 123  # For logging purposes in the send function
+        mock_notification.pk = 123  
 
         try:
-            # Call the send_reminder_sms function
             success = send_reminder_sms(mock_notification, test_phone_number)
 
             if success:
