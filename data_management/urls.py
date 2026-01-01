@@ -11,16 +11,8 @@ from .views.historical_summary_view import HistoricalSummaryView
 app_name = 'data_management'
 
 urlpatterns = [
-    path(
-        'blocklist/block/<str:signed_email>/',
-        AddToBlocklistView.as_view(),
-        name='add_to_blocklist'
-    ),
-    path(
-        'blocklist-success/',
-        BlocklistSuccessView.as_view(),
-        name='blocklist_success'
-    ),
+    path('blocklist/block/<str:signed_email>/', AddToBlocklistView.as_view(), name='add_to_blocklist'),
+    path('blocklist-success/', BlocklistSuccessView.as_view(), name='blocklist_success'),
     path('faqs/', FaqListView.as_view(), name='faq-list'),
     path('terms/latest/', LatestTermsAndConditionsView.as_view(), name='latest-terms'),
     path('products/single-event-price/', SingleEventPriceView.as_view(), name='single-event-price'),

@@ -42,8 +42,6 @@ The logic is orchestrated by the `anonymize_user` utility function:
 4.  **Deactivate Account:** The user's `is_active` flag is set to `False` to prevent any future logins.
 5.  **Timestamp:** An `anonymized_at` timestamp is recorded on the user model.
 
-**Note:** This process only affects pending notifications. Records of already sent notifications are not modified or anonymized.
-
 ## API Endpoints
 
 The following are the primary endpoints provided by this app, under the `/api/users/` prefix:

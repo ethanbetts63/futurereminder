@@ -1,8 +1,6 @@
 from django.db import models
 from django.conf import settings
 from .event import Event
-from ..utils.send_reminder_email import send_reminder_email
-from ..utils.send_reminder_sms import send_reminder_sms
 
 class Notification(models.Model):
     """

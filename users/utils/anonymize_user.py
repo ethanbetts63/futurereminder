@@ -30,15 +30,11 @@ def anonymize_user(user: User):
 
     # --- Anonymize Sent Notification History ---
     # We need to hash the PII stored in the recipient_contact_info of sent notifications.
-    sent_notifications = Notification.objects.filter(user=user, status__in=['sent', 'failed', 'completed'])
-    notifications_to_update = []
-    for notification in sent_notifications:
+    notifications_to_update = Notification.objects.filter(user=user, status__in=['sent', 'failed', 'completed'])
+    for notification in notifications_to_update:
         if notification.recipient_contact_info:
             notification.recipient_contact_info = hash_value(notification.recipient_contact_info, salt)
-            notifications_to_update.append(notification)
-    
-    if notifications_to_update:
-        Notification.objects.bulk_update(notifications_to_update, ['recipient_contact_info'])
+            notification.save(update_fields=['recipient_contact_info'])
 
     # A mapping of original PII fields to their `hash_` counterparts.
     pii_fields_to_hash = {

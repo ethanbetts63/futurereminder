@@ -21,7 +21,6 @@ urlpatterns = [
     path("api/payments/", include("payments.urls")),
     path("api/data/", include("data_management.urls")),
     path("api/events/", include("events.urls")),
-    path("api/notifications/", include("events.notification_urls")),
 
     # Sitemap
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
