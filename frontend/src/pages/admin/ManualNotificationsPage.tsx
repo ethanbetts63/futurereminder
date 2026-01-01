@@ -17,7 +17,7 @@ const ManualNotificationsPage: React.FC = () => {
           </p>
         </div>
         <NotificationHistoryChart
-          dataUrl="/api/analytics/manual-notifications/"
+          dataUrl="/api/data/analytics/manual-notifications/"
           title="Manual Task Trends"
           description="Number of manual tasks scheduled for each day versus the number marked as completed."
         />

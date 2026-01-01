@@ -51,7 +51,7 @@ export function HistoricalSummaryChart() {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const response = await authedFetch('/api/analytics/historical-summary/');
+                const response = await authedFetch('/api/data/analytics/historical-summary/');
                 if (!response.ok) {
                     throw new Error(`Failed to fetch chart data`);
                 }

@@ -140,7 +140,7 @@ export async function activateFreeEvent(eventId: number): Promise<Event> {
 // --- User Profile & Settings Endpoints ---
 
 export async function getDashboardAnalytics(): Promise<any[]> {
-    const response = await authedFetch('/api/analytics/dashboard/', {
+    const response = await authedFetch('/api/data/analytics/dashboard/', {
         method: 'GET',
     });
     return handleResponse(response);

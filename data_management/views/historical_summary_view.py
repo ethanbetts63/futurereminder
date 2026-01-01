@@ -2,7 +2,6 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAdminUser
 from django.utils import timezone
-from datetime import date
 from collections import defaultdict
 from django.db.models import Count
 from django.contrib.auth import get_user_model

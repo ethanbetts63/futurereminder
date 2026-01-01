@@ -17,7 +17,7 @@ const AutomatedNotificationsPage: React.FC = () => {
           </p>
         </div>
         <NotificationHistoryChart
-          dataUrl="/api/analytics/automated-notifications/"
+          dataUrl="/api/data/analytics/automated-notifications/"
           title="Automated Notification Trends"
           description="Number of notifications scheduled for each day versus the number actually sent."
         />
