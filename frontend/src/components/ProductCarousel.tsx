@@ -32,7 +32,7 @@ export const ProductCarousel = () => {
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold tracking-tight text-center text-primary-foreground mb-2">The <span className= "font-bold italic underline">FutureReminder</span> System</h2>
         <p className="text-lg text-primary-foreground text-center mb-8">
-          You can define how long before your event we begin to try and reach you. Then we will repeat email notifications, whilst stepping through our hierachy of other contact options until you acknowledge. Every notification containts a quick stop link so can stop the spam in an instant.
+          Define how long before your event we begin to try and reach you. Then get repeating email notifications, text-messages notifications and outreach via emergency contacts and/or social media.
         </p>
         <div className="flex overflow-x-auto space-x-6 pb-4">
           {hierarchyLevels.map((item) => (

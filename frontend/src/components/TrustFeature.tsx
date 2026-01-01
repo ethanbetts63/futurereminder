@@ -19,7 +19,7 @@ const TrustFeature: React.FC = () => {
           <ul className="list-disc list-inside text-lg">
             <li className="mb-4"><strong>True Deletion:</strong> Industry standard account deletion means just disabling your account not deleting it. We cryptographically erase your data.</li>
             <li className="mb-4"><strong>No Ads, No Selling:</strong> Your contact info is used for one thing: finding you when it matters. We do not sell data.</li>
-            <li className="mb-4"><strong>One-Click Stop:</strong> A link is present in all notifications to stop reminder sequences instantly. Events timelines and contact methods are also editable even after creation.</li>
+            <li className="mb-4"><strong>Full-control:</strong> Events timelines and contact methods are editable even after creation and stopping further notifications is just as easy.</li>
           </ul>
         </div>
       </div>
