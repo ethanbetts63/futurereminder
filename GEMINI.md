@@ -7,7 +7,7 @@ This project, named , is a web application designed to act as a highly persisten
 
 The technical stack consists of a Django backend and a React frontend.
 
-The Django backend is structured into several dedicated apps: `users` for managing a custom user model with extensive contact details; `events` for creating and managing the reminder events themselves; `notifications` to handle the complex, multi-channel notification logic (like email, SMS, and calls); and `payments` for processing one-time fees to activate events. An `api` app serves as the bridge between the backend services and the frontend.
+The Django backend is structured into several dedicated apps: `users` for managing a custom user model with extensive contact details; `events` for creating and managing the reminder events themselves; `notifications` to handle the complex, multi-channel notification logic (like email, SMS); and `payments` for processing one-time fees to activate events. An `api` app serves as the bridge between the backend services and the frontend.
 
 The frontend is a standard React application, which will provide the user interface for creating accounts, setting up events, and managing contact information.
 

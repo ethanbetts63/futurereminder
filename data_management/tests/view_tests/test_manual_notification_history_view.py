@@ -44,7 +44,7 @@ def test_manual_notification_history_authorized(api_client, admin_user):
     Notification.objects.create(
         event=event,
         user=event.user,
-        channel='admin_call', 
+        channel='social_media', 
         status='pending', 
         scheduled_send_time=base_time
     )
@@ -87,3 +87,4 @@ def test_manual_notification_history_authorized(api_client, admin_user):
     # Check for the completed notification
     assert completed_day_str in data_map
     assert data_map[completed_day_str]['completed'] == 1
+    assert data_map[completed_day_str]['sent'] == 0

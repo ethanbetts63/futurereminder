@@ -140,7 +140,6 @@ const TierChoicePage: React.FC = () => {
                                 <li className="flex items-center gap-3"><CheckCircle className="h-5 w-5 text-green-500" /><span className="text-foreground">Everything in Automated</span></li>
                                 <li className="flex items-center gap-3"><CheckCircle className="h-5 w-5 text-green-500" /><span className="text-foreground">Secondary phone number</span></li>
                                 <li className="flex items-center gap-3"><CheckCircle className="h-5 w-5 text-green-500" /><span className="text-foreground">Emergency contact</span></li>
-                                <li className="flex items-center gap-3"><CheckCircle className="h-5 w-5 text-green-500" /><span className="text-foreground">Phone calls</span></li>
                             </ul>
                         </CardContent>
                         <CardFooter>

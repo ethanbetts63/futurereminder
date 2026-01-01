@@ -62,22 +62,33 @@ def test_automated_notification_history_authorized(api_client, admin_user):
     Notification.objects.filter(pk=completed_notification.pk).update(updated_at=completed_time)
 
 
-    # 3. A notification with a status that should NOT be counted as completed
-    Notification.objects.create(
+    # 3. A notification that has failed
+    failed_notification = Notification.objects.create(
         event=event,
         user=event.user,
         channel='primary_email', 
         status='failed', 
         scheduled_send_time=base_time - timedelta(days=3),
     )
+    Notification.objects.filter(pk=failed_notification.pk).update(updated_at=completed_time)
 
-    # 4. A notification with a channel that should NOT be included
+    # 4. A notification that was delivered
+    delivered_notification = Notification.objects.create(
+        event=event,
+        user=event.user,
+        channel='backup_sms', 
+        status='delivered', 
+        scheduled_send_time=base_time - timedelta(days=4),
+    )
+    Notification.objects.filter(pk=delivered_notification.pk).update(updated_at=completed_time)
+
+    # 5. A notification with a channel that should NOT be included
     Notification.objects.create(
         event=event,
         user=event.user,
-        channel='admin_call', 
+        channel='social_media', 
         status='completed', 
-        scheduled_send_time=base_time - timedelta(days=4),
+        scheduled_send_time=base_time - timedelta(days=5),
     )
 
     url = reverse('data_management:automated-notification-history')
@@ -97,6 +108,9 @@ def test_automated_notification_history_authorized(api_client, admin_user):
     assert scheduled_day_str in data_map
     assert data_map[scheduled_day_str]['scheduled'] == 1
     
-    # Check the data for the completed notification
+    # Check the data for the sent, delivered, and failed notifications
     assert completed_day_str in data_map
-    assert data_map[completed_day_str]['completed'] == 1
+    assert data_map[completed_day_str]['sent'] == 1
+    assert data_map[completed_day_str]['delivered'] == 1
+    assert data_map[completed_day_str]['errors'] == 1
+    assert data_map[completed_day_str]['completed'] == 0
