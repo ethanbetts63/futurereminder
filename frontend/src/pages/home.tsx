@@ -34,7 +34,7 @@ const HomePage = () => {
       />
       
       {/* --- Hierarchy Section --- */}
-      <section className="bg-primary mb-16">
+      <section className="bg-primary mb-10">
         <ProductCarousel />
       </section>
 
@@ -42,7 +42,7 @@ const HomePage = () => {
       <div className="container mx-auto px-0 sm:px-4 lg:grid lg:grid-cols-3 lg:gap-8">
         
         {/* Main Content Column (2/3 width) */}
-        <div className="lg:col-span-2 bg-background text-primary-foreground rounded-lg py-4 px-0 sm:p-8 md:p-8 lg:p-8 flex flex-col gap-0 sm:gap-8">
+        <div className="lg:col-span-2 bg-background text-primary-foreground rounded-lg px-0 sm:p-8 md:p-8 lg:p-8 flex flex-col gap-0 sm:gap-8">
           <Letter />
           <section>
             <TrustFeature />
@@ -54,7 +54,7 @@ const HomePage = () => {
 
         {/* Sticky Sidebar Column (1/3 width) */}
         <aside className="hidden lg:block">
-          <div className="sticky top-24">
+          <div className="sticky mb-7 mt-6 top-24">
             <CtaCard />
           </div>
         </aside>
