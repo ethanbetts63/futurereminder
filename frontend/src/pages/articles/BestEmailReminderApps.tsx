@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 const BestEmailReminderApps = () => {
   const articleDetails = {
-    title: "Best Email Reminder Apps in 2025 — Ranked | FutureReminder",
+    title: "Best Email Reminder Apps in 2026 — Ranked | FutureReminder",
     description: "A review of the best email reminder apps and services, focusing on reliability, ease of use, and features. We've based out analysis on forum, reddit and expert consensus.",
     url: "https://www.futurereminder.app/articles/best-email-reminder-apps",
     ogImage: "/static/og-images/og-reminder-apps-ranked.webp",
@@ -14,7 +14,7 @@ const BestEmailReminderApps = () => {
     publisherName: "FutureReminder",
     publisherLogoUrl: "https://www.futurereminder.app/static/logo_128_black.png",
     datePublished: "2025-12-22T00:00:00Z",
-    dateModified: "2025-12-22T00:00:00Z",
+    dateModified: "2026-01-01T00:00:00Z",
   };
 
   const structuredData = {
@@ -54,7 +54,7 @@ const BestEmailReminderApps = () => {
         structuredData={structuredData}
       />
       <ArticleLayout
-        title="Best Email Reminder Apps in 2025 — Ranked"
+        title="Best Email Reminder Apps in 2026 — Ranked"
         subtitle={<><span className="font-bold italic underline">Article Summary:</span> Email reminder tools send scheduled reminders straight to your inbox so important tasks, follow-ups, or deadlines don’t get forgotten. Some rely entirely on forwarding or scheduling reminder emails, while others add reminder features inside the mail app itself. The appeal is clear: reminders show up where you’re already looking.</>}
         imageSrc={articleImage}
         imageAlt="A collection of sticky notes representing email reminders"

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 const BestDailyReminderApps = () => {
   const articleDetails = {
-    title: "Best Daily Reminder Apps in 2025 | FutureReminder",
+    title: "Best Daily Reminder Apps in 2026 | FutureReminder",
     description: "An in depth review of the most popular daily reminder tools based on forum, reddit and expert consensus.",
     url: "https://www.futurereminder.app/articles/best-daily-reminder-apps",
     ogImage: "/static/og-images/og-reminder-apps-ranked.webp",
@@ -14,7 +14,7 @@ const BestDailyReminderApps = () => {
     publisherName: "FutureReminder",
     publisherLogoUrl: "https://www.futurereminder.app/static/logo_128_black.png",
     datePublished: "2025-12-22T00:00:00Z",
-    dateModified: "2025-12-22T00:00:00Z",
+    dateModified: "2026-01-01T00:00:00Z",
   };
 
   const structuredData = {
@@ -54,7 +54,7 @@ const BestDailyReminderApps = () => {
         structuredData={structuredData}
       />
       <ArticleLayout
-        title="Best Daily Reminder Apps in 2025"
+        title="Best Daily Reminder Apps in 2026"
         subtitle={<><span className="font-bold italic underline">Article Summary:</span> Daily reminders aren’t about remembering one-off events; they’re about creating structure. Whether you’re juggling routines, habits, work tasks, or medications, the right app can make the difference between staying consistent and letting things slip. We reviewed the most popular daily reminder tools available today to help you choose one that actually supports your life, not complicates it.</>}
         imageSrc={articleImage}
         imageAlt="A collection of sticky notes representing daily reminders"

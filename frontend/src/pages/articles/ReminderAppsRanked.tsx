@@ -6,15 +6,15 @@ import { Link } from 'react-router-dom';
 
 const ReminderAppsRanked = () => {
   const articleDetails = {
-    title: "The Best Reminder Apps in 2025 — Ranked by a Niche Reminder App",
-    description: "This article reviews and ranks the best reminder apps of 2025, based on community consensus from forums and Reddit. Discover which apps excel in cross-platform sync, persistence, ease of use, cost, and features.",
+    title: "The Best Reminder Apps in 2026 — Ranked by a Niche Reminder App",
+    description: "This article reviews and ranks the best reminder apps of 2026, based on community consensus from forums and Reddit. Discover which apps excel in cross-platform sync, persistence, ease of use, cost, and features.",
     url: "https://www.futurereminder.app/articles/reminder-apps-ranked",
     ogImage: "/static/og-images/og-reminder-apps-ranked.webp",
     authorName: "The FutureReminder Team",
     publisherName: "FutureReminder",
     publisherLogoUrl: "https://www.futurereminder.app/static/logo_128_black.png",
     datePublished: "2025-12-22T00:00:00Z",
-    dateModified: "2025-12-22T00:00:00Z",
+    dateModified: "2026-01-01T00:00:00Z",
   };
 
   const structuredData = {
@@ -54,7 +54,7 @@ const ReminderAppsRanked = () => {
         structuredData={structuredData}
       />
       <ArticleLayout
-        title="The Best Reminder Apps in 2025 — Ranked by a Reminder App That Only Wants 1% of You"
+        title="The Best Reminder Apps in 2026 — Ranked by a Reminder App That Only Wants 1% of You"
         subtitle={<>We’re not actually a reminder app. We’re reminder app adjacent. If you need to be reminded about something really important and/or well into the future go check out our home page. If not, keep reading. We live and breathe the reminder app ecosystem and we don’t want your business. Who else’s opinion would you rather. Some guy on reddit? </>}
         imageSrc={articleImage}
         imageAlt="A corkboard covered in colorful sticky notes with reminder icons"
@@ -74,7 +74,7 @@ const ReminderAppsRanked = () => {
             <li><span className="font-bold">Featurefulness:</span> Smart lists, recurring patterns, tags, priorities, location-based reminders, widgets, integrations, power options — all the bells and whistles.</li>
           </ol>
 
-          <h2 className="text-3xl font-bold tracking-tight mb-4 mt-8">The Top Reminder Apps of 2025</h2>
+          <h2 className="text-3xl font-bold tracking-tight mb-4 mt-8">The Top Reminder Apps of 2026</h2>
           
           <div className="space-y-12">
             {/* App 5 */}
@@ -143,7 +143,7 @@ const ReminderAppsRanked = () => {
 
             {/* App 1 */}
             <div>
-              <h3 className="text-2xl font-bold tracking-tight mb-4">1. TickTick — The Best All-Round Reminder App in 2025</h3>
+              <h3 className="text-2xl font-bold tracking-tight mb-4">1. TickTick — The Best All-Round Reminder App in 2026</h3>
               <div className="pl-4 border-l-4 border-muted/30">
                 <p><span className="font-bold">Cross-platform sync:</span> 5/5</p>
                 <p><span className="font-bold">Hard-to-ignore:</span> 4/5</p>

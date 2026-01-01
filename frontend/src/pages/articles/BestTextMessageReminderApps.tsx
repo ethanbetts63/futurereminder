@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 const BestTextMessageReminderApps = () => {
   const articleDetails = {
-    title: "Best Text-Message Reminder Apps in 2025 — Ranked | FutureReminder",
+    title: "Best Text-Message Reminder Apps in 2026 — Ranked | FutureReminder",
     description: "A review of the best SMS-based reminder apps and services, focusing on reliability, persistence, and ease of use. We've based out analysis on forum, reddit and expert consensus.",
     url: "https://www.futurereminder.app/articles/best-text-message-reminder-apps",
     ogImage: "/static/og-images/og-reminder-apps-ranked.webp",
@@ -14,7 +14,7 @@ const BestTextMessageReminderApps = () => {
     publisherName: "FutureReminder",
     publisherLogoUrl: "https://www.futurereminder.app/static/logo_128_black.png",
     datePublished: "2025-12-22T00:00:00Z",
-    dateModified: "2025-12-22T00:00:00Z",
+    dateModified: "2026-01-01T00:00:00Z",
   };
 
   const structuredData = {
@@ -54,7 +54,7 @@ const BestTextMessageReminderApps = () => {
         structuredData={structuredData}
       />
       <ArticleLayout
-        title="Best Text-Message Reminder Apps in 2025 — Ranked"
+        title="Best Text-Message Reminder Apps in 2026 — Ranked"
         subtitle={<><span className="font-bold italic underline">Article Summary:</span> Text-message reminders hit differently than push notifications. They show up in the same feed as real conversations and are almost impossible to ignore. Whether you need recurring reminders, scheduled SMS nudges, or automated texts triggered by workflows, the apps below send reminders directly through SMS so you’ll actually see them.</>}
         imageSrc={articleImage}
         imageAlt="A collection of sticky notes representing text message reminders"

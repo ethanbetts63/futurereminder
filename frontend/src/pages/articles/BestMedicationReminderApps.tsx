@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 const BestMedicationReminderApps = () => {
   const articleDetails = {
-    title: "Best Medication Reminder Apps in 2025 — Ranked | FutureReminder",
+    title: "Best Medication Reminder Apps in 2026 — Ranked | FutureReminder",
     description: "A review of the best medication reminder apps, focusing on safety, routine, and reliability for long-term adherence. We've based out analysis on forum, reddit and expert consensus.",
     url: "https://www.futurereminder.app/articles/best-medication-reminder-apps",
     ogImage: "/static/og-images/og-reminder-apps-ranked.webp",
@@ -14,7 +14,7 @@ const BestMedicationReminderApps = () => {
     publisherName: "FutureReminder",
     publisherLogoUrl: "https://www.futurereminder.app/static/logo_128_black.png",
     datePublished: "2025-12-22T00:00:00Z",
-    dateModified: "2025-12-22T00:00:00Z",
+    dateModified: "2026-01-01T00:00:00Z",
   };
 
   const structuredData = {
@@ -54,7 +54,7 @@ const BestMedicationReminderApps = () => {
         structuredData={structuredData}
       />
       <ArticleLayout
-        title="Best Medication Reminder Apps in 2025 — Ranked"
+        title="Best Medication Reminder Apps in 2026 — Ranked"
         subtitle={<><span className="font-bold italic underline">Article Summary:</span> Medication reminders aren’t about productivity—they’re about safety, routine, and real consequences if something slips. The apps below are designed to help people stick to long-term schedules, handle recurring doses reliably, and make missed reminders harder to ignore than standard push notifications.</>}
         imageSrc={articleImage}
         imageAlt="A collection of sticky notes representing medication reminders"

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 const BestFreeReminderApps = () => {
   const articleDetails = {
-    title: "Best Free Reminder Apps in 2025 — No Fees, No Friction | FutureReminder",
+    title: "Best Free Reminder Apps in 2026 — No Fees, No Friction | FutureReminder",
     description: "A review of the best free reminder apps for everyday life, focusing on features, reliability, and limitations. We've based our analysis on forum, reddit and expert consensus.",
     url: "https://www.futurereminder.app/articles/best-free-reminder-apps",
     ogImage: "/static/og-images/og-reminder-apps-ranked.webp",
@@ -14,7 +14,7 @@ const BestFreeReminderApps = () => {
     publisherName: "FutureReminder",
     publisherLogoUrl: "https://www.futurereminder.app/static/logo_128_black.png",
     datePublished: "2025-12-22T00:00:00Z",
-    dateModified: "2025-12-22T00:00:00Z",
+    dateModified: "2026-01-01T00:00:00Z",
   };
 
   const structuredData = {
@@ -54,7 +54,7 @@ const BestFreeReminderApps = () => {
         structuredData={structuredData}
       />
       <ArticleLayout
-        title="Best Free Reminder Apps in 2025 — No Fees, No Friction"
+        title="Best Free Reminder Apps in 2026 — No Fees, No Friction"
         subtitle={<><span className="font-bold italic underline">Article Summary:</span> We’re not here to push subscriptions, upsell premium tiers, or trick you into trial periods. We’re simply fascinated by reminder apps—how they work, where they fail, and why people rely on them. If you’re looking for reminders targeting important events and/or events years into the future, our homepage has that covered. But if you just want a solid free app for everyday life, this ranking is for you.</>}
         imageSrc={articleImage}
         imageAlt="A collection of sticky notes representing daily reminders"

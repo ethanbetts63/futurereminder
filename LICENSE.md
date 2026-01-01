@@ -4,7 +4,7 @@
 FSL-1.1-MIT
 
 ## Notice
-Copyright 2025 FutureReminder
+Copyright 2026 FutureReminder
 
 ## Terms and Conditions
 

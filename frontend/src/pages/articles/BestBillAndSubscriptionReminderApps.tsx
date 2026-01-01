@@ -54,7 +54,7 @@ const BestBillAndSubscriptionReminderApps = () => {
         structuredData={structuredData}
       />
       <ArticleLayout
-        title="Best Bill & Subscription Reminder Apps in 2025 — Ranked"
+        title="Best Bill & Subscription Reminder Apps in 2026 — Ranked"
         subtitle={<><span className="font-bold italic underline">Article Summary:</span> Missing a payment or letting a subscription renew unnoticed can cost money fast. The apps below help you stay on top of recurring bills, subscriptions, rent, and other expenses — basically anything that hits your wallet if you forget it. Some are dedicated bill trackers, others combine reminders with budgeting tools, but all focus on keeping you aware of what’s due.</>}
         imageSrc={articleImage}
         imageAlt="A collection of sticky notes representing bill and subscription reminders"
