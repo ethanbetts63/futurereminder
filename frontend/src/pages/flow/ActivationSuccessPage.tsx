@@ -21,8 +21,10 @@ const ActivationSuccessPage: React.FC = () => {
         <div className="container mx-auto flex items-center justify-center min-h-[60vh]">
             <Seo title="Event Activated | FutureReminder" />
             <Card className="w-full max-w-lg text-center shadow-lg">
-                <CardHeader className="items-center">
-                    <CheckCircle2 className="h-16 w-16 text-green-500 mb-4" />
+                <CardHeader>
+                    <div className="flex justify-center">
+                        <CheckCircle2 className="h-16 w-16 text-green-500 mb-4" />
+                    </div>
                     <CardTitle className="text-3xl">Activation Successful!</CardTitle>
                     <CardDescription className="text-lg text-muted-foreground pt-2">
                         Your reminder for <span className="font-semibold text-primary">{event.name}</span> is now active.

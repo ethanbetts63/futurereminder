@@ -10,23 +10,25 @@ TIER_MANIFESTS = {
     'Free': [
         'primary_email',
         'primary_email',
+        'primary_sms',
     ],
     'Standard': [
         'primary_email',
-        'secondary_email',
+        'backup_email',
         'primary_email',
         'primary_sms',
         'primary_email',
+        'emergency_contact_email',
+
     ],
     'Premium': [
         'primary_email',
-        'secondary_email',
+        'backup_email',
         'primary_sms',
         'primary_email',
-        'backup_sms', # Assumes backup_phone is used for SMS
-        'admin_call',
+        'backup_sms',
         'primary_email',
-        'emergency_contact',
+        'emergency_contact_email',
         'social_media',
     ]
 }
@@ -41,15 +43,18 @@ def schedule_notifications_for_event(event: 'Event'):
     """
     # 1. Clear any existing pending notifications for this event
     clear_pending_notifications(event)
+    print(f"Cleared pending notifications for event ID {event.id}")
 
     # 2. Basic validation
     if not all([event.is_active, event.tier, event.notification_start_date, event.event_date]) or \
        event.notification_start_date >= event.event_date:
+        print(f"Skipping notification scheduling for event ID {event.id} due to invalid state.")
         return
 
     # 3. Get the manifest for the event's tier
     manifest = TIER_MANIFESTS.get(event.tier.name)
     if not manifest:
+        print(f"No manifest found for tier '{event.tier.name}' on event ID {event.id}.")
         return
 
     # 4. Calculate timing intervals
@@ -57,6 +62,7 @@ def schedule_notifications_for_event(event: 'Event'):
     total_notifications = len(manifest)
 
     if total_notifications == 0:
+        print(f"No notifications scheduled for event ID {event.id} (manifest is empty).")
         return
     
     # If there's only one notification, schedule it at the start.
@@ -78,3 +84,4 @@ def schedule_notifications_for_event(event: 'Event'):
             channel=channel,
             send_time=send_time_aware
         )
+        print(f"Scheduled {channel} notification for event ID {event.id} at {send_time_aware.isoformat()}")

@@ -16,3 +16,7 @@ Sometimes a summary file must be created to document the work performed. This su
 
 -   **Location:** `C:\Users\ethan\coding\futurereminder\gemini_session_summaries\`
 -   **Naming Convention:** The file must be named `summary<N>.txt`, where `N` is the number of the previous summary file plus one (e.g., `summary_28.txt`).
+
+# User Preferences
+- never run npm or runserver
+- do not ask to read files just read them. 
