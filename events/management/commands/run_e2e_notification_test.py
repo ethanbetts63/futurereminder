@@ -25,7 +25,7 @@ class Command(BaseCommand):
         # 2. --- Test Setup ---
         self.stdout.write(self.style.WARNING("\n--- Step 2: Test Setup ---"))
         
-        user_email = "ethanbetts63@gmail.com"
+        user_email = "nahte12321@gmail.com"
         user_phone = "+4591749128"
 
         user, created = User.objects.get_or_create(
@@ -34,7 +34,7 @@ class Command(BaseCommand):
         )
         user.phone = user_phone
         user.backup_phone = user_phone # Using same for simplicity
-        user.backup_email = "nahte12321@gmail.com"
+        user.backup_email = "ethanbetts63@gmail.com"
         user.is_email_verified = True
         user.save()
         
