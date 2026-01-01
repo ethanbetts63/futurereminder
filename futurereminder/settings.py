@@ -36,17 +36,15 @@ STRIPE_WEBHOOK_SECRET = os.environ.get("STRIPE_WEBHOOK_SECRET", "")
 EVENT_PRICE = 10.00
 SITE_URL = os.environ.get("SITE_URL")
 HASHING_SALT = os.environ.get("HASHING_SALT")
-ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL", "admin@example.com")
+ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL")
+ADMIN_NUMBER = os.environ.get("ADMIN_NUMBER")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-
 DEBUG = os.getenv('DEBUG') == 'True'
 
 ALLOWED_HOSTS = ['ethanbetts.pythonanywhere.com', 'www.futurereminder.app', '127.0.0.1', 'localhost']
 
-
 # Application definition
-
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",

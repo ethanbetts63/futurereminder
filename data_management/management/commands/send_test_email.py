@@ -16,8 +16,8 @@ class Command(BaseCommand):
         # General arguments
         parser.add_argument(
             '--recipient',
-            default='ethanbetts63@gmail.com',
-            help='The email address to send the test email to.'
+            default=settings.ADMIN_EMAIL,
+            help='The email address to send the test email to. Defaults to ADMIN_EMAIL from settings.'
         )
         parser.add_argument(
             '--subject',

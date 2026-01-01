@@ -37,7 +37,7 @@ class Command(BaseCommand):
             self.stdout.write(f"Admin user '{admin_email}' created.")
         
         # Prepare the test user and event
-        user_email = "ethanbetts63@gmail.com"
+        user_email = "nahte12321@gmail.com"
         user_phone = settings.TWILIO_PHONE_NUMBER # Send to self for testing
 
         user, created = User.objects.get_or_create(

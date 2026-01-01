@@ -1,4 +1,5 @@
 from django.core.management.base import BaseCommand
+from django.conf import settings
 from events.utils.send_reminder_sms import send_reminder_sms
 from events.models import Notification, Event
 from users.models import User
@@ -8,7 +9,10 @@ class Command(BaseCommand):
     help = 'Sends a test SMS message to a specified number using Twilio.'
 
     def handle(self, *args, **options):
-        test_phone_number = "+4591749128"
+        test_phone_number = settings.ADMIN_NUMBER
+        if not test_phone_number:
+            self.stdout.write(self.style.ERROR("ADMIN_NUMBER is not set in your environment or settings."))
+            return
 
         self.stdout.write(f"Attempting to send a test SMS to {test_phone_number}...")
 
