@@ -59,6 +59,7 @@ const BestTextMessageReminderApps = lazy(() => import('./pages/articles/BestText
 const BestMedicationReminderApps = lazy(() => import('./pages/articles/BestMedicationReminderApps'));
 const BestBillAndSubscriptionReminderApps = lazy(() => import('./pages/articles/BestBillAndSubscriptionReminderApps'));
 const BlogExplorePage = lazy(() => import('./pages/BlogExplorePage'));
+const ContactPage = lazy(() => import('./pages/ContactPage'));
 
 
 const LoadingFallback = () => (
@@ -79,6 +80,7 @@ function App() {
               <Routes>
                 {/* Public routes */}
                 <Route path="/" element={<HomePage />} />
+                <Route path="/contact" element={<ContactPage />} />
                 <Route path="/confirmation/:eventId" element={<ConfirmationPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/forgot-password" element={<ForgotPasswordPage />} />

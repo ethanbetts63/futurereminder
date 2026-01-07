@@ -13,6 +13,7 @@ class StaticViewSitemap(Sitemap):
         return [
             '/',
             '/login',
+            '/contact',
             '/articles',
             '/articles/letter-to-future-self',
             '/articles/vaccine-boosters',
