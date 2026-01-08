@@ -1,7 +1,6 @@
 import React from 'react';
 import { Hero } from './Hero';
 import { Faq } from './Faq';
-import { CtaCard } from './CtaCard';
 import faqImage from '../assets/faq_image.webp';
 import faqImageLandscape from '../assets/faq_image_landscape.webp';
 import faqImage320 from '../assets/faq_image-320w.webp';
@@ -21,11 +20,10 @@ interface ArticleLayoutProps {
   imageSrc: string;
   imageAlt: string;
   faqPage?: string;
-  ctaElement?: React.ReactNode;
   children: React.ReactNode;
 }
 
-export const ArticleLayout: React.FC<ArticleLayoutProps> = ({ title, subtitle, imageSrc, imageAlt, ctaElement, children, faqPage }) => {
+export const ArticleLayout: React.FC<ArticleLayoutProps> = ({ title, subtitle, imageSrc, imageAlt, children, faqPage }) => {
   return (
     <main>
       <Hero
@@ -33,13 +31,12 @@ export const ArticleLayout: React.FC<ArticleLayoutProps> = ({ title, subtitle, i
         subtitle={subtitle}
         imageSrc={imageSrc}
         imageAlt={imageAlt}
-        ctaElement={ctaElement}
       />
       
-      <div className="container mx-auto px-4 lg:grid lg:grid-cols-3 lg:gap-8 mt-6">
+      <div className="container mx-auto px-4 mt-6">
         
-        {/* Main Content Column (2/3 width) */}
-        <div className="lg:col-span-2 bg-background text-primary-foreground rounded-lg px-4 md:p-0 lg:px-16 flex flex-col gap-8">
+        {/* Main Content Column (Full width) */}
+        <div className="bg-background text-primary-foreground rounded-lg px-4 md:p-0 lg:px-16 flex flex-col gap-8 max-w-4xl mx-auto">
           <div>
             {children}
           </div>
@@ -59,14 +56,6 @@ export const ArticleLayout: React.FC<ArticleLayoutProps> = ({ title, subtitle, i
             </section>
           )}
         </div>
-
-        {/* Sticky Sidebar Column (1/3 width) */}
-        <aside className="hidden lg:block">
-          <div className="sticky top-24">
-            <CtaCard />
-          </div>
-        </aside>
-
       </div>
     </main>
   );
