@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
 Allow: /articles/
+Allow: /static/
 Disallow: /dashboard/
 Disallow: /create-flow/
 Disallow: /confirmation
