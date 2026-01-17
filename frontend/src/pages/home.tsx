@@ -16,6 +16,18 @@ import { ArticleCarousel } from '../components/ArticleCarousel';
 import TrustFeature from '../components/TrustFeature';
 
 const HomePage = () => {
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "FutureReminder",
+    "url": "https://www.futurereminder.app",
+    "logo": "https://www.futurereminder.app/favicon-512x512.png",
+    "founder": {
+      "@type": "Person",
+      "name": "Ethan Betts"
+    }
+  };
+
   return (
     <main>
       <Seo
@@ -23,6 +35,7 @@ const HomePage = () => {
         description="Standard calendars fail for distant or important events. FutureReminder uses an escalating hierarchy of notifications to ensure you never miss a critical deadline or event again."
         canonicalPath="/"
         ogImage="/og-images/og-homepage.webp"
+        structuredData={organizationSchema}
       />
       <Hero
         title={<>Reminders that don't take <span className='italic'>silence</span> for an answer.</>}
