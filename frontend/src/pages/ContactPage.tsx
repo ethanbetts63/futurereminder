@@ -4,10 +4,9 @@ import { Hero } from '../components/Hero';
 import ContactDetails from '../components/ContactDetails';
 import OtherSites from '../components/OtherSites';
 import Seo from '@/components/Seo';
-
-// TODO: Replace with actual logo paths
 import allbikesLogo from '@/assets/allbikes_logo.png'; 
 import splitcartLogo from '@/assets/splitcart_logo.png';
+import foreverFlowerLogo from '@/assets/foreverflower_logo.png';
 
 const otherSitesData = [
     {
@@ -21,6 +20,12 @@ const otherSitesData = [
         logoSrc: splitcartLogo, 
         description: "Compare grocery prices across major Australian supermarkets.",
         url: "https://www.splitcart.com.au", 
+    },
+    {
+        name: "Forever Flower",
+        logoSrc: foreverFlowerLogo, 
+        description: "The only annual flower subscription app in existence. Pre arrange flowers to be sent to someone for anniversaries, birthdays, or just because on the same date every year.",
+        url: "https://www.foreverflower.app", 
     },
 ];
 
